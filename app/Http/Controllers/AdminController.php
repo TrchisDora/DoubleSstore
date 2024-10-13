@@ -46,4 +46,5 @@ public function admin(Request $request)
         // Kiểm tra session hoặc middleware bảo mật nếu cần
         return view('AdminPages.Pages.dashboard');
     }
+    //trí nguyện lỏ
 }
