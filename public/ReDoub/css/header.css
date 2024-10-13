@@ -1,0 +1,199 @@
+
+.container-header {
+    background-color: #000;
+    margin-bottom   : 2px;
+    display    : flex;
+    align-items: center;
+    padding    : 10px 0;
+}
+
+.container-header span,
+.container-header i {
+    font-size: 14px;
+    color    : #fff;
+}
+
+.container-header i {
+    width    : 20px;
+    font-size: 20px;
+}
+
+.header-logo-main {
+    width       : 30%;
+    margin-right: 56px;
+}
+
+.header-logo {
+    width: 100%;
+}
+
+.header-logo a {
+    display: block;
+    width  : 100%;
+}
+
+.header-logo img {
+    width: 100%;
+}
+
+.header-search-main {
+    position        : relative;
+    background-color: #fff;
+    border-radius   : 3px;
+}
+
+.header-search {
+    padding   : 2px 62px 2px 18px;
+    box-shadow: 1px 0 12px rgb(189 189 189 / 80%);
+}
+
+.header-search input {
+    width  : 400px;
+    height : 42px;
+    border : 0;
+    outline: 0;
+}
+
+.header-search button {
+    position        : absolute;
+    top             : 50%;
+    transform       : translateY(-50%);
+    right           : 4px;
+    background-color: var(--bg-primary-color);
+    color           : #fff;
+    padding         : 10px 16px;
+    border-radius   : 3px;
+    cursor          : pointer;
+}
+
+.header-search button:hover {
+    background-color: #000;
+    transition      : all 0.3s ease;
+}
+
+.header-order-main {
+    margin-left: 56px;
+}
+
+.header-order a,
+.header-login a,
+.header-cart a {
+    padding: 6px 0;
+}
+
+.header-hover a:hover>i,
+.header-hover a:hover>span {
+    color     : var(--bg-primary-color);
+    transition: all 0.2s ease-in-out;
+}
+
+.header-login-main {
+    margin-left: 20px;
+}
+
+.header-cart-main {
+    margin-left: 20px;
+}
+
+/* Login success */
+.main-nav-login-success {
+    position: relative;
+}
+
+.main-nav-login-success:hover .main-subnav-login-success {
+    display: block;
+}
+
+.main-icon-login-success i {
+    font-size: 30px;
+}
+
+.main-subnav-login-success::before {
+    content      : "";
+    display      : block;
+    position     : absolute;
+    top          : -4%;
+    right        : 0;
+    width        : 0;
+    height       : 0;
+    border-left  : 15px solid transparent;
+    border-right : 15px solid transparent;
+    border-bottom: 17px solid #fff;
+}
+
+.arrow-top::before {
+    top: -6% !important;
+}
+
+.main-subnav-login-success {
+    position               : absolute;
+    right                  : -10px;
+    display                : none;
+    width                  : 200px;
+    background-color       : #fff;
+    margin-top             : 16px;
+    border-radius          : 5px;
+    border-top-right-radius: 3px;
+    box-shadow             : 0 -3px 23px rgba(0, 0, 0, 0.075);
+    animation              : fadeIn linear 0.2s;
+    z-index                : 10;
+}
+
+.main-subnav-login-success::after {
+    content : "";
+    display : block;
+    position: absolute;
+    top     : -14%;
+    right   : 0;
+    width   : 100px;
+    height  : 38px;
+}
+
+.main-subnav-login-success li {
+    padding: 12px 20px;
+}
+
+.main-subnav-login-success li:first-child {
+    border-bottom: 0.5px solid #d4d4d4;
+}
+
+.main-subnav-login-success span {
+    display    : inline-block;
+    width      : 100%;
+    font-size  : 17px;
+    font-weight: 500;
+    color      : #333;
+    text-align : center;
+    cursor     : default;
+}
+
+.main-subnav-login-success a {
+    display   : block;
+    width     : 100%;
+    transition: all 0.2s linear;
+}
+
+.main-subnav-login-success button {
+    font-size       : 16px;
+    background-color: transparent;
+    cursor          : pointer;
+    color           : #ff0000;
+    transition      : all 0.2s linear;
+
+}
+
+.main-subnav-login-success a:hover,
+.main-subnav-login-success button:hover {
+    transform: translateX(12px);
+    scale    : 1.05;
+}
+
+@keyframes fadeIn {
+    0% {
+        opacity: 0;
+    }
+
+    100% {
+        opacity: 1;
+    }
+}

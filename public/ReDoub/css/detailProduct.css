@@ -1,0 +1,125 @@
+.info {
+  display        : flex;
+  align-items    : center;
+  justify-content: space-between;
+}
+
+.Ten {
+  font-size     : 32px;
+  color         : #212529;
+  font-weight   : 500;
+  padding-bottom: 10px;
+  border-bottom : 1px solid #dee2e6;
+  margin-bottom : 16px;
+}
+
+.Hinh {
+  display        : flex;
+  justify-content: center;
+  width          : 800px;
+  height         : 420px;
+}
+
+.Hinh img {
+  /* width     : 400px; */
+  max-width : 100%;
+  max-height: 100%;
+}
+
+.NoiDung {
+  flex: 1;
+}
+
+.NoiDung h3 {
+  font-weight  : 500;
+  text-align   : center;
+  margin-bottom: 12px;
+}
+
+.Gia {
+  display      : flex;
+  margin-bottom: 30px;
+}
+
+.GiaMoi {
+  display     : inline-block;
+  font-size   : 28px;
+  color       : #cb1c22;
+  margin-right: 10px;
+  font-weight : 500;
+}
+
+.GiaMoi sup,
+.GiaCu sup {
+  position : relative;
+  top      : 4px;
+  font-size: 16px !important;
+}
+
+.GiaCu {
+  position       : relative;
+  top            : 8px;
+  display        : inline-block;
+  font-size      : 16px;
+  color          : #99a2aa;
+  font-weight    : 400;
+  text-decoration: line-through;
+}
+
+.Noidung_Mota {
+  background-color: #f8f9fa;
+  margin-bottom   : 16px;
+  border-radius   : 10px;
+  box-shadow      : 1px 0 12px rgb(189 189 189 / 80%);
+}
+
+.Mota {
+  display       : flex;
+  flex-direction: column;
+}
+
+.Mota li {
+  display      : flex;
+  align-items  : center;
+  color        : #495057;
+  padding      : 24px 15px 18px 30px;
+  border-bottom: 1px solid #dee2e6;
+}
+
+.Mota li:last-child {
+  border-bottom: 0;
+}
+
+.Mota ul li span {
+  display: inline-block;
+  width  : 28%;
+}
+
+.Mota ul li strong {
+  display    : inline-block;
+  width      : 72%;
+  font-weight: normal;
+}
+
+.buy-product {
+  text-align: center;
+}
+
+.buy-product button.addtocard {
+  width           : 50%;
+  height          : 50px;
+  font-size       : 20px;
+  text-transform  : uppercase;
+  background-color: var(--bg-primary-color);
+  color           : #000;
+  margin          : 20px 0 30px;
+  cursor          : pointer;
+  border-radius   : 3px;
+  box-shadow      : 1px 0 12px rgb(189 189 189 / 80%);
+  transition      : all 0.2s ease-in-out;
+}
+
+.buy-product button.addtocard:hover {
+  background-color: #000;
+  color           : #fff;
+}

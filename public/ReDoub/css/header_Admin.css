@@ -1,0 +1,117 @@
+.header-admin {
+    position  : sticky;
+    top       : 0;
+    left      : 0;
+    right     : 0;
+    background: linear-gradient(#d7ecff, #fffbdb);
+    padding   : 20px 50px;
+    z-index   : 1000;
+}
+
+.main-container-header-admin {
+    display        : flex;
+    align-items    : center;
+    justify-content: space-between;
+}
+
+.navbar-header-right {
+    position      : relative;
+    display       : flex;
+    flex-direction: column;
+    align-items   : center;
+}
+
+.navbar-header-right:hover .subnav-info-admin {
+    display: flex;
+}
+
+.avt-admin {
+    width          : 45px;
+    display        : flex;
+    align-items    : center;
+    justify-content: center;
+}
+
+.avt-admin img {
+    width           : 100%;
+    background-color: #f0f0f0;
+    border-radius   : 50%;
+}
+
+.subnav-info-admin::before {
+    content      : "";
+    display      : block;
+    position     : absolute;
+    top          : -12%;
+    right        : 8px;
+    width        : 0;
+    height       : 0;
+    border-left  : 15px solid transparent;
+    border-right : 15px solid transparent;
+    border-bottom: 17px solid #fff;
+}
+
+.subnav-info-admin {
+    position        : absolute;
+    right           : 0;
+    bottom          : -95px;
+    display         : none;
+    flex-direction  : column;
+    justify-content : center;
+    align-items     : center;
+    width           : 150px;
+    background-color: #fff;
+    box-shadow      : 1px 0 30px rgba(0, 0, 0, 0.3);
+    border-radius   : 10px;
+    animation       : fadeIn linear 0.2s;
+}
+
+.subnav-info-admin::after {
+    content : "";
+    display : block;
+    position: absolute;
+    top     : -55%;
+    right   : 0;
+    width   : 145px;
+    height  : 50px;
+}
+
+.info_admin {
+    width        : 100%;
+    font-size    : 18px;
+    text-align   : center;
+    color        : #333;
+    padding      : 10px 0;
+    margin       : 0;
+    cursor       : default;
+    opacity      : 0.9;
+    border-bottom: 0.5px solid #d4d4d4;
+}
+
+.navbar-header-right form {
+    width: 100%;
+}
+
+.navbar-header-right button {
+    width           : 100%;
+    font-size       : 14px;
+    background-color: transparent;
+    color           : #ff0000;
+    padding         : 10px 0;
+    cursor          : pointer;
+    transition      : all 0.2s ease-in-out;
+}
+
+.navbar-header-right button:hover {
+    transform: translateX(10px);
+}
+
+@keyframes fadeIn {
+    0% {
+        opacity: 0;
+    }
+
+    100% {
+        opacity: 1;
+    }
+}

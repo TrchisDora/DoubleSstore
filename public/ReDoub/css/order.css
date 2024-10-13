@@ -1,0 +1,79 @@
+.dh-table {
+    width: 100%;
+    margin-bottom: 14px;
+    border-collapse: collapse;
+}
+
+.background-dh {
+    margin-top: 17px;
+    border-top: 1px solid #e2e2e2;
+    line-height: 40px;
+}
+
+/* heading */
+.heading-dh {
+    color: #504e4e;
+    font-size: 32px;
+    text-align: center;
+    margin: 14px 0 16px;
+}
+
+/* head đơn đặt hàng */
+.head-list-info {
+    color: rgb(255, 255, 255);
+    font-size: 20px;
+}
+
+.head-item-info {
+    padding-bottom: 10px;
+    background-color: #ffae00;
+    font-style: normal;
+    font-weight: 500;
+}
+
+/* body đơn đặt hàng */
+.body-info-product {
+    background-color: rgba(255, 255, 255, 0);
+}
+
+.body-list-info {
+    color: #333;
+    margin: 20px;
+}
+
+.body-list-info .btn-cthd {
+    width: 100%;
+    height: 30px;
+    background-color: #fff;
+    color: #333;
+    border: none;
+    font-size: 18px;
+    cursor: pointer;
+   
+}
+
+.body-list-info .btn-cthd:hover {
+    color: #fb5b08;
+}
+
+/* table xem chi tiết đơn đặt hàng */
+.btn-cart-errol {
+    width: 160px;
+    height: 40px;
+    background-color: #afadac;
+    color: #e2e1e1;
+    border: none;
+    margin: 0 10px;
+    font-size: 16px;
+    cursor: none;
+}
+.btn-cart-errol:hover {
+    cursor: initial;
+}
+
+.body-thong-bao {
+    font-weight: bold;
+    color: red;
+    font-size: 20px;
+    margin: 10px;
+}

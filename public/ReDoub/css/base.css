@@ -1,0 +1,83 @@
+:root {
+    --bg-primary-color: #EBBC34;
+}
+
+html {
+    font-family    : "Roboto", sans-serif;
+    /* chuyển động khi nhấn các navigation */
+    scroll-behavior: smooth;
+}
+
+body {
+    display       : flex;
+    flex-direction: column;
+    min-height    : 100vh;
+    padding-left  : 18rem;
+}
+
+.main-container-website {
+    flex: 1 0 auto;
+}
+
+.main-container-admin {
+    flex   : 1 0 auto;
+    padding: 10px;
+}
+
+ul {
+    margin    : 0;
+    padding   : 0;
+    list-style: none;
+}
+
+button {
+    display: inline-block;
+    border : none;
+    outline: none;
+    padding: 0;
+}
+
+a {
+    text-decoration: none;
+    color          : #000;
+}
+
+sup {
+    position       : relative;
+    top            : 3px;
+    right          : -1.5px;
+    font-size      : 12px;
+    text-decoration: underline;
+}
+
+.pl-0 {
+    padding-left: 0;
+}
+
+.mt-40 {
+    margin-top: 40px;
+}
+
+.mb-20 {
+    margin-bottom: 20px;
+}
+
+.mb-50 {
+    margin-bottom: 50px;
+}
+
+.text-center {
+    text-align: center;
+}
+
+.text-start {
+    text-align: start;
+}
+
+.d-flex {
+    display: flex;
+}
+
+.align-items-center {
+    align-items: center;
+}
