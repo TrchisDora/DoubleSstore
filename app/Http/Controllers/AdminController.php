@@ -16,19 +16,19 @@ class AdminController extends Controller
 public function admin(Request $request)
 {
     // Lấy email và password từ form đăng nhập
-    $email = $request->input('email');
-    $password = $request->input('password');
+    $admin_email = $request->input('admin_email');
+    $admin_password = $request->input('admin_password');
 
     // Kiểm tra thông tin đăng nhập
     $result = DB::table('tbl_admin')
-                ->where('email', $email)
+                ->where('admin_email', $admin_email)
                 ->first();
 
-    if ($result) {555
+    if ($result) {
         // Kiểm tra mật khẩu (nếu không mã hóa mật khẩu)
-        if ($result->password === md5($password)) {
+        if ($result->admin_password === md5($admin_password)) {
             // Đăng nhập thành công, lưu thông tin vào session
-            $request->session()->put('admin_id', $result->id);
+            $request->session()->put('admin_id', $result->admin_id);
             // Chuyển hướng đến trang dashboard
             return redirect()->route('admin.dashboard');
         } else {

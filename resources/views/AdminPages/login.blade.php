@@ -22,8 +22,8 @@
 
         <form action="{{ route('admin.login') }}" method="post">
             @csrf  <!-- Tạo mã CSRF bảo vệ -->
-            <input type="text" class="ggg" name="email" placeholder="Điền email" required="">
-            <input type="password" class="ggg" name="password" placeholder="Điền mật khẩu" required="">
+            <input type="text" class="ggg" name="admin_email" placeholder="Điền email" required="">
+            <input type="password" class="ggg" name="admin_password" placeholder="Điền mật khẩu" required="">
             <span><input type="checkbox" /> Lưu lại tài khoản</span>
             <h6><a href="#">Quên mật khẩu?</a></h6>
             <div class="clearfix"></div>
