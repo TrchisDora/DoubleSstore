@@ -8,8 +8,8 @@ use App\Http\Controllers\AdminController;
 Route::get('/trang-chu', [HomeController::class, 'index']);
 Route::get('/', [HomeController::class, 'index']);
 
-
-
+//danh mục sản phẩm trang chủ
+Route::get('/danh-muc-san-pham/{$category_id}', [CategoryProduct::class, 'index']);
 
 
 
