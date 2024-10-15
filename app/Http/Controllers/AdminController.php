@@ -1,7 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
-
+use Session;
 use Illuminate\Http\Request;
 use DB;
 
@@ -29,6 +29,7 @@ class AdminController extends Controller
             if ($result->admin_password === md5($admin_password)) {
                 // Đăng nhập thành công, lưu thông tin vào session
                 $request->session()->put('admin_id', $result->admin_id);
+                $request->session()->put('admin_name', $result->admin_name);
                 // Chuyển hướng đến trang dashboard
                 return redirect()->route('admin.dashboard');
             } else {
@@ -48,6 +49,8 @@ class AdminController extends Controller
         //abc
     }
     public function logout(){
-        
+        $request->session()->put('admin_id', null);
+        $request->session()->put('admin_name', null);
+        return redirect()->route('admin.login');
     }
 }

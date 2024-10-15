@@ -58,3 +58,4 @@ Route::post('/admin', [AdminController::class, 'admin'])->name('admin.login');
 // Trang dashboard sau khi đăng nhập thành công
 Route::get('/dashboard', [AdminController::class, 'dashboard'])->name('admin.dashboard');
 Route::get('/logout', [AdminController::class, 'logout']);
+Route::get('/logout', [AdminController::class, 'login']);
