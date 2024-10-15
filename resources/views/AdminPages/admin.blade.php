@@ -267,12 +267,12 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
                 <li class="sub-menu">
                     <a href="javascript:;">
                         <i class="fa fa-book"></i>
-                        <span>UI Elements</span>
+                        <span>Danh mục sản phẩm</span>
                     </a>
                     <ul class="sub">
-						<li><a href="typography.html">Typography</a></li>
-						<li><a href="glyphicon.html">glyphicon</a></li>
-                        <li><a href="grids.html">Grids</a></li>
+						<li><a href="{{URL::to('/add-category-product')}}">Thêm danh mục sản phẩm</a></li>
+						<li><a href="glyphicon.html">Sửa  danh mục sản phẩm</a></li>
+                        <li><a href="grids.html">Xóa danh mục sản phẩm</a></li>
                     </ul>
                 </li>
                 <li>
@@ -355,7 +355,11 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 </aside>
 <!--sidebar end-->
 <!--main content start-->
-@yield('dashboard')
+<section id="main-content">
+	<section class="wrapper">
+        @yield('admin_content')
+	</section>
+</section>
  <!-- footer -->
 		  <div class="footer">
 			<div class="wthree-copyright">
