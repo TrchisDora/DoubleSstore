@@ -41,6 +41,13 @@ Route::get('/', [HomeController::class, 'index']);
 
 
 
+
+
+
+
+
+
+
 // Backend
 // Hiển thị trang đăng nhập
 Route::get('/login', [AdminController::class, 'login'])->name('login');
