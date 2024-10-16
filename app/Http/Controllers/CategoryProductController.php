@@ -23,13 +23,13 @@ class CategoryProductController extends Controller
 
     public function add_category_product() {
         $this->AuthLogin();
-        return view('AdminPages.Pages.add_category_product');
+        return view('AdminPages.Pages.CategoryProduct.add_category_product');
     }
 
     public function all_category_product() {
         $this->AuthLogin();
-        $all_category_product = CategoryProduct::paginate(2); // Sử dụng model
-        return view('admin.all_category_product', compact('all_category_product'));
+        $all_category_product = CategoryProduct::paginate(5); // Sử dụng model
+        return view('AdminPages.Pages.CategoryProduct.all_category_product', compact('all_category_product'));
     }
 
     public function save_category_product(Request $request) {
@@ -50,7 +50,6 @@ class CategoryProductController extends Controller
 
         // Tạo slug từ tên danh mục
         $categoryProduct->slug_category_product = $this->generateSlug($data['category_name']);
-
         $categoryProduct->save();
 
         // Hiển thị thông báo khi thêm thành công
@@ -98,7 +97,7 @@ class CategoryProductController extends Controller
     public function edit_category_product($category_product_id) {
         $this->AuthLogin();
         $edit_category_product = CategoryProduct::findOrFail($category_product_id); // Sử dụng model
-        return view('admin.edit_category_product', compact('edit_category_product'));
+        return view('AdminPages.Pages.CategoryProduct.edit_category_product', compact('edit_category_product'));
     }
 
     public function update_category_product(Request $request, $category_product_id) {

@@ -7,13 +7,21 @@
             <header class="panel-heading">
                 Thêm danh mục sản phẩm
             </header>
-            <?php
-                $message = Session::get('message');
-                if ($message) {
-                    echo '<span class="text-alert">' . $message . '</span>';
-                    Session::put('message', null);
-                }
-            ?>
+            @if (session('message'))
+            <script>
+                Swal.fire({
+                    position: 'center',
+                    icon: 'success',
+                    title: '{{ session('message') }}',
+                    showConfirmButton: false,
+                    timer: 2500
+                }).then(() => {
+                    // Chuyển hướng đến trang danh sách sản phẩm sau 2 giây
+                    window.location.href = "{{ route('all.category.product') }}";
+                });
+            </script>
+        @endif
+
             <div class="panel-body">
                 <div class="position-center">
                     <form role="form" action="{{ URL::to('/save-category-product') }}" method="post">

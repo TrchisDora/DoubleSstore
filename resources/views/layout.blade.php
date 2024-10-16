@@ -496,6 +496,7 @@
 	<script src="{{asset('public/fontend/js/price-range.js')}}"></script>
     <script src="{{asset('public/fontend/js/jquery.prettyPhoto.js')}}"></script>
     <script src="{{asset('public/fontend/js/main.js')}}"></script>
+	
 </body>
 </html>
 <!-- "{{('public/fontend/')}}" -->
