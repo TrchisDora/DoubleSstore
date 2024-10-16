@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
@@ -7,11 +8,13 @@ use Session;
 
 class AdminController extends Controller
 {
+    // Hiển thị trang đăng nhập
     public function login()
     {
         return view('AdminPages.login');  
     }
 
+    // Xử lý đăng nhập
     public function admin(Request $request)
     {
         $admin_email = $request->input('admin_email');
@@ -25,21 +28,23 @@ class AdminController extends Controller
                 $request->session()->put('admin_name', $admin->admin_name);
                 return redirect()->route('admin.dashboard');
             } else {
-                return redirect()->route('admin.login')->with('error', 'Mật khẩu không chính xác.');
+                return redirect()->route('login')->with('error', 'Mật khẩu không chính xác.');
             }
         } else {
-            return redirect()->route('admin.login')->with('error', 'Email không tồn tại.');
+            return redirect()->route('login')->with('error', 'Email không tồn tại.');
         }
     }
 
+    // Trang dashboard
     public function dashboard()
     {
         return view('AdminPages.Pages.dashboard');
     }
 
+    // Đăng xuất
     public function logout(Request $request)
     {
         $request->session()->forget(['admin_id', 'admin_name']);
-        return redirect()->route('admin.login');
+        return redirect()->route('login');
     }
 }

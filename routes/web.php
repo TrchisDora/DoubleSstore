@@ -58,9 +58,9 @@ Route::post('/admin', [AdminController::class, 'admin'])->name('admin.login');
 
 // Trang dashboard sau khi đăng nhập thành công
 Route::get('/dashboard', [AdminController::class, 'dashboard'])->name('admin.dashboard');
-Route::get('/logout', [AdminController::class, 'logout']);
-Route::get('/logout', [AdminController::class, 'login']);
 
+// Đăng xuất
+Route::get('/logout', [AdminController::class, 'logout'])->name('admin.logout');
 
 //CategoryProduct
 Route::get('add-category-product', [CategoryProductController::class, 'add_category_product'])->name('add.category.product');
