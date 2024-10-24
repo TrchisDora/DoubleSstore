@@ -4,6 +4,8 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\CategoryProductController;
+use App\Http\Controllers\ProductController;
+use App\Http\Controllers\BrandProductController;
 
 // Frontend
 Route::get('/trang-chu', [HomeController::class, 'index']);
@@ -74,3 +76,12 @@ Route::get('unactive-category-product/{id}', [CategoryProductController::class, 
 Route::get('show-category-home/{slug}', [CategoryProductController::class, 'show_category_home'])->name('show.category.home');
 Route::get('export-csv', [CategoryProductController::class, 'export_csv'])->name('export.csv');
 Route::post('import-csv', [CategoryProductController::class, 'import_csv'])->name('import.csv');
+
+Route::get('/add-product', [ProductController::class, 'add_product'])->name('add.product');
+Route::post('/save-product', [ProductController::class, 'save_product'])->name('save.product');
+Route::get('/all-product', [ProductController::class, 'all_product'])->name('all.product');
+
+//BrandProduct
+Route::get('/add-brand-product', [BrandProductController::class, 'add_brand_product'])->name('add.brand.product');
+Route::post('/save-brand-product', [BrandProductController::class, 'save_brand_product'])->name('save.brand.product');
+Route::get('/all-brand-product', [BrandProductController::class, 'all_brand_product'])->name('all.brand.product');

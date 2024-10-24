@@ -20,7 +20,21 @@
                     window.location.href = "{{ route('all.category.product') }}";
                 });
             </script>
-        @endif
+             @elseif (session('error'))
+             <script>
+                Swal.fire({
+                    position: 'center',
+                    icon: 'error',
+                    title: '{{ session('error') }}',
+                    showConfirmButton: false,
+                    timer: 2500
+                }).then(() => {
+                    @php
+                            Session::forget('error');
+                        @endphp
+                });
+            </script>
+            @endif
 
             <div class="panel-body">
                 <div class="position-center">
@@ -28,17 +42,17 @@
                         {{ csrf_field() }}
                         <div class="form-group">
                             <label for="category_name">Tên danh mục</label>
-                            <input type="text" class="form-control" name="category_name" placeholder="danh mục">
+                            <input type="text" class="form-control" name="category_name" placeholder="danh mục" required>
                         </div>
                         
                         <div class="form-group">
                             <label for="category_desc">Mô tả danh mục</label>
-                            <textarea style="resize: none" rows="8" class="form-control" name="category_desc" placeholder="Mô tả danh mục"></textarea>
+                            <textarea style="resize: none" rows="8" class="form-control" name="category_desc" placeholder="Mô tả danh mục" required></textarea>
                         </div>
                         
                         <div class="form-group">
                             <label for="category_product_keywords">Từ khóa danh mục</label>
-                            <textarea style="resize: none" rows="8" class="form-control" name="category_product_keywords" placeholder="Từ khóa danh mục"></textarea>
+                            <textarea style="resize: none" rows="8" class="form-control" name="category_product_keywords" placeholder="Từ khóa danh mục" required></textarea>
                         </div>
                         
                         <div class="form-group">

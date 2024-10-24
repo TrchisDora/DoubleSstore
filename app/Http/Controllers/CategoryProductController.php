@@ -2,7 +2,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Models\CategoryProduct; // Import model CategoryProduct
+use App\Models\CategoryProduct; 
 use App\Models\Slider;
 use App\Exports\ExcelExports;
 use App\Imports\ExcelImports;
@@ -31,8 +31,9 @@ class CategoryProductController extends Controller
         $all_category_product = CategoryProduct::paginate(5); // Sử dụng model
         return view('AdminPages.Pages.CategoryProduct.all_category_product', compact('all_category_product'));
     }
-
+  
     public function save_category_product(Request $request) {
+       
         // Xác thực dữ liệu đầu vào
         $data = $request->validate([
             'category_name' => 'required|max:255',
@@ -40,8 +41,14 @@ class CategoryProductController extends Controller
             'category_product_keywords' => 'required',
             'category_product_status' => 'required|integer'
         ]);
-
-        // Tạo một đối tượng CategoryProduct mới và lưu vào cơ sở dữ liệu
+        // Kiểm tra xem tên danh mục đã tồn tại chưa
+        $existingCategory = CategoryProduct::where('category_name', $data['category_name'])->first();
+            
+        if ($existingCategory) {
+            // Nếu tên danh mục đã tồn tại, trả về thông báo lỗi
+            Session::put('error', 'Thêm danh mục sản phẩm không thành công');
+        }else{
+                        // Tạo một đối tượng CategoryProduct mới và lưu vào cơ sở dữ liệu
         $categoryProduct = new CategoryProduct();
         $categoryProduct->category_name = $data['category_name'];
         $categoryProduct->category_desc = $data['category_desc'];
@@ -55,29 +62,39 @@ class CategoryProductController extends Controller
         // Hiển thị thông báo khi thêm thành công
         Session::put('message', 'Thêm danh mục sản phẩm thành công');
         return redirect()->back();
+        }
+       
     }
+    
     private function generateSlug($name)
-    {
-        // Chuyển chuỗi về chữ thường
-        $slug = strtolower(trim($name));
-    
-        // Loại bỏ dấu trong tiếng Việt
-        $slug = preg_replace('/[àáảãạâầấẩẫậ]/u', 'a', $slug);
-        $slug = preg_replace('/[èéẻẽẹêềếểễệ]/u', 'e', $slug);
-        $slug = preg_replace('/[ìíỉĩị]/u', 'i', $slug);
-        $slug = preg_replace('/[òóỏõọôồốổỗộơờớởỡợ]/u', 'o', $slug);
-        $slug = preg_replace('/[ùúủũụưừứửữự]/u', 'u', $slug);
-        $slug = preg_replace('/[ỳýỷỹỵ]/u', 'y', $slug);
-        $slug = preg_replace('/[đ]/u', 'd', $slug);
-    
-        // Giữ lại chữ cái, số, khoảng trắng và dấu gạch nối
-        $slug = preg_replace('/[^a-z0-9\s-]/', '', $slug);
-        // Thay thế nhiều khoảng trắng và dấu gạch nối thành một dấu gạch nối
-        $slug = preg_replace('/[\s-]+/', '-', $slug);
-        $slug = trim($slug, '-'); // Loại bỏ dấu gạch nối ở đầu và cuối
-    
-        return $slug; // Trả về slug
+{
+    // Kiểm tra xem $name có phải là chuỗi hợp lệ không
+    if (!is_string($name) || empty($name)) {
+        throw new InvalidArgumentException('Invalid name provided for slug generation.');
     }
+
+    // Chuyển chuỗi về chữ thường
+    $slug = strtolower(trim($name));
+
+    // Loại bỏ dấu trong tiếng Việt
+    $slug = preg_replace('/[àáảãạâầấẩẫậ]/u', 'a', $slug);
+    $slug = preg_replace('/[èéẻẽẹêềếểễệ]/u', 'e', $slug);
+    $slug = preg_replace('/[ìíỉĩị]/u', 'i', $slug);
+    $slug = preg_replace('/[òóỏõọôồốổỗộơờớởỡợ]/u', 'o', $slug);
+    $slug = preg_replace('/[ùúủũụưừứửữự]/u', 'u', $slug);
+    $slug = preg_replace('/[ỳýỷỹỵ]/u', 'y', $slug);
+    $slug = preg_replace('/[đ]/u', 'd', $slug);
+
+    // Giữ lại chữ cái, số, khoảng trắng và dấu gạch nối
+    $slug = preg_replace('/[^a-z0-9\s-]/', '', $slug);
+    // Thay thế nhiều khoảng trắng và dấu gạch nối thành một dấu gạch nối
+    $slug = preg_replace('/[\s-]+/', '-', $slug);
+    $slug = trim($slug, '-'); // Loại bỏ dấu gạch nối ở đầu và cuối
+
+    return $slug; // Trả về slug
+}
+
+
     
 
     public function unactive_category_product($category_product_id) {
@@ -94,19 +111,26 @@ class CategoryProductController extends Controller
         return Redirect::to('all-category-product');
     }
 
-    public function edit_category_product($category_product_id) {
-        $this->AuthLogin();
-        $edit_category_product = CategoryProduct::findOrFail($category_product_id); // Sử dụng model
+    public function edit_category_product($id)
+    {
+        $this->AuthLogin(); // Kiểm tra đăng nhập
+        $edit_category_product = CategoryProduct::findOrFail($id);
         return view('AdminPages.Pages.CategoryProduct.edit_category_product', compact('edit_category_product'));
     }
+    
+    public function update_category_product(Request $request, $id)
+{
+    $this->AuthLogin(); // Kiểm tra đăng nhập
+    $data = $request->only(['category_name', 'meta_keywords', 'slug_category_product', 'category_desc']);
+    
+    $category = CategoryProduct::findOrFail($id);
+    $category->update($data);
+    
+    Session::put('message', 'Cập nhật danh mục sản phẩm thành công');
+    return redirect()->route('all.category.product');
+}
 
-    public function update_category_product(Request $request, $category_product_id) {
-        $this->AuthLogin();
-        $data = $request->only(['category_name', 'meta_keywords', 'slug_category_product', 'category_desc']);
-        CategoryProduct::where('category_id', $category_product_id)->update($data); // Sử dụng model
-        Session::put('message', 'Cập nhật danh mục sản phẩm thành công');
-        return Redirect::to('all-category-product');
-    }
+    
 
     public function delete_category_product($category_product_id) {
         $this->AuthLogin();
