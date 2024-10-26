@@ -35,7 +35,7 @@
             @endif
             <div class="panel-body">
                 <div class="position-center">
-                    <form role="form" action="{{ URL::to('/save-product') }}" method="post">
+                    <form role="form" action="{{ URL::to('/save-product') }}" method="post" enctype="multipart/form-data">
                         {{ csrf_field() }}
 
                         <div class="form-group">
@@ -49,10 +49,13 @@
                         </div>
 
                         <div class="form-group">
+                            <label for="product_content">Nội dung sản phẩm</label>
+                            <textarea style="resize: none" rows="8" class="form-control" name="product_content" placeholder="Nội dung sản phẩm" required></textarea>
+                        </div>
+                        <div class="form-group">
                             <label for="product_desc">Mô tả sản phẩm</label>
                             <textarea style="resize: none" rows="8" class="form-control" name="product_desc" placeholder="Mô tả sản phẩm" required></textarea>
                         </div>
-
                         <div class="form-group">
                             <label for="product_price">Giá</label>
                             <input type="text" class="form-control" name="product_price" id="product_price" placeholder="Giá sản phẩm" required>
@@ -88,6 +91,13 @@
                             <select name="product_status" class="form-control" required>
                                 <option value="0">Hiển thị</option>
                                 <option value="1">Ẩn</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="exampleInputPassword1">Nổi bật</label>
+                            <select name="product_prominent" class="form-control input-sm m-bot15" required>
+                                <option value="0">Không</option>
+                                <option value="1">Có</option>
                             </select>
                         </div>
 

@@ -278,7 +278,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
                 <li>
                     <a href="javascript:;">
                         <i class="fa fa-book"></i>
-                        <span>Thương thiệu</span>
+                        <span>Thương hiệu</span>
                     </a>
                     <ul class="sub">
                         <li><a href="{{URL::to('/all-brand-product')}}">Xem tất cả thương hiệu</a></li>

@@ -16,20 +16,21 @@ class Product extends Model
         'product_image', 
         'category_id', 
         'brand_id', 
-        'product_status'
+        'product_status',
+        'product_prominent', // Thêm vào đây
+        'product_desc',      // Thêm trường này nếu có trong bảng
+        'product_content'    // Thêm trường này nếu có trong bảng
     ];
 
     public $timestamps = true;
 
-        // Model Product
     public function categoryProduct()
     {
-        return $this->belongsTo(categoryProduct::class, 'category_id');
+        return $this->belongsTo(CategoryProduct::class, 'category_id');
     }
 
     public function brandProduct()
     {
         return $this->belongsTo(BrandProduct::class, 'brand_id');
     }
-
 }

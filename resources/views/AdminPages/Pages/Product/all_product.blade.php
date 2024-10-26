@@ -6,6 +6,22 @@
             <div class="panel-heading">
                 Liệt kê sản phẩm
             </div>
+            @if (session('message'))
+                <script>
+                    Swal.fire({
+                        position: 'center',
+                        icon: 'success',
+                        title: '{{ session('message') }}',
+                        showConfirmButton: false,
+                        timer: 2500
+                    }).then(() => {
+                        // Xóa session để tránh lặp lại thông báo
+                        @php
+                            Session::forget('message');
+                        @endphp
+                    });
+                </script>
+            @endif
             <div class="row w3-res-tb">
                 <div class="col-sm-5 m-b-xs">
                     <select class="input-sm form-control w-sm inline v-middle">
@@ -27,13 +43,6 @@
                 </div>
             </div>
             <div class="table-responsive">
-                <?php
-                $message = Session::get('message');
-                if($message){
-                    echo '<span class="text-alert">'.$message.'</span>';
-                    Session::put('message',null);
-                }
-                ?>
                 <table class="table table-striped b-t b-light">
                     <thead>
                         <tr>
@@ -50,6 +59,7 @@
                             <th>Danh mục</th>
                             <th>Thương hiệu</th>
                             <th>Hiển thị</th>
+                            <th>Nổi bật</th> <!-- Cột mới -->
                             <th style="width:30px;"></th>
                         </tr>
                     </thead>
@@ -64,22 +74,40 @@
                             <td>{{ $pro->product_name }}</td>
                             <td>{{ $pro->product_quantity }}</td>
                             <td>{{ $pro->product_slug }}</td>
-                            <td>{{ number_format($pro->product_price,0,',','.') }}đ</td>
-                            <td><img src="{{ asset('public/uploads/product/'.$pro->product_image) }}" height="100" width="100"></td>
+                            <td>{{ number_format($pro->product_price, 0, ',', '.') }}đ</td>
+                            <td><img src="{{ asset('public/fontend/images/product/'.$pro->product_image) }}" height="100" width="100"></td>
                             <td>{{ $pro->categoryProduct ? $pro->categoryProduct->category_name : 'Không có danh mục' }}</td>
                             <td>{{ $pro->brandProduct ? $pro->brandProduct->brand_name : 'Không có thương hiệu' }}</td>
                             <td>
                                 <span class="text-ellipsis">
-                                    @if($pro->product_status == 0)
-                                        <a href="{{ URL::to('/unactive-product/'.$pro->product_id) }}"><span class="fa-thumb-styling fa fa-thumbs-up"></span></a>
+                                    @if($pro->product_status == 1)
+                                        <a href="{{ URL::to('/unactive-product/'.$pro->product_id) }}">
+                                            <span class="fa-thumb-styling fa fa-thumbs-up"></span>
+                                        </a>
                                     @else
-                                        <a href="{{ URL::to('/active-product/'.$pro->product_id) }}"><span class="fa-thumb-styling fa fa-thumbs-down"></span></a>
+                                        <a href="{{ URL::to('/active-product/'.$pro->product_id) }}">
+                                            <span class="fa-thumb-styling fa fa-thumbs-down"></span>
+                                        </a>
+                                    @endif
+                                </span>
+                            </td>
+                            <td>
+                                <span class="text-ellipsis">
+                                    @if($pro->product_prominent == 1)
+                                        <a href="{{ URL::to('/unactive-prominent-product/'.$pro->product_id) }}">
+                                            <span class="fa fa-star"></span>
+                                        </a>
+                                    @else
+                                        <a href="{{ URL::to('/active-prominent-product/'.$pro->product_id) }}">
+                                            <span class="fa fa-star-o"></span>
+                                        </a>
                                     @endif
                                 </span>
                             </td>
                             <td>
                                 <a href="{{ URL::to('/edit-product/'.$pro->product_id) }}" class="active styling-edit" ui-toggle-class="">
-                                    <i class="fa fa-pencil-square-o text-success text-active"></i></a>
+                                    <i class="fa fa-pencil-square-o text-success text-active"></i>
+                                </a>
                                 <a onclick="return confirm('Bạn có chắc là muốn xóa sản phẩm này không?')" href="{{ URL::to('/delete-product/'.$pro->product_id) }}" class="active styling-edit" ui-toggle-class="">
                                     <i class="fa fa-times text-danger text"></i>
                                 </a>
@@ -92,11 +120,11 @@
             <footer class="panel-footer">
                 <div class="row">
                     <div class="col-sm-5 text-center">
-                        <small class="text-muted inline m-t-sm m-b-sm">showing 20-30 of 50 items</small>
+                        <small class="text-muted inline m-t-sm m-b-sm">showing {{ $all_product->firstItem() }} - {{ $all_product->lastItem() }} of {{ $all_product->total() }} items</small>
                     </div>
                     <div class="col-sm-7 text-right text-center-xs">                
                         <ul class="pagination pagination-sm m-t-none m-b-none">
-                            {!!$all_product->links()!!}
+                            {!! $all_product->links() !!}
                         </ul>
                     </div>
                 </div>

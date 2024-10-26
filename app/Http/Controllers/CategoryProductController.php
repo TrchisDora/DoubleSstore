@@ -67,32 +67,32 @@ class CategoryProductController extends Controller
     }
     
     private function generateSlug($name)
-{
-    // Kiểm tra xem $name có phải là chuỗi hợp lệ không
-    if (!is_string($name) || empty($name)) {
-        throw new InvalidArgumentException('Invalid name provided for slug generation.');
+    {
+        // Kiểm tra xem $name có phải là chuỗi hợp lệ không
+        if (!is_string($name) || empty($name)) {
+            throw new InvalidArgumentException('Invalid name provided for slug generation.');
+        }
+
+        // Chuyển chuỗi về chữ thường
+        $slug = strtolower(trim($name));
+
+        // Loại bỏ dấu trong tiếng Việt
+        $slug = preg_replace('/[àáảãạâầấẩẫậ]/u', 'a', $slug);
+        $slug = preg_replace('/[èéẻẽẹêềếểễệ]/u', 'e', $slug);
+        $slug = preg_replace('/[ìíỉĩị]/u', 'i', $slug);
+        $slug = preg_replace('/[òóỏõọôồốổỗộơờớởỡợ]/u', 'o', $slug);
+        $slug = preg_replace('/[ùúủũụưừứửữự]/u', 'u', $slug);
+        $slug = preg_replace('/[ỳýỷỹỵ]/u', 'y', $slug);
+        $slug = preg_replace('/[đ]/u', 'd', $slug);
+
+        // Giữ lại chữ cái, số, khoảng trắng và dấu gạch nối
+        $slug = preg_replace('/[^a-z0-9\s-]/', '', $slug);
+        // Thay thế nhiều khoảng trắng và dấu gạch nối thành một dấu gạch nối
+        $slug = preg_replace('/[\s-]+/', '-', $slug);
+        $slug = trim($slug, '-'); // Loại bỏ dấu gạch nối ở đầu và cuối
+
+        return $slug; // Trả về slug
     }
-
-    // Chuyển chuỗi về chữ thường
-    $slug = strtolower(trim($name));
-
-    // Loại bỏ dấu trong tiếng Việt
-    $slug = preg_replace('/[àáảãạâầấẩẫậ]/u', 'a', $slug);
-    $slug = preg_replace('/[èéẻẽẹêềếểễệ]/u', 'e', $slug);
-    $slug = preg_replace('/[ìíỉĩị]/u', 'i', $slug);
-    $slug = preg_replace('/[òóỏõọôồốổỗộơờớởỡợ]/u', 'o', $slug);
-    $slug = preg_replace('/[ùúủũụưừứửữự]/u', 'u', $slug);
-    $slug = preg_replace('/[ỳýỷỹỵ]/u', 'y', $slug);
-    $slug = preg_replace('/[đ]/u', 'd', $slug);
-
-    // Giữ lại chữ cái, số, khoảng trắng và dấu gạch nối
-    $slug = preg_replace('/[^a-z0-9\s-]/', '', $slug);
-    // Thay thế nhiều khoảng trắng và dấu gạch nối thành một dấu gạch nối
-    $slug = preg_replace('/[\s-]+/', '-', $slug);
-    $slug = trim($slug, '-'); // Loại bỏ dấu gạch nối ở đầu và cuối
-
-    return $slug; // Trả về slug
-}
 
 
     
@@ -113,24 +113,22 @@ class CategoryProductController extends Controller
 
     public function edit_category_product($id)
     {
-        $this->AuthLogin(); // Kiểm tra đăng nhập
+        $this->AuthLogin(); 
         $edit_category_product = CategoryProduct::findOrFail($id);
         return view('AdminPages.Pages.CategoryProduct.edit_category_product', compact('edit_category_product'));
     }
     
     public function update_category_product(Request $request, $id)
-{
-    $this->AuthLogin(); // Kiểm tra đăng nhập
-    $data = $request->only(['category_name', 'meta_keywords', 'slug_category_product', 'category_desc']);
-    
-    $category = CategoryProduct::findOrFail($id);
-    $category->update($data);
-    
-    Session::put('message', 'Cập nhật danh mục sản phẩm thành công');
-    return redirect()->route('all.category.product');
-}
-
-    
+    {
+        $this->AuthLogin(); // Kiểm tra đăng nhập
+        $data = $request->only(['category_name', 'meta_keywords', 'slug_category_product', 'category_desc']);
+        
+        $category = CategoryProduct::findOrFail($id);
+        $category->update($data);
+        
+        Session::put('message', 'Cập nhật danh mục sản phẩm thành công');
+        return redirect()->route('all.category.product');
+    }
 
     public function delete_category_product($category_product_id) {
         $this->AuthLogin();

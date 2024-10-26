@@ -6,6 +6,22 @@
         <div class="panel-heading">
             Liệt kê thương hiệu sản phẩm
         </div>
+        @if (session('message'))
+                <script>
+                    Swal.fire({
+                        position: 'center',
+                        icon: 'success',
+                        title: '{{ session('message') }}',
+                        showConfirmButton: false,
+                        timer: 2500
+                    }).then(() => {
+                        // Xóa session để tránh lặp lại thông báo
+                        @php
+                            Session::forget('message');
+                        @endphp
+                    });
+                </script>
+        @endif
         <div class="row w3-res-tb">
             <div class="col-sm-5 m-b-xs">
                 <select class="input-sm form-control w-sm inline v-middle">
@@ -27,13 +43,6 @@
             </div>
         </div>
         <div class="table-responsive">
-            <?php
-                $message = Session::get('message');
-                if($message){
-                    echo '<span class="text-alert">'.$message.'</span>';
-                    Session::put('message',null);
-                }
-            ?>
             <table class="table table-striped b-t b-light">
                 <thead>
                     <tr>
