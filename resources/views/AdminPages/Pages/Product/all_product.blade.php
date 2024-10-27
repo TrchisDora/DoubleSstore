@@ -20,6 +20,16 @@
                         @endphp
                     });
                 </script>
+                @elseif (session('error'))
+                <script>
+                    Swal.fire({
+                        position: 'center',
+                        icon: 'error',
+                        title: '{{ session('error') }}',
+                        showConfirmButton: false,
+                        timer: 2500
+                    });
+                </script>
             @endif
                 <div class="row w3-res-tb">
                     <div class="col-sm-6 m-b-xs" style="">
@@ -143,10 +153,9 @@
                                 <select name="bulk_action" class="input-sm form-control w-sm inline v-middle">
                                     <option value="0">Chọn hành động</option>
                                     <option value="1">Xóa các mục</option>
-                                    <option value="2">Lọc các mục</option>
-                                    <option value="3">Hiện/Ẩn các mục</option>
-                                    <option value="4">Un/Nổi Bật các mục</option>
-                                    <option value="5">Xuất dữ liệu các mục</option>
+                                    <option value="2">Hiện/Ẩn các mục</option>
+                                    <option value="3">Un/Nổi Bật các mục</option>
+                                    <option value="4">Xuất dữ liệu các mục</option>
                                 </select>
                                 <button type="submit" id="applyFilter" class="btn btn-sm btn-default">Apply</button>
                             </div>    

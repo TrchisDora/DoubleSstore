@@ -42,6 +42,16 @@
                         @endphp
                     });
                 </script>
+                @elseif (session('error'))
+                <script>
+                    Swal.fire({
+                        position: 'center',
+                        icon: 'error',
+                        title: '{{ session('error') }}',
+                        showConfirmButton: false,
+                        timer: 2500
+                    });
+                </script>
             @endif
 
                 <table class="table table-striped b-t b-light">

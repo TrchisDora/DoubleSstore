@@ -29,17 +29,5 @@ $(document).ready(function(){
 	});
 });
 
-document.querySelector('form').onsubmit = function() {
-	const checkboxes = document.querySelectorAll('input[name="product_ids[]"]:checked');
-	if (checkboxes.length === 0) {
-		alert('Vui lòng chọn ít nhất một sản phẩm!');
-		return false; 
-	}
-	else
-	{
-	
-	}
-};
-
 
 

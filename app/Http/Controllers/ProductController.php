@@ -92,9 +92,8 @@ class ProductController extends Controller
         $currentPage = $request->input('page', 1);
         session(['current_page' => $currentPage]);
        
-        $query = Product::query()->with('categoryProduct'); 
-
-        // Lọc sản phẩm dựa trên yêu cầu (nếu có)
+        $query = Product::query()->with('categoryProduct');
+      
         if ($request->has('category_id') && $request->category_id != 0) {
             $query->where('category_id', $request->category_id);
         }
@@ -129,7 +128,7 @@ class ProductController extends Controller
         $productIds = $request->input('product_ids', []);
 
         if (empty($productIds)) {
-            return redirect()->back()->with('message', 'Vui lòng chọn ít nhất một sản phẩm!');
+            return redirect()->back()->with('error', 'Vui lòng chọn ít nhất một sản phẩm!');
         }
 
         switch ($action) {
@@ -137,9 +136,8 @@ class ProductController extends Controller
                 Product::destroy($productIds);
                 return redirect()->back()->with('message', 'Đã xóa sản phẩm thành công!');
 
-            case '2': // Lọc các mục
             
-            case '3': // Hiện/Ẩn các mục
+            case '2': // Hiện/Ẩn các mục
                 foreach ($productIds as $id) {
                     $product = Product::find($id);
                     if ($product) {
@@ -149,7 +147,7 @@ class ProductController extends Controller
                 }
                 return redirect()->back()->with('message', 'Đã cập nhật trạng thái sản phẩm thành công!');
 
-            case '4': // Un/Nổi Bật các mục
+            case '3': // Un/Nổi Bật các mục
                 foreach ($productIds as $id) {
                     $product = Product::find($id);
                     if ($product) {
@@ -158,12 +156,12 @@ class ProductController extends Controller
                     }
                 }
                 return redirect()->back()->with('message', 'Đã cập nhật tình trạng nổi bật của sản phẩm thành công!');
-            case '5': // Xuất dữ liệu các mục
+            case '4': // Xuất dữ liệu các mục
                 // Logic xuất dữ liệu có thể ở đây (ví dụ: tạo file CSV)
                 return response()->download($filePath); // Giả sử bạn đã tạo file cần tải về
 
             default:
-                return redirect()->back()->with('message', 'Hành động không hợp lệ!');
+                return redirect()->back()->with('error', 'Hành động không hợp lệ!');
         }
     }
       public function edit_product($id) {

@@ -21,6 +21,17 @@
                         @endphp
                     });
                 </script>
+                @elseif (session('error'))
+                <script>
+                    Swal.fire({
+                        position: 'center',
+                        icon: 'error',
+                        title: '{{ session('error') }}',
+                        showConfirmButton: false,
+                        timer: 2500
+                    });
+                </script>
+
         @endif
         <div class="row w3-res-tb">
             <div class="col-sm-5 m-b-xs">
