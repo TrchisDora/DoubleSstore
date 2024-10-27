@@ -99,9 +99,33 @@
                     <small class="text-muted inline m-t-sm m-b-sm">Showing {{ $all_brand_product->firstItem() }} - {{ $all_brand_product->lastItem() }} of {{ $all_brand_product->total() }} items</small>
                 </div>
                 <div class="col-sm-7 text-right text-center-xs">                
-                    <ul class="pagination pagination-sm m-t-none m-b-none">
-                        {!! $all_brand_product->links() !!}
-                    </ul>
+                <ul class="pagination pagination-sm m-t-none m-b-none">
+                    {{-- Nút Quay lại --}}
+                    @if ($all_brand_product->onFirstPage())
+                        <li class="page-item disabled"><span class="page-link">Quay lại</span></li>
+                    @else
+                        <li class="page-item">
+                            <a class="page-link" href="{{ $all_brand_product->previousPageUrl() }}">Quay lại</a>
+                        </li>
+                    @endif
+
+                    {{-- Hiển thị các số trang --}}
+                    @foreach ($all_brand_product->getUrlRange(1, $all_brand_product->lastPage()) as $page => $url)
+                        <li class="page-item {{ $page == $all_brand_product->currentPage() ? 'active' : '' }}">
+                            <a class="page-link" href="{{ $url }}">{{ $page }}</a>
+                        </li>
+                    @endforeach
+
+                    {{-- Nút Trang kế --}}
+                    @if ($all_brand_product->hasMorePages())
+                        <li class="page-item">
+                            <a class="page-link" href="{{ $all_brand_product->nextPageUrl() }}">Trang kế</a>
+                        </li>
+                    @else
+                        <li class="page-item disabled"><span class="page-link">Trang kế</span></li>
+                    @endif
+                </ul>
+
                 </div>
             </div>
         </footer>

@@ -76,26 +76,97 @@ class ProductController extends Controller
                 
                 $product->save();
                 Session::put('message', 'Thêm sản phẩm thành công');
-                return redirect()->to('all-product');
+                return redirect()->route('all.product', ['page' => session('current_page', 1)]);
+
             }
         } catch (\Exception $e) {
             Log::error('Có lỗi xảy ra trong quá trình thêm sản phẩm: '.$e->getMessage());
             Session::put('error', 'Có lỗi xảy ra trong quá trình thêm sản phẩm');
-            return redirect()->back();
+            return redirect()->route('all.product', ['page' => session('current_page', 1)]);
         }
     }
     
     public function all_product(Request $request)
     {
-        // Lưu trang hiện tại vào session
+       
         $currentPage = $request->input('page', 1);
         session(['current_page' => $currentPage]);
+       
+        $query = Product::query()->with('categoryProduct'); 
 
-        $all_product = Product::paginate(10); 
-        return view('AdminPages.Pages.Product.all_product', compact('all_product'));
+        // Lọc sản phẩm dựa trên yêu cầu (nếu có)
+        if ($request->has('category_id') && $request->category_id != 0) {
+            $query->where('category_id', $request->category_id);
+        }
+        if ($request->has('brand_id') && $request->brand_id != 0) {
+            $query->where('brand_id', $request->brand_id);
+        }
+        if ($request->has('product_status') && $request->product_status != '') {
+            $query->where('product_status', $request->product_status);
+        }
+        if ($request->has('product_prominent') && $request->product_prominent != ''){
+            $query->where('product_prominent', $request->product_prominent);
+        }
+        if ($request->has('search')) {
+            // Tìm kiếm theo tên sản phẩm hoặc meta_keywords
+            $searchTerm = $request->search;
+            $query->where(function ($q) use ($searchTerm) {
+                $q->where('product_name', 'like', '%' . $searchTerm . '%')
+                ->orWhereHas('categoryProduct', function ($query) use ($searchTerm) {
+                    $query->where('meta_keywords', 'like', '%' . $searchTerm . '%');
+                });
+            });
+        }
+        $all_product = $query->paginate(10);
+        $categories = CategoryProduct::all();
+        $brands = BrandProduct::all();
+        return view('AdminPages.Pages.Product.all_product', compact('all_product', 'categories', 'brands'));
     }
+    
+    public function bulkAction(Request $request)
+    {
+        $action = $request->input('bulk_action');
+        $productIds = $request->input('product_ids', []);
 
-    public function edit_product($id) {
+        if (empty($productIds)) {
+            return redirect()->back()->with('message', 'Vui lòng chọn ít nhất một sản phẩm!');
+        }
+
+        switch ($action) {
+            case '1': // Xóa các mục
+                Product::destroy($productIds);
+                return redirect()->back()->with('message', 'Đã xóa sản phẩm thành công!');
+
+            case '2': // Lọc các mục
+            
+            case '3': // Hiện/Ẩn các mục
+                foreach ($productIds as $id) {
+                    $product = Product::find($id);
+                    if ($product) {
+                        $product->product_status = !$product->product_status; // Chuyển đổi trạng thái
+                        $product->save();
+                    }
+                }
+                return redirect()->back()->with('message', 'Đã cập nhật trạng thái sản phẩm thành công!');
+
+            case '4': // Un/Nổi Bật các mục
+                foreach ($productIds as $id) {
+                    $product = Product::find($id);
+                    if ($product) {
+                        $product->product_prominent = !$product->product_prominent; // Chuyển đổi nổi bật
+                        $product->save();
+                    }
+                }
+                return redirect()->back()->with('message', 'Đã cập nhật tình trạng nổi bật của sản phẩm thành công!');
+            case '5': // Xuất dữ liệu các mục
+                // Logic xuất dữ liệu có thể ở đây (ví dụ: tạo file CSV)
+                return response()->download($filePath); // Giả sử bạn đã tạo file cần tải về
+
+            default:
+                return redirect()->back()->with('message', 'Hành động không hợp lệ!');
+        }
+    }
+      public function edit_product($id) {
         $this->AuthLogin();
         $product = Product::findOrFail($id);
         $categories = CategoryProduct::all();
@@ -141,8 +212,6 @@ class ProductController extends Controller
 
         $product->save();
         Session::put('message', 'Cập nhật sản phẩm thành công');
-
-        // Chuyển hướng về trang đã lưu trong session
         return redirect()->route('all.product', ['page' => session('current_page', 1)]);
     }
     
@@ -150,58 +219,40 @@ class ProductController extends Controller
         $this->AuthLogin();
         Product::destroy($product_id);
         Session::put('message', 'Xóa sản phẩm thành công');
-        return Redirect::to('all-product');
+        return redirect()->route('all.product', ['page' => session('current_page', 1)]);
+
     }
 
     public function active_product($product_id) {
         $this->AuthLogin();
         Product::where('product_id', $product_id)->update(['product_status' => 1]);
         Session::put('message', 'Kích hoạt sản phẩm thành công');
-        return Redirect::to('all-product');
+        return redirect()->route('all.product', ['page' => session('current_page', 1)]);
+
     }
     
     public function unactive_product($product_id) {
         $this->AuthLogin();
         Product::where('product_id', $product_id)->update(['product_status' => 0]);
         Session::put('message', 'Không kích hoạt sản phẩm thành công');
-        return Redirect::to('all-product');
+        return redirect()->route('all.product', ['page' => session('current_page', 1)]);
+
     }
     
     public function active_prominent_product($product_id) {
         $this->AuthLogin();
         Product::where('product_id', $product_id)->update(['product_prominent' => 1]);
         Session::put('message', 'Kích hoạt sản phẩm nổi bật thành công');
-        return Redirect::to('all-product');
+        return redirect()->route('all.product', ['page' => session('current_page', 1)]);
+
     } 
     
     public function unactive_prominent_product($product_id) {
         $this->AuthLogin();
         Product::where('product_id', $product_id)->update(['product_prominent' => 0]); 
         Session::put('message', 'Không kích hoạt sản phẩm nổi bật thành công');
-        return Redirect::to('all-product');
+        return redirect()->route('all.product', ['page' => session('current_page', 1)]);
+
     }
-    public function filterProducts(Request $request)
-{
-    $query = Product::query();
-
-    // Lọc theo loại
-    if ($request->filled('category_id') && $request->category_id != 0) {
-        $query->where('category_id', $request->category_id);
-    }
-
-    // Lọc sản phẩm nổi bật
-    if ($request->filled('prominent')) {
-        $query->where('product_prominent', 1);
-    }
-
-    // Lọc sản phẩm đang hiển thị
-    if ($request->filled('status')) {
-        $query->where('product_status', 1);
-    }
-
-    $all_product = $query->paginate(10);
-    $categories = CategoryProduct::all();
-
-    return view('AdminPages.Pages.Product.all_product', compact('all_product', 'categories'));
-}
+    
 }

@@ -34,7 +34,10 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 <!--logo start-->
 <div class="brand">
     <a href="index.html" class="logo">
-        VISITORS
+        <div class="brand-container">
+                <img alt="" src="{{ asset('public/backend/images/logos/logo_icon.png') }}">
+                <span>Green Store</span>
+        </div>
     </a>
     <div class="sidebar-toggle-box">
         <div class="fa fa-bars"></div>
@@ -228,7 +231,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
         <!-- user login dropdown start-->
         <li class="dropdown">
             <a data-toggle="dropdown" class="dropdown-toggle" href="#">
-                <img alt="" src="images/2.png">
+                <img alt="" src="{{ asset('public/backend/images/icons/avt-admin.png') }}">
                 <span class="username">
                 <?php
                     $name = Session::get('admin_name');

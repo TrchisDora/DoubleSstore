@@ -15,133 +15,177 @@
                         showConfirmButton: false,
                         timer: 2500
                     }).then(() => {
-                        // Xóa session để tránh lặp lại thông báo
                         @php
                             Session::forget('message');
                         @endphp
                     });
                 </script>
             @endif
-            <div class="row w3-res-tb align-items-center mb-3">
-                <div class="col-sm-5">
-                    <div class="d-flex">
-                        <select class="input-sm form-control me-2">
-                            <option value="0">Bulk action</option>
-                            <option value="1">Delete selected</option>
-                            <option value="2">Bulk edit</option>
-                            <option value="3">Export</option>
-                        </select>
-                        <button class="btn btn-sm btn-default">Apply</button>
-                    </div>
-                </div>
-                <div class="col-sm-5">
-                    <div class="d-flex">
-                        <select class="input-sm form-control me-2">
-                            <option value="0">Theo loại</option>
-                            <option value="1">Sản phẩm nổi bật</option>
-                            <option value="2">Sản phẩm đang hiển thị</option>
-                        </select>
-                        <button class="btn btn-sm btn-default">Apply</button>
-                    </div>
-                </div>
-                <div class="col-sm-2">
-                    <div class="input-group">
-                        <input type="text" class="input-sm form-control" placeholder="Search">
-                        <span class="input-group-btn">
-                            <button class="btn btn-sm btn-default" type="button">Go!</button>
-                        </span>
-                    </div>
-                </div>
-            </div>
-
-            <div class="table-responsive">
-                <table class="table table-striped b-t b-light">
-                    <thead>
-                        <tr>
-                            <th style="width:20px;">
-                                <label class="i-checks m-b-none">
-                                    <input type="checkbox"><i></i>
-                                </label>
-                            </th>
-                            <th>Tên sản phẩm</th>
-                            <th>Số lượng</th>
-                            <th>Slug</th>
-                            <th>Giá</th>
-                            <th>Hình sản phẩm</th>
-                            <th>Danh mục</th>
-                            <th>Thương hiệu</th>
-                            <th>Hiển thị</th>
-                            <th>Nổi bật</th> 
-                            <th style="width:30px;"></th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        @foreach($all_product as $key => $pro)
-                        <tr>
-                            <td>
-                                <label class="i-checks m-b-none">
-                                    <input type="checkbox" name="post[]"><i></i>
-                                </label>
-                            </td>
-                            <td>{{ $pro->product_name }}</td>
-                            <td>{{ $pro->product_quantity }}</td>
-                            <td>{{ $pro->product_slug }}</td>
-                            <td>{{ number_format($pro->product_price, 0, ',', '.') }}đ</td>
-                            <td><img src="{{ asset('public/fontend/images/product/'.$pro->product_image) }}" height="115" width="125"></td>
-                            <td>{{ $pro->categoryProduct ? $pro->categoryProduct->category_name : 'Không có danh mục' }}</td>
-                            <td>{{ $pro->brandProduct ? $pro->brandProduct->brand_name : 'Không có thương hiệu' }}</td>
-                            <td>
-                                <span class="text-ellipsis">
-                                    @if($pro->product_status == 1)
-                                        <a href="{{ URL::to('/unactive-product/'.$pro->product_id) }}">
-                                            <span class="fa-thumb-styling fa fa-thumbs-up"></span>
-                                        </a>
-                                    @else
-                                        <a href="{{ URL::to('/active-product/'.$pro->product_id) }}">
-                                            <span class="fa-thumb-styling fa fa-thumbs-down"></span>
-                                        </a>
-                                    @endif
+                <div class="row w3-res-tb">
+                    <div class="col-sm-6 m-b-xs" style="">
+                                <form method="GET" action="{{ route('admin.products.index') }}">
+                                        <select class="input-sm form-control w-sm inline v-middle" name="category_id" onchange="this.form.submit()">
+                                                <option value="0">Tất cả danh mục</option>
+                                                @foreach($categories as $category)
+                                                    <option value="{{ $category->category_id }}" {{ request('category_id') == $category->category_id ? 'selected' : '' }}>
+                                                        {{ $category->category_name }}
+                                                </option>
+                                                @endforeach
+                                        </select>
+                                        <select class="input-sm form-control w-sm inline v-middle" name="brand_id" onchange="this.form.submit()">
+                                                <option value="0">Tất cả thương hiệu</option>
+                                                @foreach($brands as $brand)
+                                                    <option value="{{ $brand->brand_id }}" {{ request('brand_id') == $brand->brand_id ? 'selected' : '' }}>
+                                                        {{ $brand->brand_name }}
+                                                </option>
+                                                @endforeach
+                                        </select>
+                                        <select class="input-sm form-control w-sm inline v-middle" name="product_status" onchange="this.form.submit()">
+                                                <option value="">Tất cả sản phẩm</option>
+                                                <option value="0" {{ request('product_status') == '0' ? 'selected' : '' }}>Sản phẩm đang ẩn</option>
+                                                <option value="1" {{ request('product_status') == '1' ? 'selected' : '' }}>Sản phẩm đang hiển thị</option>
+                                        </select>
+                                        <select class="input-sm form-control w-sm inline v-middle" name="product_prominent" onchange="this.form.submit()">
+                                                <option value="">Tất cả sản phẩm</option>
+                                                <option value="1" {{ request('product_prominent') == '1' ? 'selected' : '' }}>Sản phẩm nổi bật</option>
+                                                <option value="0" {{ request('product_prominent') == '0' ? 'selected' : '' }}>Sản phẩm không nổi bật</option>
+                                                
+                                        </select>
+                                </form>
+                                </div>
+                            <div class="col-sm-3"></div>
+                    <div class="col-sm-3">
+                        <form method="GET" action="{{ route('admin.products.index') }}" style="display: inline; flex-grow: 1;">
+                            <div class="input-group">
+                                <input type="text" name="search" class="input-sm form-control" placeholder="Search" value="{{ request('search') }}">
+                                <span class="input-group-btn">
+                                    <button class="btn btn-sm btn-default" type="submit">Go!</button>
                                 </span>
-                            </td>
-                            <td>
-                                <span class="text-ellipsis">
-                                    @if($pro->product_prominent == 1)
-                                        <a href="{{ URL::to('/unactive-prominent-product/'.$pro->product_id) }}">
-                                            <span class="fa fa-star"></span>
-                                        </a>
-                                    @else
-                                        <a href="{{ URL::to('/active-prominent-product/'.$pro->product_id) }}">
-                                            <span class="fa fa-star-o"></span>
-                                        </a>
-                                    @endif
-                                </span>
-                            </td>
-                            <td>
-                                <a href="{{ URL::to('/edit-product/'.$pro->product_id) }}" class="active styling-edit" ui-toggle-class="">
-                                    <i class="fa fa-pencil-square-o text-success text-active"></i>
-                                </a>
-                                <a onclick="return confirm('Bạn có chắc là muốn xóa sản phẩm này không?')" href="{{ URL::to('/delete-product/'.$pro->product_id) }}" class="active styling-edit" ui-toggle-class="">
-                                    <i class="fa fa-times text-danger text"></i>
-                                </a>
-                            </td>
-                        </tr>
-                        @endforeach
-                    </tbody>
-                </table>
-            </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+                <div class="table-responsive">
+                <form action="{{ route('admin.products.bulk_action') }}" method="POST">
+                 @csrf
+                    <table class="table table-striped b-t b-light">
+                        <thead>
+                            <tr>
+                                <th style="width:20px;">
+                                    <label class="i-checks m-b-none">
+                                        <input type="checkbox" id="select-all"><i></i>
+                                    </label>
+                                </th>
+                                <th>Tên sản phẩm</th>
+                                <th>Số lượng</th>
+                                <th>Slug</th>
+                                <th>Giá</th>
+                                <th>Hình sản phẩm</th>
+                                <th>Danh mục</th>
+                                <th>Thương hiệu</th>
+                                <th>Hiển thị</th>
+                                <th>Nổi bật</th> 
+                                <th style="width:30px;"></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <form action="{{ route('admin.products.bulk_action') }}" method="POST">
+                            @csrf
+                            @foreach($all_product as $key => $pro)
+                            <tr>
+                                <td>
+                                <input type="checkbox" name="product_ids[]" value="{{ $pro->product_id }}">
+                                </td>
+                                <td>{{ $pro->product_name }}</td>
+                                <td>{{ $pro->product_quantity }}</td>
+                                <td>{{ $pro->product_slug }}</td>
+                                <td>{{ number_format($pro->product_price, 0, ',', '.') }}đ</td>
+                                <td><img src="{{ asset('public/fontend/images/product/'.$pro->product_image) }}" height="115" width="125"></td>
+                                <td>{{ $pro->categoryProduct ? $pro->categoryProduct->category_name : 'Không có danh mục' }}</td>
+                                <td>{{ $pro->brandProduct ? $pro->brandProduct->brand_name : 'Không có thương hiệu' }}</td>
+                                <td>
+                                    <span class="text-ellipsis">
+                                        @if($pro->product_status == 0)
+                                            <a href="{{ URL::to('/active-product/'.$pro->product_id) }}">
+                                                <span class="fa-thumb-styling fa fa-thumbs-down"></span>
+                                            </a>
+                                        @else
+                                            <a href="{{ URL::to('/unactive-product/'.$pro->product_id) }}">
+                                                <span class="fa-thumb-styling fa fa-thumbs-up"></span>
+                                            </a>
+                                        @endif
+                                    </span>
+                                </td>
+                                <td>
+                                    <span class="text-ellipsis">
+                                        @if($pro->product_prominent == 0)
+                                            <a href="{{ URL::to('/active-prominent-product/'.$pro->product_id) }}">
+                                                <span class="fa fa-star-o"></span>
+                                            </a>
+                                        @else
+                                            <a href="{{ URL::to('/unactive-prominent-product/'.$pro->product_id) }}">
+                                                <span class="fa fa-star"></span>
+                                            </a>
+                                        @endif
+                                    </span>
+                                </td>
+                                <td>
+                                    <a href="{{ URL::to('/edit-product/'.$pro->product_id) }}" class="active styling-edit" ui-toggle-class="">
+                                        <i class="fa fa-pencil-square-o text-success text-active"></i>
+                                    </a>
+                                    <a onclick="return confirm('Bạn có chắc là muốn xóa sản phẩm này không?')" href="{{ URL::to('/delete-product/'.$pro->product_id) }}" class="active styling-edit" ui-toggle-class="">
+                                        <i class="fa fa-times text-danger text"></i>
+                                    </a>
+                                </td>
+                            </tr>
+                            @endforeach
+                            <div class="col-sm-3 m-b-xs">
+                                <select name="bulk_action" class="input-sm form-control w-sm inline v-middle">
+                                    <option value="0">Chọn hành động</option>
+                                    <option value="1">Xóa các mục</option>
+                                    <option value="2">Lọc các mục</option>
+                                    <option value="3">Hiện/Ẩn các mục</option>
+                                    <option value="4">Un/Nổi Bật các mục</option>
+                                    <option value="5">Xuất dữ liệu các mục</option>
+                                </select>
+                                <button type="submit" id="applyFilter" class="btn btn-sm btn-default">Apply</button>
+                            </div>    
+                            </form>
+                        </tbody>
+                    </table>
+                </form> 
+            </div>           
             <footer class="panel-footer">
                 <div class="row">
                     <div class="col-sm-5 text-center">
                         <small class="text-muted inline m-t-sm m-b-sm">showing {{ $all_product->firstItem() }} - {{ $all_product->lastItem() }} of {{ $all_product->total() }} items</small>
                     </div>
                     <div class="col-sm-7 text-right text-center-xs">                
-                        <ul class="pagination pagination-sm m-t-none m-b-none">
-                        {{ $all_product->appends(request()->input())->links() }}
-                        </ul>
+                    <ul class="pagination pagination-sm m-t-none m-b-none">
+                        @if ($all_product->onFirstPage())
+                            <li class="page-item disabled"><span class="page-link">Quay lại</span></li>
+                        @else
+                            <li class="page-item">
+                                <a class="page-link" href="{{ $all_product->previousPageUrl() }}">Quay lại</a>
+                            </li>
+                        @endif
+                        @foreach ($all_product->getUrlRange(1, $all_product->lastPage()) as $page => $url)
+                            <li class="page-item {{ $page == $all_product->currentPage() ? 'active' : '' }}">
+                                <a class="page-link" href="{{ $url }}">{{ $page }}</a>
+                            </li>
+                        @endforeach
+                        @if ($all_product->hasMorePages())
+                            <li class="page-item">
+                                <a class="page-link" href="{{ $all_product->nextPageUrl() }}">Trang kế</a>
+                            </li>
+                        @else
+                            <li class="page-item disabled"><span class="page-link">Trang kế</span></li>
+                        @endif
+                    </ul>
                     </div>
                 </div>
             </footer>
         </div>
-       
     </div>
+    @yield('product_list')
 @endsection

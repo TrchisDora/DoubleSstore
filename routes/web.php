@@ -80,6 +80,8 @@ Route::post('import-csv', [CategoryProductController::class, 'import_csv'])->nam
 Route::get('/add-product', [ProductController::class, 'add_product'])->name('add.product');
 Route::post('/save-product', [ProductController::class, 'save_product'])->name('save.product');
 Route::get('/all-product', [ProductController::class, 'all_product'])->name('all.product');
+Route::get('admin/products', [ProductController::class, 'all_product'])->name('admin.products.index');
+Route::post('/admin/products/bulk-action', [ProductController::class, 'bulkAction'])->name('admin.products.bulk_action');
 Route::get('edit-product/{id}', [ProductController::class, 'edit_product'])->name('edit.product');
 Route::post('update-product/{id}', [ProductController::class, 'update_product'])->name('update.product');
 Route::get('delete-product/{id}', [ProductController::class, 'delete_product'])->name('delete.product');
@@ -87,7 +89,6 @@ Route::get('active-product/{id}', [ProductController::class, 'active_product'])-
 Route::get('unactive-product/{id}', [ProductController::class, 'unactive_product'])->name('unactive.product');
 Route::get('active-prominent-product/{id}', [ProductController::class, 'active_prominent_product'])->name('active.prominent.product');
 Route::get('unactive-prominent-product/{id}', [ProductController::class, 'unactive_prominent_product'])->name('unactive.prominent.product');
-Route::get('/product/filter', [ProductController::class, 'filterProducts'])->name('product.filter');
 
 //BrandProduct
 Route::get('/add-brand-product', [BrandProductController::class, 'add_brand_product'])->name('add.brand.product');
