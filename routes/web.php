@@ -87,7 +87,7 @@ Route::get('active-product/{id}', [ProductController::class, 'active_product'])-
 Route::get('unactive-product/{id}', [ProductController::class, 'unactive_product'])->name('unactive.product');
 Route::get('active-prominent-product/{id}', [ProductController::class, 'active_prominent_product'])->name('active.prominent.product');
 Route::get('unactive-prominent-product/{id}', [ProductController::class, 'unactive_prominent_product'])->name('unactive.prominent.product');
-Route::get('show-home/{slug}', [ProductController::class, 'show_home'])->name('show.brand.home');
+Route::get('/product/filter', [ProductController::class, 'filterProducts'])->name('product.filter');
 
 //BrandProduct
 Route::get('/add-brand-product', [BrandProductController::class, 'add_brand_product'])->name('add.brand.product');

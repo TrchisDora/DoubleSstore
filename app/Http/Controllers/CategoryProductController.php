@@ -56,7 +56,7 @@ class CategoryProductController extends Controller
         $categoryProduct->category_status = $data['category_product_status'];
 
         // Tạo slug từ tên danh mục
-        $categoryProduct->slug_category_product = $this->generateSlug($data['category_name']);
+        $categoryProduct->slug_category_product = $this->XuLyTen($data['category_name']);
         $categoryProduct->save();
 
         // Hiển thị thông báo khi thêm thành công
@@ -65,37 +65,6 @@ class CategoryProductController extends Controller
         }
        
     }
-    
-    private function generateSlug($name)
-    {
-        // Kiểm tra xem $name có phải là chuỗi hợp lệ không
-        if (!is_string($name) || empty($name)) {
-            throw new InvalidArgumentException('Invalid name provided for slug generation.');
-        }
-
-        // Chuyển chuỗi về chữ thường
-        $slug = strtolower(trim($name));
-
-        // Loại bỏ dấu trong tiếng Việt
-        $slug = preg_replace('/[àáảãạâầấẩẫậ]/u', 'a', $slug);
-        $slug = preg_replace('/[èéẻẽẹêềếểễệ]/u', 'e', $slug);
-        $slug = preg_replace('/[ìíỉĩị]/u', 'i', $slug);
-        $slug = preg_replace('/[òóỏõọôồốổỗộơờớởỡợ]/u', 'o', $slug);
-        $slug = preg_replace('/[ùúủũụưừứửữự]/u', 'u', $slug);
-        $slug = preg_replace('/[ỳýỷỹỵ]/u', 'y', $slug);
-        $slug = preg_replace('/[đ]/u', 'd', $slug);
-
-        // Giữ lại chữ cái, số, khoảng trắng và dấu gạch nối
-        $slug = preg_replace('/[^a-z0-9\s-]/', '', $slug);
-        // Thay thế nhiều khoảng trắng và dấu gạch nối thành một dấu gạch nối
-        $slug = preg_replace('/[\s-]+/', '-', $slug);
-        $slug = trim($slug, '-'); // Loại bỏ dấu gạch nối ở đầu và cuối
-
-        return $slug; // Trả về slug
-    }
-
-
-    
 
     public function unactive_category_product($category_product_id) {
         $this->AuthLogin();

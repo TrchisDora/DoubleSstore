@@ -44,8 +44,9 @@ class ProductController extends Controller
                 'product_status' => 'required|integer',
                 'product_prominent' => 'required|integer',
             ]);
-             // Tạo slug từ tên sản phẩm trước khi kiểm tra sự tồn tại
-            $slug = $this->generateSlug($data['product_name']);
+
+            // Tạo slug từ tên sản phẩm
+            $slug = $this->XuLyTen($data['product_name']); // Gọi phương thức XuLyTen
             $existingProduct = Product::where('product_name', $data['product_name'])->first();
 
             if ($existingProduct) {
@@ -67,13 +68,13 @@ class ProductController extends Controller
                 
                 if ($request->hasFile('product_image')) {
                     $image = $request->file('product_image');
-                    $image_name = time() . '.' . $image->getClientOriginalExtension();
+                    // Gọi phương thức XuLyAnh
+                    $image_name = $this->XuLyAnh($image->getClientOriginalName(), $product->product_name);
                     $image->move(public_path('fontend/images/product'), $image_name);
                     $product->product_image = $image_name;
                 }
                 
                 $product->save();
-
                 Session::put('message', 'Thêm sản phẩm thành công');
                 return redirect()->to('all-product');
             }
@@ -83,33 +84,17 @@ class ProductController extends Controller
             return redirect()->back();
         }
     }
-
-    private function generateSlug($name)
+    
+    public function all_product(Request $request)
     {
-        if (!is_string($name) || empty($name)) {
-            throw new \InvalidArgumentException('Invalid name provided for slug generation.');
-        }
+        // Lưu trang hiện tại vào session
+        $currentPage = $request->input('page', 1);
+        session(['current_page' => $currentPage]);
 
-        $slug = strtolower(trim($name));
-        $slug = preg_replace('/[àáảãạâầấẩẫậ]/u', 'a', $slug);
-        $slug = preg_replace('/[èéẻẽẹêềếểễệ]/u', 'e', $slug);
-        $slug = preg_replace('/[ìíỉĩị]/u', 'i', $slug);
-        $slug = preg_replace('/[òóỏõọôồốổỗộơờớởỡợ]/u', 'o', $slug);
-        $slug = preg_replace('/[ùúủũụưừứửữự]/u', 'u', $slug);
-        $slug = preg_replace('/[ỳýỷỹỵ]/u', 'y', $slug);
-        $slug = preg_replace('/[đ]/u', 'd', $slug);
-        $slug = preg_replace('/[^a-z0-9\s-]/', '', $slug);
-        $slug = preg_replace('/[\s-]+/', '-', $slug);
-        $slug = trim($slug, '-');
-
-        return $slug;
-    }
-
-    public function all_product()
-    {
         $all_product = Product::paginate(10); 
         return view('AdminPages.Pages.Product.all_product', compact('all_product'));
     }
+
     public function edit_product($id) {
         $this->AuthLogin();
         $product = Product::findOrFail($id);
@@ -117,23 +102,24 @@ class ProductController extends Controller
         $brands = BrandProduct::all();
         return view('AdminPages.Pages.Product.edit_product', compact('product', 'categories', 'brands'));
     }
+    
     public function update_product(Request $request, $id) {
         $this->AuthLogin();
+        
         $data = $request->validate([
             'product_name' => 'required|max:255',
-            'product_slug' => 'required',
             'product_price' => 'required|numeric',
             'product_quantity' => 'required|integer',
             'product_desc' => 'required',
             'product_status' => 'required|integer',
-            'category_id' => 'required|integer',
-            'brand_id' => 'required|integer',
+            'category_id' => 'required|integer', 
+            'brand_id' => 'required|integer', 
             'product_image' => 'image'
         ]);
 
         $product = Product::findOrFail($id);
         $product->product_name = $data['product_name'];
-        $product->product_slug = $data['product_slug'];
+        $product->product_slug = $this->XuLyTen($data['product_name']); 
         $product->product_price = $data['product_price'];
         $product->product_quantity = $data['product_quantity'];
         $product->product_desc = $data['product_desc'];
@@ -148,16 +134,18 @@ class ProductController extends Controller
                 unlink(public_path('fontend/images/product/' . $product->product_image));
             }
             $file = $request->file('product_image');
-            $filename = time() . '.' . $file->getClientOriginalExtension();
+            $filename = $this->XuLyAnh($file->getClientOriginalName(), $data['product_name']);
             $file->move(public_path('fontend/images/product'), $filename);
             $product->product_image = $filename;
         }
 
         $product->save();
         Session::put('message', 'Cập nhật sản phẩm thành công');
-        return redirect()->route('all.product');
-    }
 
+        // Chuyển hướng về trang đã lưu trong session
+        return redirect()->route('all.product', ['page' => session('current_page', 1)]);
+    }
+    
     public function delete_product($product_id) {
         $this->AuthLogin();
         Product::destroy($product_id);
@@ -185,10 +173,35 @@ class ProductController extends Controller
         Session::put('message', 'Kích hoạt sản phẩm nổi bật thành công');
         return Redirect::to('all-product');
     } 
+    
     public function unactive_prominent_product($product_id) {
         $this->AuthLogin();
         Product::where('product_id', $product_id)->update(['product_prominent' => 0]); 
         Session::put('message', 'Không kích hoạt sản phẩm nổi bật thành công');
         return Redirect::to('all-product');
     }
+    public function filterProducts(Request $request)
+{
+    $query = Product::query();
+
+    // Lọc theo loại
+    if ($request->filled('category_id') && $request->category_id != 0) {
+        $query->where('category_id', $request->category_id);
+    }
+
+    // Lọc sản phẩm nổi bật
+    if ($request->filled('prominent')) {
+        $query->where('product_prominent', 1);
+    }
+
+    // Lọc sản phẩm đang hiển thị
+    if ($request->filled('status')) {
+        $query->where('product_status', 1);
+    }
+
+    $all_product = $query->paginate(10);
+    $categories = CategoryProduct::all();
+
+    return view('AdminPages.Pages.Product.all_product', compact('all_product', 'categories'));
+}
 }

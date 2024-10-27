@@ -33,7 +33,7 @@ class BrandProductController extends Controller
             'brand_product_status' => 'required|integer'
         ]);
 
-        $brand_slug = $this->generateSlug($request->input('brand_product_name'));
+        $brand_slug = $this->XuLyTen($request->input('brand_product_name'));
 
         $existingBrand = BrandProduct::where('brand_slug', $brand_slug)->first();
 
@@ -88,7 +88,7 @@ class BrandProductController extends Controller
     public function update_brand_product(Request $request, $id)
     {
         $data = $request->only(['brand_product_name', 'brand_product_desc']);
-        $data['brand_slug'] = $this->generateSlug($data['brand_product_name']);
+        $data['brand_slug'] = $this->XuLyTen($data['brand_product_name']);
         
         $brand = BrandProduct::findOrFail($id);
         $brand->update($data);
@@ -103,21 +103,5 @@ class BrandProductController extends Controller
         BrandProduct::destroy($id);
         Session::put('message', 'Xóa thương hiệu sản phẩm thành công');
         return Redirect::to('all-brand-product');
-    }
-
-    // Hàm tạo slug từ tên thương hiệu
-    private function generateSlug($name)
-    {
-        $slug = strtolower(trim($name));
-        $slug = preg_replace('/[àáảãạâầấẩẫậ]/u', 'a', $slug);
-        $slug = preg_replace('/[èéẻẽẹêềếểễệ]/u', 'e', $slug);
-        $slug = preg_replace('/[ìíỉĩị]/u', 'i', $slug);
-        $slug = preg_replace('/[òóỏõọôồốổỗộơờớởỡợ]/u', 'o', $slug);
-        $slug = preg_replace('/[ùúủũụưừứửữự]/u', 'u', $slug);
-        $slug = preg_replace('/[ỳýỷỹỵ]/u', 'y', $slug);
-        $slug = preg_replace('/[đ]/u', 'd', $slug);
-        $slug = preg_replace('/[^a-z0-9\s-]/', '', $slug);
-        $slug = preg_replace('/[\s-]+/', '-', $slug);
-        return trim($slug, '-');
     }
 }
