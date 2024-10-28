@@ -136,7 +136,40 @@ class CategoryProductController extends Controller
             return redirect()->back();
 
     }
-    
+    public function bulkAction(Request $request)
+    {
+        $action = $request->input('bulk_action');
+        $categoryIds = $request->input('category_ids',[]);
+
+        if (empty( $categoryIds)) {
+            return redirect()->back()->with('error', 'Vui lòng chọn ít nhất một sản phẩm!');
+        }
+
+        switch ($action) {
+            case '1': // Xóa các mục
+                CategoryProduct::destroy( $categoryIds);
+                return redirect()->back()->with('message', 'Đã xóa sản phẩm thành công!');
+  
+                
+            case '2': // Hiện/Ẩn các mục
+                foreach ($categoryIds as $id) {
+                    $category = CategoryProduct::find($id);
+                        if ($category) {
+                            $category->category_status = !$category->category_status; 
+                            $category->save();
+                        }
+                }
+                return redirect()->back()->with('message', 'Đã cập nhật trạng thái sản phẩm thành công!');
+                    
+ 
+            case '3': // Xuất dữ liệu các mục
+                // Logic xuất dữ liệu có thể ở đây (ví dụ: tạo file CSV)
+                return response()->download($filePath); // Giả sử bạn đã tạo file cần tải về
+
+            default:
+                return redirect()->back()->with('error', 'Hành động không hợp lệ!');
+        }
+    }
     public function unactive_category_product($category_product_id) {
         $this->AuthLogin();
         CategoryProduct::where('category_id', $category_product_id)->update(['category_status' => 0]); 

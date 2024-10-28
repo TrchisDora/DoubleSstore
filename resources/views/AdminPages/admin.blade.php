@@ -299,6 +299,23 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 						<li><a href="{{URL::to('/add-product')}}">Thêm sản phẩm</a></li>
                     </ul>
                 </li>
+                <li>
+                    <a href="javascript:;">
+                        <i class="fa fa-book"></i>
+                        <span>Quản lý đơn hàng</span>
+                    </a>
+                    <ul class="sub">
+                        <li><a href="{{URL::to('/order')}}">Tất cả các đơn</a></li>
+                        <li><a href="{{URL::to('#')}}">Đang xử lý đơn hàng</a></li>
+						<li><a href="{{URL::to('#')}}">Đã xử lý đơn hàng</a></li>
+                        <li><a href="{{URL::to('#')}}">Đang giao hàng</a></li>
+                        <li><a href="{{URL::to('#')}}">Giao hàng thành công</a></li>
+                        <li><a href="{{URL::to('#')}}">Yêu cầu hủy đơn hàng</a></li>
+                        <li><a href="{{URL::to('#')}}">Đã hủy đơn hàng</a></li>
+                        <li><a href="{{URL::to('#')}}">Giao hàng thất bại</a></li>
+                        <li><a href="{{URL::to('#')}}">Hết hàng</a></li>
+                    </ul>
+                </li>
                 
             </ul>            
         </div>

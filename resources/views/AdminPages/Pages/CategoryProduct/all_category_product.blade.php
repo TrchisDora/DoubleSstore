@@ -5,9 +5,7 @@
             <div class="panel-heading">
                 Liệt kê danh mục sản phẩm
             </div>
-
-            <div class="table-responsive">
-                @if (session('message'))
+            @if (session('message'))
                     <script>
                         Swal.fire({
                             position: 'center',
@@ -30,13 +28,28 @@
                         });
                     </script>
                 @endif
-
+            <div class="row w3-res-tb">
+                    <div class="col-sm-6 m-b-xs" style="">
+                    </div>
+                    <div class="col-sm-3"></div>
+                    <div class="col-sm-3">
+                        <form method="GET" action="{{ route('admin.products.index') }}" style="display: inline; flex-grow: 1;">
+                            <div class="input-group">
+                                <input type="text" name="search" class="input-sm form-control" placeholder="Search" value="{{ request('search') }}">
+                                <span class="input-group-btn">
+                                    <button class="btn btn-sm btn-default" type="submit">Go!</button>
+                                </span>
+                            </div>
+                        </form>
+                    </div>
+            </div>
+            <div class="table-responsive">
                 <table class="table table-striped b-t b-light">
                     <thead>
                         <tr>
                             <th style="width:20px;">
                                 <label class="i-checks m-b-none">
-                                    <input type="checkbox"><i></i>
+                                    <input type="checkbox" id="select-all"><i></i>
                                 </label>
                             </th>
                             <th>Tên danh mục</th>
@@ -48,9 +61,11 @@
                         </tr>
                     </thead>
                     <tbody>
+                        <form action="{{ route('admin.category.bulk_action') }}" method="POST">
+                        @csrf
                         @foreach($all_category_product as $key => $cate_pro)
                             <tr>
-                                <td><label class="i-checks m-b-none"><input type="checkbox" name="post[]"><i></i></label></td>
+                                <td><input type="checkbox" name="category_ids[]" value="{{ $cate_pro->category_id}}"></td>
                                 <td>{{ $cate_pro->category_name }}</td>
                                 <td>{{ $cate_pro->slug_category_product }}</td>
                                 <td><img src="{{ asset('public/fontend/images/icons/'.$cate_pro->category_icon_user) }}" alt="User Icon" style="width: 50px; height: auto;"></td>
@@ -77,7 +92,17 @@
                                     </a>
                                 </td>
                             </tr>
-                        @endforeach
+                            @endforeach
+                            <div class="col-sm-3 m-b-xs">
+                                <select name="bulk_action" class="input-sm form-control w-sm inline v-middle">
+                                    <option value="0">Chọn hành động</option>
+                                    <option value="1">Xóa các mục</option>
+                                    <option value="2">Hiện/Ẩn các mục</option>
+                                    <option value="3">Xuất dữ liệu các mục</option>
+                                </select>
+                                <button type="submit" id="applyFilter" class="btn btn-sm btn-default">Apply</button>
+                            </div>    
+                        </form>
                     </tbody>
                 </table>
             </div>
@@ -114,4 +139,12 @@
             </footer>
         </div>
     </div>
+    <script>
+    document.getElementById('select-all').addEventListener('change', function() {
+        const checkboxes = document.querySelectorAll('input[name="category_ids[]"]');
+        checkboxes.forEach(checkbox => {
+            checkbox.checked = this.checked;
+        });
+    });
+    </script>
 @endsection
