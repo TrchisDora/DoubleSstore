@@ -60,10 +60,10 @@
                                                 <option value="1" {{ request('product_prominent') == '1' ? 'selected' : '' }}>Sản phẩm nổi bật</option>
                                                 <option value="0" {{ request('product_prominent') == '0' ? 'selected' : '' }}>Sản phẩm không nổi bật</option>
                                                 
-                                        </select>
-                                </form>
-                                </div>
-                            <div class="col-sm-3"></div>
+                                    </select>
+                            </form>
+                        </div>
+                    <div class="col-sm-3"></div>
                     <div class="col-sm-3">
                         <form method="GET" action="{{ route('admin.products.index') }}" style="display: inline; flex-grow: 1;">
                             <div class="input-group">

@@ -15,6 +15,8 @@ class CategoryProduct extends Model
         'slug_category_product',
         'category_desc',
         'category_status',
+        'category_icon_admin',
+        'category_icon_user',
     ];
 
     public $timestamps = true; // Laravel sẽ tự động thêm và cập nhật created_at và updated_at

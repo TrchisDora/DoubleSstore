@@ -175,6 +175,7 @@ class ProductController extends Controller
     public function update_product(Request $request, $id) {
         $this->AuthLogin();
         
+        // Xác thực dữ liệu
         $data = $request->validate([
             'product_name' => 'required|max:255',
             'product_price' => 'required|numeric',
@@ -183,9 +184,10 @@ class ProductController extends Controller
             'product_status' => 'required|integer',
             'category_id' => 'required|integer', 
             'brand_id' => 'required|integer', 
-            'product_image' => 'image'
+            'product_image' => 'image|nullable'
         ]);
-
+    
+        // Tìm sản phẩm theo ID
         $product = Product::findOrFail($id);
         $product->product_name = $data['product_name'];
         $product->product_slug = $this->XuLyTen($data['product_name']); 
@@ -195,19 +197,23 @@ class ProductController extends Controller
         $product->product_status = $data['product_status'];
         $product->category_id = $data['category_id'];
         $product->brand_id = $data['brand_id'];
-
+    
         // Cập nhật hình ảnh nếu có
         if ($request->hasFile('product_image')) {
-            // Xóa hình ảnh cũ
-            if (file_exists(public_path('fontend/images/product/' . $product->product_image))) {
-                unlink(public_path('fontend/images/product/' . $product->product_image));
+            // Xóa hình ảnh cũ nếu tồn tại
+            $oldImagePath = public_path('fontend/images/product/'. $product->product_image);
+            if (is_file($oldImagePath)) {
+                unlink($oldImagePath);
             }
+    
+            // Xử lý và lưu hình ảnh mới
             $file = $request->file('product_image');
-            $filename = $this->XuLyAnh($file->getClientOriginalName(), $data['product_name']);
+            $filename = $this->XuLyAnh($file->getClientOriginalName(), $data['product_name']); // Tạo tên file mới
             $file->move(public_path('fontend/images/product'), $filename);
-            $product->product_image = $filename;
+            $product->product_image = $filename; // Cập nhật tên hình ảnh trong cơ sở dữ liệu
         }
-
+    
+        // Lưu sản phẩm
         $product->save();
         Session::put('message', 'Cập nhật sản phẩm thành công');
         return redirect()->route('all.product', ['page' => session('current_page', 1)]);
@@ -224,7 +230,7 @@ class ProductController extends Controller
     public function active_product($product_id) {
         $this->AuthLogin();
         Product::where('product_id', $product_id)->update(['product_status' => 1]);
-        Session::put('message', 'Kích hoạt sản phẩm thành công');
+        Session::put('message', 'Đã hiện');
         return redirect()->route('all.product', ['page' => session('current_page', 1)]);
 
     }
@@ -232,7 +238,7 @@ class ProductController extends Controller
     public function unactive_product($product_id) {
         $this->AuthLogin();
         Product::where('product_id', $product_id)->update(['product_status' => 0]);
-        Session::put('message', 'Không kích hoạt sản phẩm thành công');
+        Session::put('message', 'Đã ẩn');
         return redirect()->route('all.product', ['page' => session('current_page', 1)]);
 
     }
@@ -240,7 +246,7 @@ class ProductController extends Controller
     public function active_prominent_product($product_id) {
         $this->AuthLogin();
         Product::where('product_id', $product_id)->update(['product_prominent' => 1]);
-        Session::put('message', 'Kích hoạt sản phẩm nổi bật thành công');
+        Session::put('message', 'Kích hoạt nổi bật');
         return redirect()->route('all.product', ['page' => session('current_page', 1)]);
 
     } 
@@ -248,7 +254,7 @@ class ProductController extends Controller
     public function unactive_prominent_product($product_id) {
         $this->AuthLogin();
         Product::where('product_id', $product_id)->update(['product_prominent' => 0]); 
-        Session::put('message', 'Không kích hoạt sản phẩm nổi bật thành công');
+        Session::put('message', 'Đã tắt nổi bật');
         return redirect()->route('all.product', ['page' => session('current_page', 1)]);
 
     }

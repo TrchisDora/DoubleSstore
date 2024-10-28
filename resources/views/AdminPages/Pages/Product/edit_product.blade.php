@@ -102,7 +102,6 @@
                                 <option value="1" {{ $product->product_status == 1 ? 'selected' : '' }}>Hiển thị</option>
                             </select>
                         </div>
-
                         <button type="submit" name="add_product" class="btn btn-info">Cập nhật sản phẩm</button>
                     </form>
                 </div>

@@ -8,6 +8,7 @@ use App\Exports\ExcelExports;
 use App\Imports\ExcelImports;
 use Excel;
 use Session;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Redirect;
 
 class CategoryProductController extends Controller
@@ -33,70 +34,121 @@ class CategoryProductController extends Controller
     }
   
     public function save_category_product(Request $request) {
-       
-        // Xác thực dữ liệu đầu vào
-        $data = $request->validate([
-            'category_name' => 'required|max:255',
-            'category_desc' => 'required',
-            'category_product_keywords' => 'required',
-            'category_product_status' => 'required|integer'
-        ]);
-        // Kiểm tra xem tên danh mục đã tồn tại chưa
-        $existingCategory = CategoryProduct::where('category_name', $data['category_name'])->first();
+            $data = $request->validate([
+                'category_name' => 'required|max:255',
+                'category_desc' => 'required',
+                'meta_keywords' => 'required',
+                'category_status' => 'required|integer',
+                'category_icon_admin' => 'image|nullable',
+                'category_icon_user' => 'image|nullable',
+            ]);
+            $slug = $this->XuLyTen($data['category_name']); // Gọi phương thức XuLyTen
+            $existingCategory = CategoryProduct::where('category_name', $data['category_name'])->first();
             
-        if ($existingCategory) {
-            // Nếu tên danh mục đã tồn tại, trả về thông báo lỗi
-            Session::put('error', 'Thêm danh mục sản phẩm không thành công');
-        }else{
-                        // Tạo một đối tượng CategoryProduct mới và lưu vào cơ sở dữ liệu
-        $categoryProduct = new CategoryProduct();
-        $categoryProduct->category_name = $data['category_name'];
-        $categoryProduct->category_desc = $data['category_desc'];
-        $categoryProduct->meta_keywords = $data['category_product_keywords'];
-        $categoryProduct->category_status = $data['category_product_status'];
+            if ($existingCategory) {
+                Session::put('error', 'Thêm danh mục sản phẩm không thành công, danh mục đã tồn tại');
+                return redirect()->back();
+            } else {
+                $categoryProduct = new CategoryProduct();
+                $categoryProduct->category_name = $data['category_name'];
+                $categoryProduct->category_desc = $data['category_desc'];
+                $categoryProduct->meta_keywords = $data['meta_keywords'];
+                $categoryProduct->category_status = $data['category_status'];
+                $categoryProduct->slug_category_product = $slug;
+                
+                // Upload image for Admin icon
+                if ($request->hasFile('category_icon_admin')) {
+                    $file = $request->file('category_icon_admin');
+                    // Tạo tên hình ảnh theo slug
+                    $filename = $this->XuLyAnh($file->getClientOriginalName(), $data['category_name']);
+                    $file->move('public/backend/images/icons', $filename);
+                    $categoryProduct->category_icon_admin = $filename;
+                }
 
-        // Tạo slug từ tên danh mục
-        $categoryProduct->slug_category_product = $this->XuLyTen($data['category_name']);
-        $categoryProduct->save();
+                // Upload image for User icon
+                if ($request->hasFile('category_icon_user')) {
+                    $file = $request->file('category_icon_user');
+                    // Tạo tên hình ảnh theo slug
+                    $filename = $this->XuLyAnh($file->getClientOriginalName(), $data['category_name']);
+                    $file->move('public/fontend/images/icons', $filename);
+                    $categoryProduct->category_icon_user = $filename;
+                }
 
-        // Hiển thị thông báo khi thêm thành công
-        Session::put('message', 'Thêm danh mục sản phẩm thành công');
-        return redirect()->back();
-        }
-       
+
+                $categoryProduct->save();
+                Session::put('message', 'Thêm danh mục sản phẩm thành công');
+                return redirect()->back();
+            }
+    }
+    public function edit_category_product($category_product_id) {
+        $this->AuthLogin();
+        $edit_category_product = CategoryProduct::find($category_product_id);
+        return view('AdminPages.Pages.CategoryProduct.edit_category_product', compact('edit_category_product'));
     }
 
+    public function update_category_product(Request $request, $id) {
+      
+            $data = $request->validate([
+                'category_name' => 'required|max:255',
+                'category_desc' => 'required',
+                'meta_keywords' => 'required',
+                'category_status' => 'required|integer',
+                'category_icon_admin' => 'image|nullable',
+                'category_icon_user' => 'image|nullable',
+            ]);
+    
+            $categoryProduct = CategoryProduct::findOrFail($id);
+            $categoryProduct->category_name = $data['category_name'];
+            $categoryProduct->category_desc = $data['category_desc'];
+            $categoryProduct->meta_keywords = $data['meta_keywords'];
+            $categoryProduct->category_status = $data['category_status'];
+            $categoryProduct->slug_category_product = $this->XuLyTen($data['category_name']); // Tạo slug từ tên danh mục
+    
+            // Cập nhật hình ảnh Admin nếu có
+            if ($request->hasFile('category_icon_admin')) {
+                // Xóa hình ảnh cũ
+                if (file_exists(public_path('backend/images/icons/' . $categoryProduct->category_icon_admin))) {
+                    unlink(public_path('backend/images/icons/' . $categoryProduct->category_icon_admin));
+                }
+                // Tải hình ảnh mới lên
+                $file = $request->file('category_icon_admin');
+                $filename = $this->XuLyAnh($file->getClientOriginalName(), $data['category_name']);
+                $file->move(public_path('backend/images/icons'), $filename);
+                $categoryProduct->category_icon_admin = $filename;
+            }
+    
+            // Cập nhật hình ảnh User nếu có
+            if ($request->hasFile('category_icon_user')) {
+                // Xóa hình ảnh cũ
+                if (file_exists(public_path('fontend/images/icons/' . $categoryProduct->category_icon_user))) {
+                    unlink(public_path('fontend/images/icons/' . $categoryProduct->category_icon_user));
+                }
+                // Tải hình ảnh mới lên
+                $file = $request->file('category_icon_user');
+                $filename = $this->XuLyAnh($file->getClientOriginalName(), $data['category_name']);
+                $file->move(public_path('fontend/images/icons'), $filename);
+                $categoryProduct->category_icon_user = $filename;
+            }
+    
+            // Lưu danh mục sản phẩm
+            $categoryProduct->save();
+            Session::put('message', 'Cập nhật danh mục sản phẩm thành công');
+            return redirect()->back();
+
+    }
+    
     public function unactive_category_product($category_product_id) {
         $this->AuthLogin();
-        CategoryProduct::where('category_id', $category_product_id)->update(['category_status' => 1]); // Sử dụng model
-        Session::put('message', 'Không kích hoạt danh mục sản phẩm thành công');
+        CategoryProduct::where('category_id', $category_product_id)->update(['category_status' => 0]); 
+        Session::put('message', 'Đã ẩn');
         return Redirect::to('all-category-product');
     }
 
     public function active_category_product($category_product_id) {
         $this->AuthLogin();
-        CategoryProduct::where('category_id', $category_product_id)->update(['category_status' => 0]); // Sử dụng model
-        Session::put('message', 'Kích hoạt danh mục sản phẩm thành công');
+        CategoryProduct::where('category_id', $category_product_id)->update(['category_status' => 1]); 
+        Session::put('message', 'Đã hiện thị');
         return Redirect::to('all-category-product');
-    }
-
-    public function edit_category_product($id)
-    {
-        $this->AuthLogin(); 
-        $edit_category_product = CategoryProduct::findOrFail($id);
-        return view('AdminPages.Pages.CategoryProduct.edit_category_product', compact('edit_category_product'));
-    }
-    
-    public function update_category_product(Request $request, $id)
-    {
-        $this->AuthLogin(); // Kiểm tra đăng nhập
-        $data = $request->only(['category_name', 'meta_keywords', 'slug_category_product', 'category_desc']);
-        
-        $category = CategoryProduct::findOrFail($id);
-        $category->update($data);
-        
-        Session::put('message', 'Cập nhật danh mục sản phẩm thành công');
-        return redirect()->route('all.category.product');
     }
 
     public function delete_category_product($category_product_id) {

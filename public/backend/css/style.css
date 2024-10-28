@@ -624,7 +624,7 @@ ul.top-menu>li>a:hover,ul.top-menu>li>a:focus {
     -o-transition: all .3s ease;
     transition: all .3s ease;
     box-shadow: none;
-    background: #2fa9da url(../images/search-icon.png) no-repeat 10px 8px;
+    background: #2fa9da url(../images/icons/search-icon.png) no-repeat 10px 8px;
     padding: 0 5px 0 30px;
     color: #fff;
     border-radius: 100px;
@@ -632,14 +632,14 @@ ul.top-menu>li>a:hover,ul.top-menu>li>a:focus {
 	cursor:pointer;
 }
 .search:focus {
-    width:180px;
+    width:300px;
     box-shadow:none;
     -webkit-transition:all .3s ease;
     -moz-transition:all .3s ease;
     -ms-transition:all .3s ease;
     -o-transition:all .3s ease;
     transition:all .3s ease;
-    color:#c8c8c8;
+    color:#ffffff;
     font-weight: 300;
 }
 .todo-search:focus{
