@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <head>
-<title>Visitors an Admin Panel Category Bootstrap Responsive Website Template | Home :: w3layouts</title>
+<title>Admin DoubleSstore</title>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <meta name="keywords" content="Visitors Responsive web template, Bootstrap Web Templates, Flat Web Templates, Android Compatible web template, 
@@ -25,6 +25,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 <script src="{{asset('public/backend/js/jquery2.0.3.min.js')}}"></script>
 <script src="{{asset('public/backend/js/raphael-min.js')}}"></script>
 <script src="{{asset('public/backend/js/morris.js')}}"></script>
+<script src="{{asset('public/backend/js/admin.js')}}"></script>
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </head>
 <body>
@@ -33,7 +34,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 <header class="header fixed-top clearfix">
 <!--logo start-->
 <div class="brand">
-    <a href="index.html" class="logo">
+    <a href="{{URL::to('/dashboard')}}" class="logo">
         <div class="brand-container">
                 <img alt="" src="{{ asset('public/backend/images/logos/logo_icon.png') }}">
                 <span>Green Store</span>
@@ -261,16 +262,21 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
         <!-- sidebar menu start-->
         <div class="leftside-navigation">
             <ul class="sidebar-menu" id="nav-accordion">
-                <li>
+                <li class="sub-menu">
                     <a class="active" href="{{URL::to('/dashboard')}}">
-                        <i class="fa fa-dashboard"></i>
+                        <img src="{{ asset('public/backend/images/icons/dashboard-admin.png')}}" alt="icon-sliderbar" width="40" style="margin-right: 20px">
                         <span>Dashboard</span>
                     </a>
                 </li>
-                
                 <li class="sub-menu">
                     <a href="javascript:;">
-                        <i class="fa fa-book"></i>
+                    <img src="{{ asset('public/backend/images/icons/users.png')}}" alt="icon-sliderbar" width="40" style="margin-right: 20px">
+                        <span>Người dùng</span>
+                    </a>
+                </li>
+                <li class="sub-menu">
+                    <a href="javascript:;">
+                    <img src="{{ asset('public/backend/images/icons/categories.png')}}" alt="icon-sliderbar" width="40" style="margin-right: 20px">
                         <span>Danh mục sản phẩm</span>
                     </a>
                     <ul class="sub">
@@ -280,7 +286,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
                 </li>
                 <li>
                     <a href="javascript:;">
-                        <i class="fa fa-book"></i>
+                    <img src="{{ asset('public/backend/images/icons/brand.png')}}" alt="icon-sliderbar" width="40" style="margin-right: 20px">
                         <span>Thương hiệu</span>
                     </a>
                     <ul class="sub">
@@ -291,7 +297,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
                 </li>
                 <li>
                     <a href="javascript:;">
-                        <i class="fa fa-book"></i>
+                    <img src="{{ asset('public/backend/images/icons/Products.png')}}" alt="icon-sliderbar" width="40" style="margin-right: 20px">
                         <span>Sản phẩm</span>
                     </a>
                     <ul class="sub">
@@ -301,19 +307,35 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
                 </li>
                 <li>
                     <a href="javascript:;">
-                        <i class="fa fa-book"></i>
+                    <img src="{{ asset('public/backend/images/icons/ordersadmin.png')}}" alt="icon-sliderbar" width="40" style="margin-right: 20px">
                         <span>Quản lý đơn hàng</span>
                     </a>
                     <ul class="sub">
-                        <li><a href="{{URL::to('/order')}}">Tất cả các đơn</a></li>
-                        <li><a href="{{URL::to('#')}}">Đang xử lý đơn hàng</a></li>
-						<li><a href="{{URL::to('#')}}">Đã xử lý đơn hàng</a></li>
-                        <li><a href="{{URL::to('#')}}">Đang giao hàng</a></li>
-                        <li><a href="{{URL::to('#')}}">Giao hàng thành công</a></li>
-                        <li><a href="{{URL::to('#')}}">Yêu cầu hủy đơn hàng</a></li>
-                        <li><a href="{{URL::to('#')}}">Đã hủy đơn hàng</a></li>
-                        <li><a href="{{URL::to('#')}}">Giao hàng thất bại</a></li>
-                        <li><a href="{{URL::to('#')}}">Hết hàng</a></li>
+                        <li><a href="{{URL::to('/order')}}">Tất cả các đơn</a></li>                  
+                        <li><a href="{{ route('admin.orders.index', ['order_status' => 1]) }}">Đang xử lý đơn hàng</a></li>
+                        <li><a href="{{ route('admin.orders.index', ['order_status' => 2]) }}">Đã xử lý đơn hàng</a></li>
+                        <li><a href="{{ route('admin.orders.index', ['order_status' => 3]) }}">Đang giao hàng</a></li>
+                        <li><a href="{{ route('admin.orders.index', ['order_status' => 4]) }}">Giao hàng thành công</a></li>
+                        <li><a href="{{ route('admin.orders.index', ['order_status' => 5]) }}">Yêu cầu hủy đơn hàng</a></li>
+                        <li><a href="{{ route('admin.orders.index', ['order_status' => 6]) }}">Đã hủy đơn hàng</a></li>
+                        <li><a href="{{ route('admin.orders.index', ['order_status' => 7]) }}">Giao hàng thất bại</a></li>
+                        <li><a href="{{ route('admin.orders.index', ['order_status' => 8]) }}">Hết hàng</a></li>
+                    </ul>
+                </li>
+                <li>
+                    <a href="{{URL::to('/add-order')}}">
+                    <img src="{{ asset('public/backend/images/icons/addorders.png')}}" alt="icon-sliderbar" width="40" style="margin-right: 20px">
+                        <span>Thêm đơn hàng</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="javascript:;">
+                    <img src="{{ asset('public/backend/images/icons/coupons.png')}}" alt="icon-sliderbar" width="40" style="margin-right: 20px">
+                        <span>Mã giảm giá</span>
+                    </a>
+                    <ul class="sub">
+                        <li><a href="">Thêm mã giảm giá</a></li>
+                        <li><a href="">Xem tất cả mã giảm giá</a></li>
                     </ul>
                 </li>
                 

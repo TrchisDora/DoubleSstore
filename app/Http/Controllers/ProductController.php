@@ -107,7 +107,6 @@ class ProductController extends Controller
             $query->where('product_prominent', $request->product_prominent);
         }
         if ($request->has('search')) {
-            // Tìm kiếm theo tên sản phẩm hoặc meta_keywords
             $searchTerm = $request->search;
             $query->where(function ($q) use ($searchTerm) {
                 $q->where('product_name', 'like', '%' . $searchTerm . '%')

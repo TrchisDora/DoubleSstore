@@ -103,5 +103,11 @@ Route::get('unactive-brand-product/{id}', [BrandProductController::class, 'unact
 Route::get('show-brand-home/{slug}', [BrandProductController::class, 'show_brand_home'])->name('show.brand.home');
 //Order
 Route::get('order', [OrderController::class, 'order_index'])->name('admin.orders.index');
-Route::post('order/bulk-action', [OrderController::class, 'bulkAction'])->name('admin.orders.bulk_action');
+Route::get('/orders', [OrderController::class, 'getOrdersByStatus'])->name('orders.byStatus');
+Route::post('order/update-status', [OrderController::class, 'updateOrderStatus'])->name('updateOrderStatus');
+Route::get('order/{id}', [OrderController::class, 'orderDetail'])->name('order.detail');
+Route::post('/admin/orders/bulk-action', [OrderController::class, 'bulkAction'])->name('bulk_action');
+Route::get('/admin/orders/{order_code}', [OrderController::class, 'showOrderDetail'])->name('order.detail');
+Route::get('/add-order', [OrderController::class, 'add_order'])->name('add_order');
+Route::get('admin/orders', [OrderController::class, 'add_order'])->name('admin.order.add_order');
 

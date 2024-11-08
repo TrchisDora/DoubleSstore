@@ -213,7 +213,7 @@
                 cursorborder: "0px solid #fff",
                 cursorborderradius: "0px",
                 cursorwidth: "3px"
-            });
+            });5
 
             $('#sidebar').toggleClass('hide-left-bar');
             if ($('#sidebar').hasClass('hide-left-bar')) {

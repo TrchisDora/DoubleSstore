@@ -76,95 +76,91 @@
                     </div>
                 </div>
                 <div class="table-responsive">
-                <form action="{{ route('admin.products.bulk_action') }}" method="POST">
-                 @csrf
-                 <table class="table table-striped b-t b-light">
-                    <thead>
-                        <tr>
-                            <th style="width:20px;">
-                                <label class="i-checks m-b-none">
-                                    <input type="checkbox" id="select-all"><i></i>
-                                </label>
-                            </th>
-                            <th>Tên sản phẩm</th>
-                            <th>Số lượng</th>
-                            <th>Slug</th>
-                            <th>Giá</th>
-                            <th>Hình sản phẩm</th>
-                            <th>Danh mục</th>
-                            <th>Thương hiệu</th>
-                            <th>Hiển thị</th>
-                            <th>Nổi bật</th>
-                            <th style="width:30px;"></th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <form action="{{ route('admin.products.bulk_action') }}" method="POST">
-                            @csrf
-                            @foreach($all_product as $key => $pro)
-                            <tr>
-                                <td>
-                                    <input type="checkbox" name="product_ids[]" value="{{ $pro->product_id }}">
-                                </td>
-                                <td>{{ $pro->product_name }}</td>
-                                <td>{{ $pro->product_quantity }}</td>
-                                <td>{{ $pro->product_slug }}</td>
-                                <td>{{ number_format($pro->product_price, 0, ',', '.') }}đ</td>
-                                <td><img src="{{ asset('public/fontend/images/product/'.$pro->product_image) }}" height="115" width="125"></td>
-                                <td>{{ $pro->categoryProduct ? $pro->categoryProduct->category_name : 'Không có danh mục' }}</td>
-                                <td>{{ $pro->brandProduct ? $pro->brandProduct->brand_name : 'Không có thương hiệu' }}</td>
-                                <td>
-                                    <span class="text-ellipsis">
-                                        @if($pro->product_status == 0)
-                                            <a href="{{ URL::to('/active-product/'.$pro->product_id) }}">
-                                                <span class="fa-thumb-styling fa fa-thumbs-down"></span>
-                                            </a>
-                                        @else
-                                            <a href="{{ URL::to('/unactive-product/'.$pro->product_id) }}">
-                                                <span class="fa-thumb-styling fa fa-thumbs-up"></span>
-                                            </a>
-                                        @endif
-                                    </span>
-                                </td>
-                                <td>
-                                    <span class="text-ellipsis">
-                                        @if($pro->product_prominent == 0)
-                                            <a href="{{ URL::to('/active-prominent-product/'.$pro->product_id) }}">
-                                                <span class="fa fa-star-o"></span>
-                                            </a>
-                                        @else
-                                            <a href="{{ URL::to('/unactive-prominent-product/'.$pro->product_id) }}">
-                                                <span class="fa fa-star"></span>
-                                            </a>
-                                        @endif
-                                    </span>
-                                </td>
-                                <td>
-                                    <a href="{{ URL::to('/edit-product/'.$pro->product_id) }}" class="active styling-edit" ui-toggle-class="">
-                                        <i class="fa fa-pencil-square-o text-success text-active"></i>
-                                    </a>
-                                    <a onclick="return confirm('Bạn có chắc là muốn xóa sản phẩm này không?')" href="{{ URL::to('/delete-product/'.$pro->product_id) }}" class="active styling-edit" ui-toggle-class="">
-                                        <i class="fa fa-times text-danger text"></i>
-                                    </a>
-                                </td>
-                            </tr>
-                            @endforeach
-                            <div class="col-sm-3 m-b-xs">
-                                <select name="bulk_action" class="input-sm form-control w-sm inline v-middle">
-                                    <option value="0">Chọn hành động</option>
-                                    <option value="1">Xóa các mục</option>
-                                    <option value="2">Hiện/Ẩn các mục</option>
-                                    <option value="3">Un/Nổi Bật các mục</option>
-                                    <option value="4">Xuất dữ liệu các mục</option>
-                                </select>
-                                <button type="submit" id="applyFilter" class="btn btn-sm btn-default">Apply</button>
-                            </div>    
-                        </form>
-                    </tbody>
-                </table>
-
-                </form> 
-            </div>           
+                    <form action="{{ route('admin.products.bulk_action') }}" method="POST" id="bulkActionForm">
+                        @csrf
+                        <table class="table table-striped b-t b-light">
+                            <thead>
+                                <tr>
+                                    <th style="width:20px;">
+                                        <label class="i-checks m-b-none">
+                                            <input type="checkbox" id="select-all"><i></i>
+                                        </label>
+                                    </th>
+                                    <th>Tên sản phẩm</th>
+                                    <th>Số lượng</th>
+                                    <th>Slug</th>
+                                    <th>Giá</th>
+                                    <th>Hình sản phẩm</th>
+                                    <th>Danh mục</th>
+                                    <th>Thương hiệu</th>
+                                    <th>Hiển thị</th>
+                                    <th>Nổi bật</th>
+                                    <th style="width:30px;"></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach($all_product as $key => $pro)
+                                <tr>
+                                    <td>
+                                        <input type="checkbox" name="product_ids[]" value="{{ $pro->product_id }}">
+                                    </td>
+                                    <td>{{ $pro->product_name }}</td>
+                                    <td>{{ $pro->product_quantity }}</td>
+                                    <td>{{ $pro->product_slug }}</td>
+                                    <td>{{ number_format($pro->product_price, 0, ',', '.') }}đ</td>
+                                    <td><img src="{{ asset('public/fontend/images/product/'.$pro->product_image) }}" height="115" width="125"></td>
+                                    <td>{{ $pro->categoryProduct ? $pro->categoryProduct->category_name : 'Không có danh mục' }}</td>
+                                    <td>{{ $pro->brandProduct ? $pro->brandProduct->brand_name : 'Không có thương hiệu' }}</td>
+                                    <td>
+                                        <span class="text-ellipsis">
+                                            @if($pro->product_status == 0)
+                                                <a href="{{ URL::to('/active-product/'.$pro->product_id) }}">
+                                                    <span class="fa-thumb-styling fa fa-thumbs-down"></span>
+                                                </a>
+                                            @else
+                                                <a href="{{ URL::to('/unactive-product/'.$pro->product_id) }}">
+                                                    <span class="fa-thumb-styling fa fa-thumbs-up"></span>
+                                                </a>
+                                            @endif
+                                        </span>
+                                    </td>
+                                    <td>
+                                        <span class="text-ellipsis">
+                                            @if($pro->product_prominent == 0)
+                                                <a href="{{ URL::to('/active-prominent-product/'.$pro->product_id) }}">
+                                                    <span class="fa fa-star-o"></span>
+                                                </a>
+                                            @else
+                                                <a href="{{ URL::to('/unactive-prominent-product/'.$pro->product_id) }}">
+                                                    <span class="fa fa-star"></span>
+                                                </a>
+                                            @endif
+                                        </span>
+                                    </td>
+                                    <td>
+                                        <a href="{{ URL::to('/edit-product/'.$pro->product_id) }}" class="active styling-edit" ui-toggle-class="">
+                                            <i class="fa fa-pencil-square-o text-success text-active"></i>
+                                        </a>
+                                        <a onclick="return confirm('Bạn có chắc là muốn xóa sản phẩm này không?')" href="{{ URL::to('/delete-product/'.$pro->product_id) }}" class="active styling-edit" ui-toggle-class="">
+                                            <i class="fa fa-times text-danger text"></i>
+                                        </a>
+                                    </td>
+                                </tr>
+                                @endforeach
+                                <div class="col-sm-3 m-b-xs">
+                                    <select name="bulk_action" id="bulkActionSelect" class="input-sm form-control w-sm inline v-middle">
+                                        <option value="0">Chọn hành động</option>
+                                        <option value="1">Xóa các mục</option>
+                                        <option value="2">Hiện/Ẩn các mục</option>
+                                        <option value="3">Un/Nổi Bật các mục</option>
+                                        <option value="4">Xuất dữ liệu các mục</option>
+                                    </select>
+                                    <button type="button" id="applyFilter" class="btn btn-sm btn-default" onclick="confirmBulkAction()">Apply</button>
+                                </div>
+                            </tbody>
+                        </table>
+                    </form>
+                </div>           
             <footer class="panel-footer">
                 <div class="row">
                     <div class="col-sm-5 text-center">
@@ -198,12 +194,34 @@
         </div>
     </div>
     <script>
+    function confirmBulkAction() {
+        const bulkAction = document.getElementById('bulkActionSelect').value;
+
+        if (bulkAction === "1") { // Check if "Delete Selected" is chosen
+            Swal.fire({
+                title: 'Xác nhận',
+                text: 'Bạn có chắc chắn muốn xóa các mục đã chọn không?',
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonText: 'Có',
+                cancelButtonText: 'Không'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    document.getElementById('bulkActionForm').submit(); // Submit form if confirmed
+                }
+            });
+        } else {
+            document.getElementById('bulkActionForm').submit(); // Directly submit for other actions
+        }
+    }
+
+    // Select/Deselect All functionality
     document.getElementById('select-all').addEventListener('change', function() {
         const checkboxes = document.querySelectorAll('input[name="product_ids[]"]');
-        checkboxes.forEach(checkbox => {
+        checkboxes.forEach((checkbox) => {
             checkbox.checked = this.checked;
         });
     });
-    </script>
+</script>
     @yield('product_list')
 @endsection
