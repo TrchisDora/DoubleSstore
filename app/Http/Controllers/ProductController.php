@@ -88,12 +88,11 @@ class ProductController extends Controller
     
     public function all_product(Request $request)
     {
-       
         $currentPage = $request->input('page', 1);
         session(['current_page' => $currentPage]);
-       
+    
         $query = Product::query()->with('categoryProduct');
-      
+        
         if ($request->has('category_id') && $request->category_id != 0) {
             $query->where('category_id', $request->category_id);
         }
@@ -103,23 +102,28 @@ class ProductController extends Controller
         if ($request->has('product_status') && $request->product_status != '') {
             $query->where('product_status', $request->product_status);
         }
-        if ($request->has('product_prominent') && $request->product_prominent != ''){
+        if ($request->has('product_prominent') && $request->product_prominent != '') {
             $query->where('product_prominent', $request->product_prominent);
         }
         if ($request->has('search')) {
             $searchTerm = $request->search;
             $query->where(function ($q) use ($searchTerm) {
                 $q->where('product_name', 'like', '%' . $searchTerm . '%')
-                ->orWhereHas('categoryProduct', function ($query) use ($searchTerm) {
-                    $query->where('meta_keywords', 'like', '%' . $searchTerm . '%');
-                });
+                  ->orWhereHas('categoryProduct', function ($query) use ($searchTerm) {
+                      $query->where('meta_keywords', 'like', '%' . $searchTerm . '%');
+                  });
             });
         }
-        $all_product = $query->paginate(10);
+        
+        // Áp dụng phân trang với các tham số lọc
+        $all_product = $query->paginate(10)->appends(request()->query());
+    
         $categories = CategoryProduct::all();
         $brands = BrandProduct::all();
+        
         return view('AdminPages.Pages.Product.all_product', compact('all_product', 'categories', 'brands'));
     }
+    
     
     public function bulkAction(Request $request)
     {
@@ -157,7 +161,7 @@ class ProductController extends Controller
                 return redirect()->back()->with('message', 'Đã cập nhật tình trạng nổi bật của sản phẩm thành công!');
             case '4': // Xuất dữ liệu các mục
                 // Logic xuất dữ liệu có thể ở đây (ví dụ: tạo file CSV)
-                return response()->download($filePath); // Giả sử bạn đã tạo file cần tải về
+                
 
             default:
                 return redirect()->back()->with('error', 'Hành động không hợp lệ!');

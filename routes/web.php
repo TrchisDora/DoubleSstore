@@ -105,9 +105,8 @@ Route::get('show-brand-home/{slug}', [BrandProductController::class, 'show_brand
 Route::get('order', [OrderController::class, 'order_index'])->name('admin.orders.index');
 Route::get('/orders', [OrderController::class, 'getOrdersByStatus'])->name('orders.byStatus');
 Route::post('order/update-status', [OrderController::class, 'updateOrderStatus'])->name('updateOrderStatus');
-Route::get('order/{id}', [OrderController::class, 'orderDetail'])->name('order.detail');
-Route::post('/admin/orders/bulk-action', [OrderController::class, 'bulkAction'])->name('bulk_action');
 Route::get('/admin/orders/{order_code}', [OrderController::class, 'showOrderDetail'])->name('order.detail');
+Route::post('/admin/orders/bulk-action', [OrderController::class, 'bulkAction'])->name('bulk_action');
 Route::get('/add-order', [OrderController::class, 'add_order'])->name('add_order');
 Route::get('admin/orders', [OrderController::class, 'add_order'])->name('admin.order.add_order');
-
+Route::get('/order/search-customer', [OrderController::class, 'searchCustomerByPhone'])->name('order.customer.search');

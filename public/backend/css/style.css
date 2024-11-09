@@ -984,7 +984,28 @@ div#graph1,div#graph4,div#graph5,div#graph6,div#graph7,div#graph8,div#graph9 {
     margin-bottom: 1em;
     text-transform: uppercase;
 }
-/*-- graphs --*/
+/*-- table-order --*/
+.table-container {
+    height: 400px; /* Chiều cao cố định cho bảng */
+    overflow-y: auto;
+    margin-bottom: 50px; /* Thanh cuộn dọc sẽ xuất hiện khi nội dung vượt quá chiều cao */
+}
+.table-container-2 {
+    height: 500px; /* Chiều cao cố định cho bảng */
+    overflow-y: auto;
+    margin-bottom: 50px; /* Thanh cuộn dọc sẽ xuất hiện khi nội dung vượt quá chiều cao */
+}
+
+/* Optional: Thêm style cho bảng nếu cần */
+.table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.table th, .table td {
+    padding: 10px;
+    text-align: left;
+}
 /*--statistics--*/
 .stats-info ul li {
     margin-bottom: 1em;

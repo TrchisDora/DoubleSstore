@@ -3,18 +3,17 @@
 namespace App\Http\Controllers;
 
 use App\Models\Order;  
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Log;
 use App\Models\Product;          
 use App\Models\CategoryProduct;  
 use App\Models\BrandProduct;  
-use App\Http\Controllers\ProductController;
-
-
+use App\Models\Customer; 
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
 
 class OrderController extends Controller
 {
+    // Hiển thị danh sách đơn hàng
     public function order_index(Request $request)
     {
         // Định nghĩa trạng thái đơn hàng
@@ -65,8 +64,9 @@ class OrderController extends Controller
         });
 
         if ($orders->isEmpty()) {
-            return redirect()->route('admin.orders.index')->with('error', 'Không có đơn hàng nào !');
+            return redirect()->route('admin.orders.index')->with('error', 'Không có đơn hàng nào!');
         }
+
         $orderCode = $request->query('order_code');
         $orderDetails = null;
 
@@ -74,17 +74,17 @@ class OrderController extends Controller
             $orderDetails = $this->getOrderDetailsByCode($orderCode);
         }
 
-       
         return view('AdminPages.Pages.Order.order', compact('orderStatuses', 'statusIcons', 'orderCounts', 'orders', 'orderDetails'));
     }
 
+    // Lấy chi tiết đơn hàng theo mã đơn hàng
     private function getOrderDetailsByCode($orderCode) {
-
         return Order::with('orderDetails') 
             ->where('order_code', $orderCode)
             ->first();
     }
 
+    // Thực hiện hành động hàng loạt trên các đơn hàng
     public function bulkAction(Request $request)
     {
         $orderCodes = $request->input('selectedOrderCodes'); 
@@ -111,6 +111,8 @@ class OrderController extends Controller
 
         return redirect()->back()->with('error', 'Không có đơn hàng nào được chọn hoặc trạng thái không hợp lệ.');
     }
+
+    // Cập nhật trạng thái đơn hàng
     public function updateOrderStatus(Request $request)
     {      
         $orderCode = $request->input('order_code');
@@ -120,23 +122,30 @@ class OrderController extends Controller
 
         return redirect()->route('admin.orders.index')->with('message', 'Cập nhật trạng thái đơn hàng thành công!');
     }
+
+    // Hiển thị chi tiết đơn hàng
     public function showOrderDetail($order_code)
     {
         $order = Order::with('orderDetails.product')->where('order_code', $order_code)->firstOrFail();
         return view('AdminPages.Pages.Order.order_detail', compact('order'));
     }
+
+    // In đơn hàng
     public function printOrder($id)
     {
         $order = Order::with(['customer', 'shipping', 'orderDetails.product'])->find($id);
         return view('admin.order_print', compact('order'));
     }
-        public function add_order(Request $request)
+
+    // Thêm đơn hàng mới
+    public function add_order(Request $request)
     {
         $currentPage = $request->input('page', 1);
         session(['current_page' => $currentPage]);
-       
+    
         $query = Product::query()->with('categoryProduct');
-      
+        
+        // Áp dụng các điều kiện lọc nếu có
         if ($request->has('category_id') && $request->category_id != 0) {
             $query->where('category_id', $request->category_id);
         }
@@ -146,25 +155,47 @@ class OrderController extends Controller
         if ($request->has('product_status') && $request->product_status != '') {
             $query->where('product_status', $request->product_status);
         }
-        if ($request->has('product_prominent') && $request->product_prominent != ''){
+        if ($request->has('product_prominent') && $request->product_prominent != '') {
             $query->where('product_prominent', $request->product_prominent);
         }
         if ($request->has('search')) {
             $searchTerm = $request->search;
             $query->where(function ($q) use ($searchTerm) {
                 $q->where('product_name', 'like', '%' . $searchTerm . '%')
-                ->orWhereHas('categoryProduct', function ($query) use ($searchTerm) {
-                    $query->where('meta_keywords', 'like', '%' . $searchTerm . '%');
-                });
+                  ->orWhereHas('categoryProduct', function ($query) use ($searchTerm) {
+                      $query->where('meta_keywords', 'like', '%' . $searchTerm . '%');
+                  });
             });
         }
-        $all_product = $query->paginate(10);
-
+    
+        // Áp dụng phân trang với các tham số lọc
+        $all_product = $query->paginate(10)->appends(request()->query());
+    
         // Lấy danh sách danh mục và thương hiệu để hiển thị trong filter
         $categories = CategoryProduct::all();
         $brands = BrandProduct::all();
-
+    
         // Trả về view với dữ liệu sản phẩm, danh mục và thương hiệu
         return view('AdminPages.Pages.Order.add_order', compact('all_product', 'categories', 'brands'));
-    }   
+    }
+    
+
+    // Tìm kiếm khách hàng theo số điện thoại
+    public function searchCustomerByPhone(Request $request)
+    {
+        $phone = $request->input('phone');
+        $customer = Customer::where('customer_phone', $phone)->first();
+
+        if ($customer) {
+            return response()->json([
+                'status' => 'success',
+                'customer' => $customer
+            ]);
+        } else {
+            return response()->json([
+                'status' => 'error',
+                'message' => 'Khách hàng không tìm thấy.'
+            ]);
+        }
+    }
 }

@@ -223,5 +223,4 @@
         });
     });
 </script>
-    @yield('product_list')
 @endsection
