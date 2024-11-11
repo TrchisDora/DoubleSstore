@@ -169,7 +169,7 @@ class OrderController extends Controller
         }
     
         // Áp dụng phân trang với các tham số lọc
-        $all_product = $query->paginate(10)->appends(request()->query());
+        $all_product = $query->paginate(5)->appends(request()->query());
     
         // Lấy danh sách danh mục và thương hiệu để hiển thị trong filter
         $categories = CategoryProduct::all();

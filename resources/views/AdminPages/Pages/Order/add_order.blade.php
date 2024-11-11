@@ -56,9 +56,7 @@
                     <div class="panel-heading">
                         Liệt kê sản phẩm
                     </div>
-                    <div class="table-responsive">
-                        <div class="panel panel-default">
-                            <div class="row w3-res-tb">
+                    <div class="row"style="margin: 15px 0px;">
                                 <div class="col-sm-12">
                                     <form method="GET" action="{{ route('admin.order.add_order') }}">
                                         <select class="input-sm form-control w-sm inline v-middle" name="category_id"
@@ -97,32 +95,24 @@
                                         </select>
                                     </form>
                                 </div>
-                            </div>
-                            <div class="table-container-2">
+                    </div>
+                    <div class="table-responsive">
+                        <div class="pa #addOrderBtnnel panel-default">
                                 <table class="table table-striped">
                                     <thead>
                                         <tr>
+                                            <th></th>
                                             <th>Tên sản phẩm</th>
                                             <th>Số lượng</th>
                                             <th>Giá</th>
                                             <th>Hình sản phẩm</th>
                                             <th>Danh mục</th>
                                             <th>Thương hiệu</th>
-                                            <th></th>
                                         </tr>
                                     </thead>
                                     <tbody>
                                         @foreach($all_product as $product)
                                             <tr>
-                                                <td>{{ $product->product_name }}</td>
-                                                <td>{{ $product->product_quantity }}</td>
-                                                <td>{{ number_format($product->product_price, 0, ',', '.') }}đ</td>
-                                                <td><img src="{{ asset('public/fontend/images/product/' . $product->product_image) }}"
-                                                        height="85" width="100"></td>
-                                                <td>{{ $product->categoryProduct ? $product->categoryProduct->category_name : 'Không có danh mục' }}
-                                                </td>
-                                                <td>{{ $product->brandProduct ? $product->brandProduct->brand_name : 'Không có thương hiệu' }}
-                                                </td>
                                                 <td>
                                                     <button class="btn btn-primary btn-sm add-to-cart w-100"
                                                         data-id="{{ $product->product_id }}"
@@ -132,14 +122,26 @@
                                                         <i class="fas fa-cart-plus"></i> Thêm vào giỏ
                                                     </button>
                                                 </td>
+                                                <td>{{ $product->product_name }}</td>
+                                                <td>{{ $product->product_quantity }}</td>
+                                                <td>{{ number_format($product->product_price, 0, ',', '.') }}đ</td>
+                                                <td><img src="{{ asset('public/fontend/images/product/' . $product->product_image) }}"
+                                                        height="85" width="100"></td>
+                                                <td>{{ $product->categoryProduct ? $product->categoryProduct->category_name : 'Không có danh mục' }}
+                                                </td>
+                                                <td>{{ $product->brandProduct ? $product->brandProduct->brand_name : 'Không có thương hiệu' }}
+                                                </td>
                                             </tr>
                                         @endforeach
                                     </tbody>
                                 </table>
-                            </div>
+                          
 
 
-                            <footer class="panel-footer">
+                            
+                        </div>
+                    </div>
+                    <footer class="panel-footer">
                                 <div class="row">
                                     <div class="col-sm-5 text-center">
                                         <small class="text-muted inline m-t-sm m-b-sm">showing
@@ -174,8 +176,6 @@
                                     </div>
                                 </div>
                             </footer>
-                        </div>
-                    </div>
                 </div>
                 {{-- Thông tin thanh toán --}}
                 <div class="col-md-4">

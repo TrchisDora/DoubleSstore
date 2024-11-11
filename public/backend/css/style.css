@@ -824,18 +824,19 @@ ul.top-menu>li>a:hover,ul.top-menu>li>a:focus {
 /*--market--*/
 .panel-heading {
     position: relative;
-    height: 57px;
-    line-height: 57px;
     letter-spacing: 0.2px;
     color: #000;
-    font-size: 18px;
+    font-size: 1.2em; /* Sử dụng em để kích thước chữ tự co giãn theo tỷ lệ */
     font-weight: 400;
-    padding: 0 16px;
-    background:#ddede0;
-   border-top-right-radius: 2px;
-   border-top-left-radius: 2px; 
+    padding: 12px 16px; /* Padding để phần tử co giãn theo nội dung */
+    background: #ddede0;
+    border-top-right-radius: 2px;
+    border-top-left-radius: 2px; 
     text-transform: uppercase;
     text-align: center;
+}
+.panel-heading img {
+    width: 1.5em; /* Dùng đơn vị em để hình ảnh cũng co giãn theo font-size */
 }
 .panel {
     border: none ! important;
