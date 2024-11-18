@@ -1,0 +1,250 @@
+.main-heading {
+    color        : #00a8f7;
+    font-size    : 20px;
+    text-align   :center;
+    margin: 20px 0px;
+}
+
+
+.table-main,
+.table-total table {
+    width          : 100%;
+    border-collapse: collapse;
+    border         : none;
+}
+
+/* head table  */
+.table-main thead tr th,
+.table-main tbody tr td {
+    padding   : 12px;
+    border-top: 1px solid #eee;
+
+}
+
+.table-main tbody tr td img {
+    max-width: 85px;
+}
+
+
+/* body table  */
+.body-item-img .product-img {
+    max-width: 85px;
+}
+
+.body-item-name-product span {
+    font-weight: 400;
+    color      : var(--bg-primary-color);
+}
+
+.body-item-quantity input[type="number"] {
+    max-width   : 70px;
+    padding     : 8px;
+    padding-left: 26px;
+    border      : 1px solid #eee;
+    outline     : none;
+}
+
+.body-item-into-money span {
+    color: #ff0000;
+}
+
+.body-item-action button i {
+    font-size: 16px;
+    color    : #aaa;
+    cursor   : pointer;
+}
+
+/*  total discount pay */
+.main-discount-total {
+    align-items  : center;
+    margin-bottom: 100px;
+}
+.heading-handle {
+    margin-bottom: 16px;
+}
+
+.heading-handle h4 {
+    font-size  : 19px;
+    font-weight: 600;
+    color      : #222;
+}
+
+.code-discount {
+    display: flex;
+}
+
+.code-discount {
+    position: relative;
+}
+
+.code-discount input {
+    width        : 100%;
+    height       : 42px;
+    background   : #f4f5f9;
+    color        : #4f5d77;
+    padding-right: 104px;
+    padding-left : 20px;
+    border       : 2px solid #f4f5f9;
+    box-shadow   : none;
+    transition   : all 0.2s ease-in-out;
+}
+
+.code-discount input:focus-visible {
+    background-color: #fff;
+    outline         : none;
+}
+
+.code-discount button {
+    position     : absolute;
+    right        : 0;
+    top          : 0;
+    height       : 100%;
+    display      : inline-block;
+    font-size    : 14px;
+    font-weight  : 500;
+    padding      : 12px 24px;
+    border-radius: 4px;
+    color        : #fff;
+    border       : 1px solid var(--bg-primary-color);
+    background   : var(--bg-primary-color);
+    cursor       : pointer;
+    transition   : all 0.2s ease-in-out;
+}
+
+.code-discount button:hover,
+.handle-total button:hover {
+    background-color: #000;
+    border          : 1px solid #000;
+}
+.container {
+    padding      : 30px;
+}
+
+.container-table {
+    padding      : 30px;
+    border       : 1px solid #eee;
+    border-radius: 10px;
+    box-shadow   : 0 -3px 23px rgba(0, 0, 0, 0.212);
+    margin-top: 25px;
+}
+
+.heading-total {
+    margin-bottom: 16px;
+}
+
+.heading-total h4 {
+    font-size  : 19px;
+    font-weight: 600;
+    color      : #222;
+}
+
+.table-total {
+    margin-bottom: 16px;
+}
+
+.table-total table tbody tr td {
+    padding: 8px;
+    border : 1px solid #eee;
+}
+
+.total-label {
+    font-size: 15px;
+}
+
+.total-label small {
+    font-size: 80%
+}
+
+.total-money {
+    font-size  : 18px;
+    font-weight: 900;
+}
+
+.total-money span {
+    color: #ff0000;
+}
+
+.handle-total button {
+    width           : 100%;
+    display         : inline-block;
+    font-size       : 15px;
+    font-weight     : 500;
+    background-color: var(--bg-primary-color);
+    color           : #fff;
+    padding         : 12px 40px;
+    border          : 1px solid var(--bg-primary-color);
+    border-radius   : 3px;
+    cursor          : pointer;
+    transition      : all 0.3s ease-in-out;
+}
+
+/*empty */
+.container-main-empty {
+    margin: 60px 0;
+}
+
+.empty-top h2 {
+    font-size    : 32px;
+    font-weight  : 600;
+    line-height  : 1.2;
+    color        : #222;
+    margin-bottom: 20px;
+}
+
+.empty-top p {
+    font-size  : 14px;
+    font-weight: 400;
+    line-height: 24px;
+    color      : #333;
+}
+
+.empty-mid::before {
+    content   : "";
+    position  : absolute;
+    width     : 100%;
+    top       : 50%;
+    left      : 0;
+    height    : 0;
+    border-top: 1px solid #d4d4d4;
+    margin-top: -1px;
+    transform : translateY(-50%);
+}
+
+.empty-mid {
+    position: relative;
+    margin  : 50px 0;
+}
+
+.empty-mid::after {
+    content   : "";
+    position  : absolute;
+    width     : 100%;
+    top       : 50%;
+    left      : 0;
+    height    : 0;
+    border-top: 1px solid #d4d4d4;
+    margin-top: 1px;
+    transform : translateY(-50%);
+}
+
+.empty-mid img {
+    position        : relative;
+    background-color: #fff;
+    padding         : 0 20px;
+    z-index         : 1;
+}
+
+.empty-bottom a {
+    font-size    : 14px;
+    background   : var(--bg-primary-color);
+    color        : #fff;
+    padding      : 14px 54px;
+    border       : 1px solid var(--bg-primary-color);
+    border-radius: 4px;
+    transition   : all 0.2s ease-in-out;
+}
+
+.empty-bottom a:hover {
+    background: #000;
+    border    : 1px solid #000;
+}

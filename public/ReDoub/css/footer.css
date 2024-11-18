@@ -1,0 +1,199 @@
+/* ------------- Footer ------------------ */
+.footer {
+    flex-shrink: 0;
+    position   : relative;
+    margin-top : 56px;
+}
+
+.footer::before {
+    content         : "";
+    display         : block;
+    position        : absolute;
+    top             : -16px;
+    width           : 100%;
+    height          : 0.5px;
+    background-color: #d4d4d4;
+}
+
+.footer::after {
+    content         : "";
+    display         : block;
+    position        : absolute;
+    top             : 83px;
+    width           : 100%;
+    height          : 0.5px;
+    background-color: #d4d4d4;
+}
+
+.contaction-call h3 {
+    font-size     : x-large;
+    font-weight   : 500;
+    padding-bottom: 5px;
+}
+
+.contaction-call p {
+    display    : flex;
+    align-items: center;
+}
+
+.contaction-call p i {
+    font-size       : 14px;
+    background-color: #000;
+    color           : #fff;
+    padding         : 10px;
+    margin-right    : 6px;
+    border-radius   : 50%;
+}
+
+.contaction-call p span {
+    font-size: 14px;
+}
+
+.contaction-email {
+    padding-left: 120px;
+}
+
+.contaction-email .handle-contaction-email {
+    width: 100%;
+}
+
+.contaction-email input {
+    width                    : 84%;
+    height                   : 48px;
+    font-size                : 14px;
+    padding                  : 0 20px 0 30px;
+    border                   : 1px solid #eee;
+    border-top-left-radius   : 2px;
+    border-bottom-left-radius: 2px;
+}
+
+.contaction-email input:focus-visible {
+    outline: none;
+}
+
+.contaction-email button {
+    font-size                 : 14px;
+    background-color          : var(--bg-primary-color);
+    color                     : #fff;
+    padding                   : 16px 30px;
+    margin-left               : -5px;
+    border-top-right-radius   : 2px;
+    border-bottom-right-radius: 2px;
+    cursor                    : pointer;
+    transition                : all 0.2s ease-in-out;
+}
+
+.contaction-email button:hover {
+    background-color: #000;
+}
+
+.container-information {
+    padding-top: 60px;
+}
+
+.footer-top {
+    position      : relative;
+    flex-wrap     : nowrap;
+    padding-bottom: 30px;
+}
+
+.footer-top::after {
+    content         : "";
+    display         : block;
+    position        : absolute;
+    width           : 100%;
+    height          : 0.5px;
+    background-color: #d4d4d4;
+    bottom          : 0;
+}
+
+.footer-top-item h5 {
+    font-size    : 18px;
+    font-weight  : 600;
+    margin-bottom: 20px;
+}
+
+.footer-top-item-list li {
+    font-size    : 14px;
+    margin-bottom: 5px;
+}
+
+.footer-top-item-list li span {
+    color      : #333;
+    line-height: 22px;
+}
+
+.footer-top-item-list li a {
+    display    : block;
+    color      : #ff0000 !important;
+    font-size  : 18px;
+    font-weight: 700;
+    line-height: 28px;
+}
+
+.footer-top-fanpage a {
+    display: block;
+    width  : 100%;
+}
+
+.footer-top-fanpage a img {
+    display: block;
+    width  : 100%;
+}
+
+.footer-top-certify {
+    text-align: right;
+    margin-top: 16px;
+}
+
+.footer-top-certify a {
+    display: block;
+    width  : 100%;
+}
+
+.footer-top-certify a img {
+    width: 145px;
+}
+
+.footer-bottom {
+    flex-wrap  : nowrap;
+    align-items: center;
+    padding    : 30px 0;
+}
+
+.footer-bottom-meida {
+    margin-bottom: 16px;
+}
+
+.footer-bottom-meida a {
+    margin-right: 15px;
+}
+
+.footer-bottom-meida a i:hover {
+    scale: 1.3;
+}
+
+.footer-bottom-meida a i {
+    font-size : large;
+    transition: all 0.2s linear;
+}
+
+.footer-bottom-address .description {
+    font-size    : 13px;
+    color        : #777;
+    line-height  : 20px;
+    margin-bottom: 10px;
+}
+
+.footer-bottom-address .copyright {
+    font-size: 13px;
+    color    : #777;
+}
+
+.footer-bottom-visa {
+    text-align: center;
+}
+
+.footer-bottom-visa img {
+    width: 290px;
+}
