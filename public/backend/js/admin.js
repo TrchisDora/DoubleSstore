@@ -11,3 +11,5 @@ function updateURLProcess(ordercode) {
 function goBack() {
     window.history.back(); // Trở lại trang trước đó
 }
+
+

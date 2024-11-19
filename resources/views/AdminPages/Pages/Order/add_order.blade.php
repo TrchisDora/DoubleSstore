@@ -52,130 +52,125 @@
                             </div>
                         </div>
                     </div>
-
                     <div class="panel-heading">
                         Liệt kê sản phẩm
                     </div>
-                    <div class="row"style="margin: 15px 0px;">
-                                <div class="col-sm-12">
-                                    <form method="GET" action="{{ route('admin.order.add_order') }}">
-                                        <select class="input-sm form-control w-sm inline v-middle" name="category_id"
-                                            onchange="this.form.submit()">
-                                            <option value="0">Tất cả danh mục</option>
-                                            @foreach($categories as $category)
-                                                <option value="{{ $category->category_id }}" {{ request('category_id') == $category->category_id ? 'selected' : '' }}>
-                                                    {{ $category->category_name }}
-                                                </option>
-                                            @endforeach
-                                        </select>
-                                        <select class="input-sm form-control w-sm inline v-middle" name="brand_id"
-                                            onchange="this.form.submit()">
-                                            <option value="0">Tất cả thương hiệu</option>
-                                            @foreach($brands as $brand)
-                                                <option value="{{ $brand->brand_id }}" {{ request('brand_id') == $brand->brand_id ? 'selected' : '' }}>
-                                                    {{ $brand->brand_name }}
-                                                </option>
-                                            @endforeach
-                                        </select>
-                                        <select class="input-sm form-control w-sm inline v-middle" name="product_status"
-                                            onchange="this.form.submit()">
-                                            <option value="">Tất cả sản phẩm</option>
-                                            <option value="0" {{ request('product_status') == '0' ? 'selected' : '' }}>Sản
-                                                phẩm đang ẩn</option>
-                                            <option value="1" {{ request('product_status') == '1' ? 'selected' : '' }}>Sản
-                                                phẩm đang hiển thị</option>
-                                        </select>
-                                        <select class="input-sm form-control w-sm inline v-middle"
-                                            name="product_prominent" onchange="this.form.submit()">
-                                            <option value="">Tất cả sản phẩm</option>
-                                            <option value="1" {{ request('product_prominent') == '1' ? 'selected' : '' }}>
-                                                Sản phẩm nổi bật</option>
-                                            <option value="0" {{ request('product_prominent') == '0' ? 'selected' : '' }}>
-                                                Sản phẩm không nổi bật</option>
-                                        </select>
-                                    </form>
-                                </div>
+                    <div class="row" style="margin: 15px 0px;">
+                        <div class="col-sm-12">
+                            <form method="GET" action="{{ route('admin.order.add_order') }}">
+                                <select class="input-sm form-control w-sm inline v-middle" name="category_id"
+                                    onchange="this.form.submit()">
+                                    <option value="0">Tất cả danh mục</option>
+                                    @foreach($categories as $category)
+                                        <option value="{{ $category->category_id }}" {{ request('category_id') == $category->category_id ? 'selected' : '' }}>
+                                            {{ $category->category_name }}
+                                        </option>
+                                    @endforeach
+                                </select>
+                                <select class="input-sm form-control w-sm inline v-middle" name="brand_id"
+                                    onchange="this.form.submit()">
+                                    <option value="0">Tất cả thương hiệu</option>
+                                    @foreach($brands as $brand)
+                                        <option value="{{ $brand->brand_id }}" {{ request('brand_id') == $brand->brand_id ? 'selected' : '' }}>
+                                            {{ $brand->brand_name }}
+                                        </option>
+                                    @endforeach
+                                </select>
+                                <select class="input-sm form-control w-sm inline v-middle" name="product_status"
+                                    onchange="this.form.submit()">
+                                    <option value="">Tất cả sản phẩm</option>
+                                    <option value="0" {{ request('product_status') == '0' ? 'selected' : '' }}>Sản
+                                        phẩm đang ẩn</option>
+                                    <option value="1" {{ request('product_status') == '1' ? 'selected' : '' }}>Sản
+                                        phẩm đang hiển thị</option>
+                                </select>
+                                <select class="input-sm form-control w-sm inline v-middle" name="product_prominent"
+                                    onchange="this.form.submit()">
+                                    <option value="">Tất cả sản phẩm</option>
+                                    <option value="1" {{ request('product_prominent') == '1' ? 'selected' : '' }}>
+                                        Sản phẩm nổi bật</option>
+                                    <option value="0" {{ request('product_prominent') == '0' ? 'selected' : '' }}>
+                                        Sản phẩm không nổi bật</option>
+                                </select>
+                            </form>
+                        </div>
                     </div>
                     <div class="table-responsive">
-                        <div class="pa #addOrderBtnnel panel-default">
-                                <table class="table table-striped">
-                                    <thead>
+                        <div class="panel panel-default">
+                            <table class="table table-striped">
+                                <thead>
+                                    <tr>
+                                        <th></th>
+                                        <th>Tên sản phẩm</th>
+                                        <th>Số lượng</th>
+                                        <th>Giá</th>
+                                        <th>Hình sản phẩm</th>
+                                        <th>Danh mục</th>
+                                        <th>Thương hiệu</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach($all_product as $product)
                                         <tr>
-                                            <th></th>
-                                            <th>Tên sản phẩm</th>
-                                            <th>Số lượng</th>
-                                            <th>Giá</th>
-                                            <th>Hình sản phẩm</th>
-                                            <th>Danh mục</th>
-                                            <th>Thương hiệu</th>
+                                            <td>
+                                                <button class="btn btn-primary btn-sm add-to-cart w-100"
+                                                    data-id="{{ $product->product_id }}"
+                                                    data-name="{{ $product->product_name }}"
+                                                    data-price="{{ $product->product_price }}"
+                                                    data-image="{{ asset('public/fontend/images/product/' . $product->product_image) }}"
+                                                    {{ $product->product_quantity == 0 ? 'disabled' : '' }}>
+                                                    <i class="fas fa-cart-plus"></i> Thêm vào giỏ
+                                                </button>
+                                            </td>
+                                            <td>{{ $product->product_name }}</td>
+                                            <td>{{ $product->product_quantity }}</td>
+                                            <td>{{ number_format($product->product_price, 0, ',', '.') }}đ</td>
+                                            <td><img src="{{ asset('public/fontend/images/product/' . $product->product_image) }}"
+                                                    height="85" width="100"></td>
+                                            <td>{{ $product->categoryProduct ? $product->categoryProduct->category_name : 'Không có danh mục' }}
+                                            </td>
+                                            <td>{{ $product->brandProduct ? $product->brandProduct->brand_name : 'Không có thương hiệu' }}
+                                            </td>
                                         </tr>
-                                    </thead>
-                                    <tbody>
-                                        @foreach($all_product as $product)
-                                            <tr>
-                                                <td>
-                                                    <button class="btn btn-primary btn-sm add-to-cart w-100"
-                                                        data-id="{{ $product->product_id }}"
-                                                        data-name="{{ $product->product_name }}"
-                                                        data-price="{{ $product->product_price }}"
-                                                        data-image="{{ asset('public/fontend/images/product/' . $product->product_image) }}">
-                                                        <i class="fas fa-cart-plus"></i> Thêm vào giỏ
-                                                    </button>
-                                                </td>
-                                                <td>{{ $product->product_name }}</td>
-                                                <td>{{ $product->product_quantity }}</td>
-                                                <td>{{ number_format($product->product_price, 0, ',', '.') }}đ</td>
-                                                <td><img src="{{ asset('public/fontend/images/product/' . $product->product_image) }}"
-                                                        height="85" width="100"></td>
-                                                <td>{{ $product->categoryProduct ? $product->categoryProduct->category_name : 'Không có danh mục' }}
-                                                </td>
-                                                <td>{{ $product->brandProduct ? $product->brandProduct->brand_name : 'Không có thương hiệu' }}
-                                                </td>
-                                            </tr>
-                                        @endforeach
-                                    </tbody>
-                                </table>
-                          
-
-
-                            
+                                    @endforeach
+                                </tbody>
+                            </table>
                         </div>
                     </div>
                     <footer class="panel-footer">
-                                <div class="row">
-                                    <div class="col-sm-5 text-center">
-                                        <small class="text-muted inline m-t-sm m-b-sm">showing
-                                            {{ $all_product->firstItem() }} - {{ $all_product->lastItem() }} of
-                                            {{ $all_product->total() }} items</small>
-                                    </div>
-                                    <div class="col-sm-7 text-right text-center-xs">
-                                        <ul class="pagination pagination-sm m-t-none m-b-none">
-                                            @if ($all_product->onFirstPage())
-                                                <li class="page-item disabled"><span class="page-link">Quay lại</span></li>
-                                            @else
-                                                <li class="page-item">
-                                                    <a class="page-link" href="{{ $all_product->previousPageUrl() }}">Quay
-                                                        lại</a>
-                                                </li>
-                                            @endif
-                                            @foreach ($all_product->getUrlRange(1, $all_product->lastPage()) as $page => $url)
-                                                <li
-                                                    class="page-item {{ $page == $all_product->currentPage() ? 'active' : '' }}">
-                                                    <a class="page-link" href="{{ $url }}">{{ $page }}</a>
-                                                </li>
-                                            @endforeach
-                                            @if ($all_product->hasMorePages())
-                                                <li class="page-item">
-                                                    <a class="page-link" href="{{ $all_product->nextPageUrl() }}">Trang
-                                                        kế</a>
-                                                </li>
-                                            @else
-                                                <li class="page-item disabled"><span class="page-link">Trang kế</span></li>
-                                            @endif
-                                        </ul>
-                                    </div>
-                                </div>
-                            </footer>
+                        <div class="row">
+                            <div class="col-sm-5 text-center">
+                                <small class="text-muted inline m-t-sm m-b-sm">showing
+                                    {{ $all_product->firstItem() }} - {{ $all_product->lastItem() }} of
+                                    {{ $all_product->total() }} items</small>
+                            </div>
+                            <div class="col-sm-7 text-right text-center-xs">
+                                <ul class="pagination pagination-sm m-t-none m-b-none">
+                                    @if ($all_product->onFirstPage())
+                                        <li class="page-item disabled"><span class="page-link">Quay lại</span></li>
+                                    @else
+                                        <li class="page-item">
+                                            <a class="page-link" href="{{ $all_product->previousPageUrl() }}">Quay
+                                                lại</a>
+                                        </li>
+                                    @endif
+                                    @foreach ($all_product->getUrlRange(1, $all_product->lastPage()) as $page => $url)
+                                        <li class="page-item {{ $page == $all_product->currentPage() ? 'active' : '' }}">
+                                            <a class="page-link" href="{{ $url }}">{{ $page }}</a>
+                                        </li>
+                                    @endforeach
+                                    @if ($all_product->hasMorePages())
+                                        <li class="page-item">
+                                            <a class="page-link" href="{{ $all_product->nextPageUrl() }}">Trang
+                                                kế</a>
+                                        </li>
+                                    @else
+                                        <li class="page-item disabled"><span class="page-link">Trang kế</span></li>
+                                    @endif
+                                </ul>
+                            </div>
+                        </div>
+                    </footer>
                 </div>
                 {{-- Thông tin thanh toán --}}
                 <div class="col-md-4">
@@ -188,13 +183,14 @@
                                     </div>
                                     <div class="form-group">
                                         <label>Thu ngân:</label>
-                                        <img alt="" src="{{ asset('public/backend/images/icons/avt-admin.png') }}" height="40" width="40">
+                                        <img alt="" src="{{ asset('public/backend/images/icons/avt-admin.png') }}"
+                                            height="40" width="40">
                                         <span class="username">
                                             <?php
-                                            $name = Session::get('admin_name');
-                                                if ($name) {
-                                                echo $name;
-                                            }
+$name = Session::get('admin_name');
+if ($name) {
+    echo $name;
+}
                                             ?>
                                         </span>
                                     </div>
@@ -206,12 +202,14 @@
                                     <div class="form-group">
                                         <label for="customerPhone" class="mr-2">Tìm khách hàng:</label>
                                         <div class="input-group">
-                                            <input type="text" id="customerPhone" class="form-control" placeholder="Nhập số điện thoại" style="height: 40px;">
+                                            <input type="text" id="customerPhone" class="form-control"
+                                                placeholder="Nhập số điện thoại" style="height: 40px;">
                                             <span class="input-group-btn">
-                                            <button class="btn btn-primary" id="searchCustomerBtn" type="button" style="height: 40px;">Tìm kiếm</button>
+                                                <button class="btn btn-primary" id="searchCustomerBtn" type="button"
+                                                    style="height: 40px;">Tìm kiếm</button>
                                             </span>
                                         </div>
-                                        </div>
+                                    </div>
                                     <div class="form-group">
                                         <label>Tổng tiền hàng:</label>
                                         <span id="totalAmount">0</span> đ
@@ -239,7 +237,8 @@
 
                                     <div class="form-group">
                                         <label for="customerPaid">Khách thanh toán:</label>
-                                        <input type="text" class="form-control" id="customerPaid" value="0" style="height: 40px;">
+                                        <input type="text" class="form-control" id="customerPaid" value="0"
+                                            style="height: 40px;">
                                     </div>
 
                                     <div class="form-group">
@@ -247,7 +246,8 @@
                                         <span id="changeAmount">0</span>
                                     </div>
 
-                                    <button class="btn btn-success w-100 mt-3" id="checkoutBtn" style="height: 50px;">Thanh toán</button>
+                                    <button class="btn btn-success w-100 mt-3" id="checkoutBtn"
+                                        style="height: 50px;">Thanh toán</button>
                                 </div>
                             </div>
                         </div>
