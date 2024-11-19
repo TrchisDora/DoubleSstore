@@ -824,6 +824,7 @@ ul.top-menu>li>a:hover,ul.top-menu>li>a:focus {
 /*--market--*/
 .panel-heading {
     position: relative;
+<<<<<<< HEAD
     height: 57px;
     line-height: 57px;
     letter-spacing: 0.2px;
@@ -837,6 +838,22 @@ ul.top-menu>li>a:hover,ul.top-menu>li>a:focus {
     text-transform: uppercase;
     text-align: center;
 }
+=======
+    letter-spacing: 0.2px;
+    color: #000;
+    font-size: 1.2em; /* Sử dụng em để kích thước chữ tự co giãn theo tỷ lệ */
+    font-weight: 400;
+    padding: 12px 16px; /* Padding để phần tử co giãn theo nội dung */
+    background: #ddede0;
+    border-top-right-radius: 2px;
+    border-top-left-radius: 2px; 
+    text-transform: uppercase;
+    text-align: center;
+}
+.panel-heading img {
+    width: 1.5em; /* Dùng đơn vị em để hình ảnh cũng co giãn theo font-size */
+}
+>>>>>>> d97843cdb195b8e1c481d724187343e9507331a5
 .panel {
     border: none ! important;
 }
@@ -984,7 +1001,32 @@ div#graph1,div#graph4,div#graph5,div#graph6,div#graph7,div#graph8,div#graph9 {
     margin-bottom: 1em;
     text-transform: uppercase;
 }
+<<<<<<< HEAD
 /*-- graphs --*/
+=======
+/*-- table-order --*/
+.table-container {
+    height: 400px; /* Chiều cao cố định cho bảng */
+    overflow-y: auto;
+    margin-bottom: 50px; /* Thanh cuộn dọc sẽ xuất hiện khi nội dung vượt quá chiều cao */
+}
+.table-container-2 {
+    height: 500px; /* Chiều cao cố định cho bảng */
+    overflow-y: auto;
+    margin-bottom: 50px; /* Thanh cuộn dọc sẽ xuất hiện khi nội dung vượt quá chiều cao */
+}
+
+/* Optional: Thêm style cho bảng nếu cần */
+.table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.table th, .table td {
+    padding: 10px;
+    text-align: left;
+}
+>>>>>>> d97843cdb195b8e1c481d724187343e9507331a5
 /*--statistics--*/
 .stats-info ul li {
     margin-bottom: 1em;

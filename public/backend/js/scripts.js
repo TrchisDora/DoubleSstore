@@ -213,7 +213,11 @@
                 cursorborder: "0px solid #fff",
                 cursorborderradius: "0px",
                 cursorwidth: "3px"
+<<<<<<< HEAD
             });
+=======
+            });5
+>>>>>>> d97843cdb195b8e1c481d724187343e9507331a5
 
             $('#sidebar').toggleClass('hide-left-bar');
             if ($('#sidebar').hasClass('hide-left-bar')) {

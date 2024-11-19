@@ -162,9 +162,15 @@ class CategoryProductController extends Controller
                 return redirect()->back()->with('message', 'Đã cập nhật trạng thái sản phẩm thành công!');
                     
  
+<<<<<<< HEAD
             case '3': // Xuất dữ liệu các mục
                 // Logic xuất dữ liệu có thể ở đây (ví dụ: tạo file CSV)
                 return response()->download($filePath); // Giả sử bạn đã tạo file cần tải về
+=======
+            // case '3': // Xuất dữ liệu các mục
+            //     // Logic xuất dữ liệu có thể ở đây (ví dụ: tạo file CSV)
+            //     return response()->download($filePath); // Giả sử bạn đã tạo file cần tải về
+>>>>>>> d97843cdb195b8e1c481d724187343e9507331a5
 
             default:
                 return redirect()->back()->with('error', 'Hành động không hợp lệ!');

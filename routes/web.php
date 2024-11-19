@@ -7,6 +7,7 @@ use App\Http\Controllers\CategoryProductController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\BrandProductController;
 use App\Http\Controllers\OrderController;
+use App\Http\Controllers\CouponController;
 
 // Frontend
 Route::get('/trang-chu', [HomeController::class, 'index']);
@@ -81,8 +82,7 @@ Route::post('import-csv', [CategoryProductController::class, 'import_csv'])->nam
 //Product
 Route::get('/add-product', [ProductController::class, 'add_product'])->name('add.product');
 Route::post('/save-product', [ProductController::class, 'save_product'])->name('save.product');
-Route::get('/all-product', [ProductController::class, 'all_product'])->name('all.product');
-Route::get('admin/products', [ProductController::class, 'all_product'])->name('admin.products.index');
+Route::get('/all-product', [ProductController::class, 'all_product'])->name('all.product');Route::get('admin/products', [ProductController::class, 'all_product'])->name('admin.products.index');
 Route::post('/admin/products/bulk-action', [ProductController::class, 'bulkAction'])->name('admin.products.bulk_action');
 Route::get('edit-product/{id}', [ProductController::class, 'edit_product'])->name('edit.product');
 Route::post('update-product/{id}', [ProductController::class, 'update_product'])->name('update.product');
@@ -103,5 +103,18 @@ Route::get('unactive-brand-product/{id}', [BrandProductController::class, 'unact
 Route::get('show-brand-home/{slug}', [BrandProductController::class, 'show_brand_home'])->name('show.brand.home');
 //Order
 Route::get('order', [OrderController::class, 'order_index'])->name('admin.orders.index');
-Route::post('order/bulk-action', [OrderController::class, 'bulkAction'])->name('admin.orders.bulk_action');
-
+Route::get('/orders', [OrderController::class, 'getOrdersByStatus'])->name('orders.byStatus');
+Route::post('order/update-status', [OrderController::class, 'updateOrderStatus'])->name('updateOrderStatus');
+Route::get('/admin/orders/{order_code}', [OrderController::class, 'showOrderDetail'])->name('order.detail');
+Route::post('/admin/orders/bulk-action', [OrderController::class, 'bulkAction'])->name('bulk_action');
+Route::get('/add-order', [OrderController::class, 'add_order'])->name('add_order');
+Route::get('admin/orders', [OrderController::class, 'add_order'])->name('admin.order.add_order');
+Route::get('/order/search-customer', [OrderController::class, 'searchCustomerByPhone'])->name('order.customer.search');
+//Coupon
+Route::get('coupons', [CouponController::class, 'all_coupon'])->name('admin.coupons.index');
+Route::get('/all-coupon', [CouponController::class, 'all_coupon'])->name('all.coupons');
+Route::get('/add-coupon', [CouponController::class, 'add_coupon'])->name('add_coupon');
+Route::post('/save-coupon', [CouponController::class, 'save_coupon'])->name('save.coupon');
+Route::get('coupon/edit/{coupon_id}', [CouponController::class, 'edit_coupon'])->name('edit_coupon');
+Route::post('coupon/update/{coupon_id}', [CouponController::class, 'update_coupon'])->name('update_coupon');
+Route::get('coupon/delete/{coupon_id}', [CouponController::class, 'delete_coupon'])->name('delete_coupon');
