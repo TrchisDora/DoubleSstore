@@ -114,14 +114,9 @@ class CouponController extends Controller
     // Xóa mã giảm giá
     public function delete_coupon($coupon_id)
     {
-        // Lấy thông tin coupon từ cơ sở dữ liệu
-        $coupon = Coupon::findOrFail($coupon_id); // Nếu không tìm thấy sẽ trả về lỗi 404
-        
-        // Xóa coupon
+        $coupon = Coupon::findOrFail($coupon_id); 
         $coupon->delete();
-
-        // Thông báo xóa thành công và quay lại danh sách
         Session::put('message', 'Xóa mã giảm giá thành công!');
-        return redirect()->route('admin.coupons.index');
+        return redirect()->route('all.coupon');
     }
 }

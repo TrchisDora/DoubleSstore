@@ -117,4 +117,4 @@ Route::post('/save-coupon', [CouponController::class, 'save_coupon'])->name('sav
 Route::get('/all-coupon', [CouponController::class, 'all_coupon'])->name('all.coupon');
 Route::get('edit-coupon/{id}', [CouponController::class, 'edit_coupon'])->name('edit.coupon');
 Route::post('update-coupon/{id}', [CouponController::class, 'update_coupon'])->name('update.coupon');
-Route::get('delete-coupon/{id}', [CouponController::class, 'delete_coupon'])->name('delete.coupon');
+Route::get('delete-coupon/{id}',[CouponController::class, 'delete_coupon'])->name('delete.coupon');
