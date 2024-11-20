@@ -111,11 +111,10 @@ Route::post('/admin/orders/bulk-action', [OrderController::class, 'bulkAction'])
 Route::get('/add-order', [OrderController::class, 'add_order'])->name('add_order');
 Route::get('admin/orders', [OrderController::class, 'add_order'])->name('admin.order.add_order');
 Route::get('/order/search-customer', [OrderController::class, 'searchCustomerByPhone'])->name('order.customer.search');
-//Coupon
-Route::get('coupons', [CouponController::class, 'all_coupon'])->name('admin.coupons.index');
-Route::get('/all-coupon', [CouponController::class, 'all_coupon'])->name('all.coupons');
-Route::get('/add-coupon', [CouponController::class, 'add_coupon'])->name('add_coupon');
+// Coupon
+Route::get('/add-coupon', [CouponController::class, 'add_coupon'])->name('add.coupon');
 Route::post('/save-coupon', [CouponController::class, 'save_coupon'])->name('save.coupon');
-Route::get('coupon/edit/{coupon_id}', [CouponController::class, 'edit_coupon'])->name('edit_coupon');
-Route::post('coupon/update/{coupon_id}', [CouponController::class, 'update_coupon'])->name('update_coupon');
-Route::get('coupon/delete/{coupon_id}', [CouponController::class, 'delete_coupon'])->name('delete_coupon');
+Route::get('/all-coupon', [CouponController::class, 'all_coupon'])->name('all.coupon');
+Route::get('edit-coupon/{id}', [CouponController::class, 'edit_coupon'])->name('edit.coupon');
+Route::post('update-coupon/{id}', [CouponController::class, 'update_coupon'])->name('update.coupon');
+Route::get('delete-coupon/{id}', [CouponController::class, 'delete_coupon'])->name('delete.coupon');

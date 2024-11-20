@@ -64,39 +64,32 @@ class CouponController extends Controller
     }
     
 
-    // Xử lý cập nhật thông tin mã giảm giá
-    public function update_coupon(Request $request, $coupon_id)
-    {
-        // Lấy thông tin coupon từ cơ sở dữ liệu
-        $coupon = Coupon::findOrFail($coupon_id); // Nếu không tìm thấy sẽ trả về lỗi 404
 
-        // Validate dữ liệu
-        $data = $request->validate([
-            'coupon_name' => 'required|max:255',
-            'coupon_code' => 'required|unique:tbl_coupon,coupon_code,' . $coupon_id,
-            'coupon_condition' => 'required|integer',
-            'coupon_number' => 'required|numeric',
-            'coupon_time' => 'required|integer',
-            'coupon_start_date' => 'required|date',
-            'coupon_end_date' => 'required|date',
-        ]);
 
-        // Cập nhật các trường dữ liệu
-        $coupon->coupon_name = $data['coupon_name'];
-        $coupon->coupon_code = $data['coupon_code'];
-        $coupon->coupon_condition = $data['coupon_condition'];
-        $coupon->coupon_number = $data['coupon_number'];
-        $coupon->coupon_time = $data['coupon_time'];
-        $coupon->coupon_start_date = $data['coupon_start_date'];
-        $coupon->coupon_end_date = $data['coupon_end_date'];
-        
-        // Lưu các thay đổi
-        $coupon->save();
+public function update_coupon(Request $request, $coupon_id)
+{
+    // Lấy thông tin coupon từ cơ sở dữ liệu
+    $coupon = Coupon::findOrFail($coupon_id); // Nếu không tìm thấy sẽ trả về lỗi 404
 
-        // Thông báo cập nhật thành công và redirect về trang danh sách
-        Session::put('message', 'Cập nhật mã giảm giá thành công!');
-        return redirect()->route('admin.coupons.index');
-    }
+    // Validate dữ liệu
+    $data = $request->validate([
+        'coupon_name' => 'required|max:255',
+        'coupon_code' => 'required|unique:tbl_coupon,coupon_code,' . $coupon_id . ',coupon_id',
+        'coupon_condition' => 'required|integer',
+        'coupon_number' => 'required|numeric',
+        'coupon_time' => 'required|integer',
+        'coupon_start_date' => 'required|date',
+        'coupon_end_date' => 'required|date',
+    ]);
+
+    // Cập nhật các trường dữ liệu
+    $coupon->update($data);
+
+    // Thông báo cập nhật thành công và redirect về trang danh sách
+    Session::put('message', 'Cập nhật mã giảm giá thành công!');
+    return redirect()->route('admin.coupons.index');
+}
+
 
     // Xóa mã giảm giá
     public function delete_coupon($coupon_id)

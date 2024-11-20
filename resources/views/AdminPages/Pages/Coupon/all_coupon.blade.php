@@ -35,7 +35,7 @@
                 <div class="col-sm-3"></div>
                 <div class="col-sm-3"></div>
                 <div class="col-sm-6 m-b-xs">
-                    <form method="GET" action="{{ route('admin.coupons.index') }}" style="display: inline; flex-grow: 1;">
+                    <form method="GET" action="" style="display: inline; flex-grow: 1;">
                         <div class="input-group">
                             <input type="text" name="search" class="input-sm form-control" placeholder="Tìm kiếm mã giảm giá" value="{{ request('search') }}">
                             <span class="input-group-btn">
@@ -95,11 +95,11 @@
                                 {{ \Carbon\Carbon::parse($coupon->coupon_end_date)->format('d-m-Y') }}
                             </td>
                             <td>
-                                <a href="{{ URL::to('/edit-coupon/' . $coupon->coupon_id) }}" class="active styling-edit">
+                                <a href="{{ URL::to('/edit-coupon/'.$coupon->coupon_id) }}" class="active styling-edit">
                                     <i class="fa fa-pencil-square-o text-success text-active"></i>
                                 </a>
                                 <a onclick="return confirm('Bạn có chắc chắn muốn xóa mã giảm giá này không?')" 
-                                href="{{ URL::to('/delete-coupon/' . $coupon->coupon_id) }}" class="active styling-edit">
+                                href="{{ URL::to('/delete-coupon/'.$coupon->coupon_id) }}" class="active styling-edit">
                                     <i class="fa fa-times text-danger text"></i>
                                 </a>
                             </td>
