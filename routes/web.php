@@ -14,7 +14,12 @@ Route::get('/trang-chu', [HomeController::class, 'index']);
 Route::get('/', [HomeController::class, 'index']);
 
 //danh mục sản phẩm trang chủ
-Route::get('/danh-muc-san-pham/{$category_id}', [CategoryProduct::class, 'index']);
+Route::get('/danh muc san pham/{category_id}', [CategoryProductController::class, 'show_category_home'])->name('category.show');
+Route::get('/chi-tiet-san-pham/{product_id}', [ProductController::class, 'details_product'])->name('');
+
+//thương hiệu sản phẩm 
+Route::get('/thuong hieu san pham/{brand_id}', [BrandProductController::class, 'show_brand_home'])->name('brand.show');
+
 
 
 

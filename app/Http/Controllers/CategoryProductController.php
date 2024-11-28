@@ -10,6 +10,8 @@ use Excel;
 use Session;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Redirect;
+use App\Models\BrandProduct;     // Import model BrandProduct
+use App\Models\Product;          // Import model Product
 
 class CategoryProductController extends Controller
 {
@@ -191,26 +193,49 @@ class CategoryProductController extends Controller
         return Redirect::to('all-category-product');
     }
 
-    public function show_category_home(Request $request, $slug_category_product) {
-        // slide
-        $slider = Slider::orderBy('slider_id', 'DESC')->where('slider_status', '1')->take(4)->get();
-        $cate_product = CategoryProduct::where('category_status', '0')->orderBy('category_id', 'desc')->get();
-        $brand_product = DB::table('tbl_brand')->where('brand_status', '0')->orderBy('brand_id', 'desc')->get();
-        $category_by_id = DB::table('tbl_product')
-            ->join('tbl_category_product', 'tbl_product.category_id', '=', 'tbl_category_product.category_id')
-            ->where('tbl_category_product.slug_category_product', $slug_category_product)
-            ->paginate(6);
+    public function show_category_home($category_id)
+{
+        // Lấy danh mục sản phẩm
+        $cate_product = CategoryProduct::where('category_status', 1)->orderBy('category_id', 'desc')->get();
 
-        $category_name = CategoryProduct::where('slug_category_product', $slug_category_product)->limit(1)->get();
+        // Lấy thương hiệu sản phẩm
+        $brand_product = BrandProduct::where('brand_status', 0)->orderBy('brand_id', 'desc')->get();
 
-        // SEO
-        $meta_desc = $category_name->first()->category_desc ?? '';
-        $meta_keywords = $category_name->first()->meta_keywords ?? '';
-        $meta_title = $category_name->first()->category_name ?? '';
-        $url_canonical = $request->url();
+        // Lấy danh sách sản phẩm theo category_id
+        $category_by_id = Product::where('category_id', $category_id)
+            ->where('product_status', 0)
+            ->orderBy('product_id', 'desc')
+            ->get();
 
-        return view('pages.category.show_category', compact('cate_product', 'brand_product', 'category_by_id', 'category_name', 'meta_desc', 'meta_keywords', 'meta_title', 'url_canonical', 'slider'));
-    }
+        // Lấy tên danh mục sản phẩm theo category_id
+        $category_name = CategoryProduct::where('category_id', $category_id)->limit(1)->get();
+
+        // Truyền tất cả các biến vào view
+        return view('UserPages.Pages.category.show_category', compact('cate_product', 'brand_product', 'category_by_id', 'category_name'));
+}
+
+
+   
+    //(Request $request, $slug_category_product) 
+        // // slide
+        // $slider = Slider::orderBy('slider_id', 'DESC')->where('slider_status', '1')->take(4)->get();
+        // $cate_product = CategoryProduct::where('category_status', '0')->orderBy('category_id', 'desc')->get();
+        // $brand_product = DB::table('tbl_brand')->where('brand_status', '0')->orderBy('brand_id', 'desc')->get();
+        // $category_by_id = DB::table('tbl_product')
+        //     ->join('tbl_category_product', 'tbl_product.category_id', '=', 'tbl_category_product.category_id')
+        //     ->where('tbl_category_product.slug_category_product', $slug_category_product)
+        //     ->paginate(6);
+
+        // $category_name = CategoryProduct::where('slug_category_product', $slug_category_product)->limit(1)->get();
+
+        // // SEO
+        // $meta_desc = $category_name->first()->category_desc ?? '';
+        // $meta_keywords = $category_name->first()->meta_keywords ?? '';
+        // $meta_title = $category_name->first()->category_name ?? '';
+        // $url_canonical = $request->url();
+
+        // return view('pages.category.show_category', compact('cate_product', 'brand_product', 'category_by_id', 'category_name', 'meta_desc', 'meta_keywords', 'meta_title', 'url_canonical', 'slider'));
+    
 
     public function export_csv() {
         return Excel::download(new ExcelExports(), 'category_product.xlsx');
@@ -221,4 +246,5 @@ class CategoryProductController extends Controller
         Excel::import(new ExcelImports, $path);
         return back();
     }
+    
 }

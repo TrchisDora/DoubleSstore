@@ -261,5 +261,40 @@ class ProductController extends Controller
         return redirect()->route('all.product', ['page' => session('current_page', 1)]);
 
     }
-    
+    //end function admin page
+    public function details_product($product_id)
+{
+    // Lấy danh mục sản phẩm
+    $cate_product = CategoryProduct::where('category_status', 1)
+        ->orderBy('category_id', 'desc')
+        ->get();
+
+    // Lấy thương hiệu sản phẩm
+    $brand_product = BrandProduct::where('brand_status', 0)
+        ->orderBy('brand_id', 'desc')
+        ->get();
+
+    // Lấy chi tiết sản phẩm
+    $details_product = Product::with(['category', 'brand'])
+        ->where('product_id', $product_id)
+        ->get();
+
+    //Kiểm tra nếu sản phẩm không tồn tại
+    if (!$details_product) {
+        abort(404, 'Product not found.');
+    }
+
+    foreach($details_product as $key => $value){
+        $category_id = $value->category_id;
+    }
+    $related_product = Product::with(['category', 'brand'])
+        ->where('category_id', $category_id)
+        ->whereNotIn('product_id', [$product_id])
+        ->get();
+
+    // Truyền dữ liệu vào view
+    return view('UserPages.Pages.details.show_details', compact('cate_product', 'brand_product', 'details_product', 'related_product'));
+
+
+    }
 }
