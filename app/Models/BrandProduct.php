@@ -17,4 +17,9 @@ class BrandProduct extends Model
     ];
 
     public $timestamps = true; 
+    // Quan hệ với Product
+    public function products()
+    {
+        return $this->hasMany(Product::class, 'brand_id');
+    }
 }

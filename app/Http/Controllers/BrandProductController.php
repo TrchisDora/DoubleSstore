@@ -6,6 +6,9 @@ use Illuminate\Http\Request;
 use App\Models\BrandProduct;
 use Session;
 use Illuminate\Support\Facades\Redirect;
+use App\Models\CategoryProduct;  // Import model CategoryProduct
+use App\Models\Product;          // Import model Product
+
 
 class BrandProductController extends Controller
 {
@@ -103,5 +106,26 @@ class BrandProductController extends Controller
         BrandProduct::destroy($id);
         Session::put('message', 'Xóa thương hiệu sản phẩm thành công');
         return Redirect::to('all-brand-product');
+    }
+
+    //end function admin page
+    public function show_brand_home($brand_id){
+        // Lấy danh mục sản phẩm
+        $cate_product = CategoryProduct::where('category_status', 1)->orderBy('category_id', 'desc')->get();
+
+        // Lấy thương hiệu sản phẩm
+        $brand_product = BrandProduct::where('brand_status', 0)->orderBy('brand_id', 'desc')->get();
+
+        // Lấy danh sách sản phẩm theo brand_id
+        $brand_by_id = Product::where('brand_id', $brand_id)
+            ->where('product_status', 0)
+            ->orderBy('product_id', 'desc')
+            ->get();
+        
+        // Lấy tên thương hiệu sản phẩm theo brand_id
+        $brand_name = BrandProduct::where('brand_id', $brand_id)->limit(1)->get();
+
+        // Truyền tất cả các biến vào view
+        return view('UserPages.Pages.brand.show_brand', compact('cate_product', 'brand_product', 'brand_by_id', 'brand_name'));
     }
 }
