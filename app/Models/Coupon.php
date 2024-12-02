@@ -9,19 +9,27 @@ class Coupon extends Model
 {
     use HasFactory;
 
-    protected $table = 'tbl_coupon';
+    protected $table = 'tbl_coupon'; // Tên bảng trong cơ sở dữ liệu
 
-    // Thêm vào đây các trường mới để có thể lưu trữ chúng
+    protected $primaryKey = 'coupon_id'; // Khóa chính là coupon_id
+
+    public $timestamps = false; // Tắt timestamps nếu không có trường created_at và updated_at
+
+    // Các cột có thể mass assign
     protected $fillable = [
         'coupon_name',
-        'coupon_code',
-        'coupon_type',
-        'coupon_value',
         'coupon_time',
-        'category_id',
-        'status',
-        'coupon_start_date',  // Thêm trường ngày bắt đầu
-        'coupon_end_date',    // Thêm trường ngày kết thúc
+        'coupon_condition',
+        'coupon_number',
+        'coupon_code',
+        'coupon_start_date',
+        'coupon_end_date',
     ];
-    public $timestamps = false; // Tắt Eloquent timestamps
+
+    // Nếu cần thiết, có thể chỉ định kiểu dữ liệu cho một số trường
+    protected $casts = [
+        'coupon_start_date' => 'date',
+        'coupon_end_date' => 'date',
+        'coupon_condition' => 'integer',
+    ];
 }

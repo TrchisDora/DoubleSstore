@@ -36,46 +36,54 @@
 
             <div class="panel-body">
                 <div class="position-center">
-                    <form role="form" action="{{ URL::to('/save-coupon') }}" method="post">
+                <form action="{{ route('save.coupon') }}" method="POST">
                         @csrf
+
                         <div class="form-group">
                             <label for="coupon_name">Tên mã giảm giá</label>
-                            <input type="text" class="form-control" name="coupon_name" placeholder="Nhập tên mã giảm giá" required>
+                            <input type="text" name="coupon_name" class="form-control" id="coupon_name" 
+                                value="{{ old('coupon_name') }}" required>
                         </div>
-                        
+
                         <div class="form-group">
                             <label for="coupon_code">Mã giảm giá</label>
-                            <input type="text" class="form-control" name="coupon_code" placeholder="Nhập mã giảm giá" required>
+                            <input type="text" name="coupon_code" class="form-control" id="coupon_code" 
+                                value="{{ old('coupon_code') }}" required>
                         </div>
-                        
+
                         <div class="form-group">
-                            <label for="coupon_time">Số lượng mã</label>
-                            <input type="number" class="form-control" name="coupon_time" placeholder="Số lượng mã giảm giá" required>
-                        </div>
-                        
-                        <div class="form-group">
-                            <label for="coupon_condition">Loại giảm giá</label>
-                            <select name="coupon_condition" class="form-control" required>
-                                <option value="0">Giảm theo %</option>
-                                <option value="1">Giảm theo số tiền</option>
+                            <label for="coupon_condition">Loại mã giảm giá</label>
+                            <select name="coupon_condition" id="coupon_condition" class="form-control" required>
+                                <option value="0">Phần trăm</option>
+                                <option value="1">Số tiền cố định</option>
                             </select>
                         </div>
-                        
+
                         <div class="form-group">
-                            <label for="coupon_number">Số tiền hoặc % giảm giá</label>
-                            <input type="number" step="0.01" class="form-control" name="coupon_number" placeholder="Nhập giá trị giảm" required>
-                        </div> 
+                            <label for="coupon_number">Giá trị mã giảm giá</label>
+                            <input type="number" name="coupon_number" class="form-control" id="coupon_number" 
+                                value="{{ old('coupon_number') }}" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="coupon_time">Số lần sử dụng</label>
+                            <input type="number" name="coupon_time" class="form-control" id="coupon_time" 
+                                value="{{ old('coupon_time') }}" required>
+                        </div>
 
                         <div class="form-group">
                             <label for="coupon_start_date">Ngày bắt đầu</label>
-                            <input type="date" class="form-control" id="coupon_start_date" name="coupon_start_date" required>
+                            <input type="date" name="coupon_start_date" class="form-control" id="coupon_start_date" 
+                                value="{{ old('coupon_start_date') }}">
                         </div>
 
                         <div class="form-group">
                             <label for="coupon_end_date">Ngày kết thúc</label>
-                            <input type="date" class="form-control" id="coupon_end_date" name="coupon_end_date" required>
+                            <input type="date" name="coupon_end_date" class="form-control" id="coupon_end_date" 
+                                value="{{ old('coupon_end_date') }}">
                         </div>
-                        <button type="submit" name="add_coupon" class="btn btn-info">Thêm mã giảm giá</button>
+
+                        <button type="submit" class="btn btn-success">Thêm mã giảm giá</button>
                     </form>
                 </div>
             </div>
