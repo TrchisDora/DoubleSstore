@@ -2,46 +2,30 @@
 
 namespace App\Models;
 
-// use Illuminate\Contracts\Auth\MustVerifyEmail;
-use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Foundation\Auth\User as Authenticatable;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Notifications\Notifiable;
+use Illuminate\Support\Facades\Hash;
 
-class User extends Authenticatable
+class User extends Model
 {
-    use HasFactory, Notifiable;
+    use Notifiable; // Sử dụng trait Notifiable để gửi thông báo
 
-    /**
-     * The attributes that are mass assignable.
-     *
-     * @var array<int, string>
-     */
+    protected $table = 'users'; // Tên bảng trong cơ sở dữ liệu
+    protected $primaryKey = 'id'; // Khóa chính mặc định là 'id'
+
+    // Cột được phép gán giá trị
     protected $fillable = [
-        'name',
-        'email',
+        'name', 
+        'email', 
         'password',
     ];
 
-    /**
-     * The attributes that should be hidden for serialization.
-     *
-     * @var array<int, string>
-     */
-    protected $hidden = [
-        'password',
-        'remember_token',
-    ];
+    // Tự động quản lý timestamps (created_at và updated_at)
+    public $timestamps = true;
 
-    /**
-     * Get the attributes that should be cast.
-     *
-     * @return array<string, string>
-     */
-    protected function casts(): array
+    // Mã hóa mật khẩu khi lưu vào cơ sở dữ liệu
+    public function setPasswordAttribute($password)
     {
-        return [
-            'email_verified_at' => 'datetime',
-            'password' => 'hashed',
-        ];
+        $this->attributes['password'] = Hash::make($password); // Mã hóa mật khẩu
     }
 }

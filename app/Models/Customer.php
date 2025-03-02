@@ -17,9 +17,8 @@ class Customer extends Model
         'customer_email',
         'customer_password',
         'customer_phone',
+        'email_verified_at',
     ];
-
-
     public $timestamps = true;
 
 

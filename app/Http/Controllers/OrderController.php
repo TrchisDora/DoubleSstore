@@ -8,6 +8,7 @@ use App\Models\CategoryProduct;
 use App\Models\BrandProduct;  
 use App\Models\Customer; 
 use Illuminate\Http\Request;
+use App\Events\OrderChangedByAdmin;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 
@@ -114,14 +115,32 @@ class OrderController extends Controller
 
     // Cập nhật trạng thái đơn hàng
     public function updateOrderStatus(Request $request)
-    {      
-        $orderCode = $request->input('order_code');
-        $status = $request->input('new_status');
+{
+    // Lấy order_code và trạng thái mới từ request
+    $orderCode = $request->input('order_code');
+    $status = $request->input('new_status');
 
-        Order::where('order_code', $orderCode)->update(['order_status' => $status]);
+    // Cập nhật trạng thái đơn hàng
+    $order = Order::where('order_code', $orderCode)->first();
 
-        return redirect()->route('admin.orders.index')->with('message', 'Cập nhật trạng thái đơn hàng thành công!');
+    // Kiểm tra xem đơn hàng có tồn tại không
+    if (!$order) {
+        return redirect()->route('admin.orders.index')->with('error', 'Đơn hàng không tồn tại!');
     }
+
+    // Cập nhật trạng thái đơn hàng
+    $order->order_status = $status;
+    $order->save();
+
+    // Lấy thông tin khách hàng liên quan
+    $customer = Customer::find($order->customer_id);
+
+    
+
+    // Trả về thông báo thành công
+    return redirect()->route('admin.orders.index')->with('message', 'Cập nhật trạng thái đơn hàng thành công!');
+}
+
 
     // Hiển thị chi tiết đơn hàng
     public function showOrderDetail($order_code)

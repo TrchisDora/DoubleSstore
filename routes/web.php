@@ -8,6 +8,9 @@ use App\Http\Controllers\ProductController;
 use App\Http\Controllers\BrandProductController;
 use App\Http\Controllers\OrderController;
 use App\Http\Controllers\CouponController;
+use App\Http\Controllers\Auth\ForgotPasswordController;
+use App\Http\Controllers\Auth\RegisterController;
+use App\Http\Controllers\CustomerController;
 
 // Frontend
 Route::get('/trang-chu', [HomeController::class, 'index']);
@@ -58,19 +61,33 @@ Route::get('/thuong hieu san pham/{brand_id}', [BrandProductController::class, '
 
 
 
-// Backend
+// Backend Routes
+
 // Hiển thị trang đăng nhập
 Route::get('/login', [AdminController::class, 'login'])->name('login');
 
 // Xử lý đăng nhập (POST)
 Route::post('/admin', [AdminController::class, 'admin'])->name('admin.login');
 
-// Trang dashboard sau khi đăng nhập thành công
+// Định nghĩa route cho trang Dashboard
 Route::get('/dashboard', [AdminController::class, 'dashboard'])->name('admin.dashboard');
-
 // Đăng xuất
 Route::get('/logout', [AdminController::class, 'logout'])->name('admin.logout');
 
+// Quên mật khẩu
+// Route quên mật khẩu
+Route::get('forgot-password', [ForgotPasswordController::class, 'showForgotPasswordForm'])->name('forgot.password.form');
+Route::post('forgot-password', [ForgotPasswordController::class, 'sendResetLink'])->name('send.reset.link');
+
+// Route reset mật khẩu
+Route::get('reset-password/{token}', [ForgotPasswordController::class, 'showResetForm'])->name('reset.password.form');
+Route::post('reset-password', [ForgotPasswordController::class, 'resetPassword'])->name('reset.password');
+
+// Route đăng ký tài khoản
+Route::get('register', [RegisterController::class, 'showRegisterForm'])->name('register.form');
+Route::post('register', [RegisterController::class, 'register'])->name('admin.register');
+Route::post('register', [RegisterController::class, 'register'])->name('register.account');
+Route::post('register', [RegisterController::class, 'register'])->name('register');
 //CategoryProduct
 Route::get('add-category-product', [CategoryProductController::class, 'add_category_product'])->name('add.category.product');
 Route::post('save-category-product', [CategoryProductController::class, 'save_category_product'])->name('save.category.product');
@@ -123,3 +140,8 @@ Route::get('/all-coupon', [CouponController::class, 'all_coupon'])->name('all.co
 Route::get('edit-coupon/{id}', [CouponController::class, 'edit_coupon'])->name('edit.coupon');
 Route::post('update-coupon/{id}', [CouponController::class, 'update_coupon'])->name('update.coupon');
 Route::get('delete-coupon/{id}',[CouponController::class, 'delete_coupon'])->name('delete.coupon');
+//Users
+Route::get('/all-customer', [CustomerController::class, 'all'])->name('all.customer');
+Route::put('/all-customer/{id}', [CustomerController::class, 'update'])->name('update.customer');
+
+

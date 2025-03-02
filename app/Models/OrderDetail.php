@@ -29,5 +29,10 @@ class OrderDetail extends Model
     {
         return $this->belongsTo(Product::class, 'product_id', 'product_id');
     }
-    
+
+    // Phương thức này để liên kết với bảng 'orders'
+    public function order()
+    {
+        return $this->belongsTo(Order::class, 'order_code', 'order_code');
+    }
 }

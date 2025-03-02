@@ -197,7 +197,8 @@ if ($name) {
 
                                     <div class="form-group">
                                         <label>Tên Khách hàng:</label>
-                                        <span id="customerName">Không tìm thấy</span>
+                                        <span id="customerName" style="cursor: pointer;"
+                                            onclick="toggleAddMemberForm()">Không tìm thấy</span>
                                     </div>
                                     <div class="form-group">
                                         <label for="customerPhone" class="mr-2">Tìm khách hàng:</label>
@@ -252,10 +253,43 @@ if ($name) {
                             </div>
                         </div>
                     </div>
+                    <!-- Cột thêm thành viên -->
+                    <div class="panel panel-default">
+                    <div class="table-agile-info">
+                        <div id="add-member-form-container" style="display:none;">
+                            <div class="panel-heading">Thêm thành viên</div>
+                            <form action="{{ route('register') }}" method="POST" id="edit-form">
+                                @csrf
+                                <div class="form-group">
+                                    <label for="customer_name">Tên khách hàng:</label>
+                                    <input type="text" class="form-control" id="customer_name" name="name" required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="customer_email">Email:</label>
+                                    <input type="email" class="form-control" id="customer_email" name="email" required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="customer_phone">Số điện thoại:</label>
+                                    <input type="text" class="form-control" id="customer_phone" name="phone" required>
+                                </div>
+                                <button type="submit" class="btn btn-primary">Đăng ký</button>
+                            </form>
+                        </div>
+                    </div>
+                    </div>
                 </div>
             </div>
         </div>
-        <script>let cart = JSON.parse(localStorage.getItem('cart')) || {}; // Lấy giỏ hàng từ localStorage
+        <script>
+            function toggleAddMemberForm() {
+                const formContainer = document.getElementById('add-member-form-container');
+                if (formContainer.style.display === 'none' || formContainer.style.display === '') {
+                    formContainer.style.display = 'block';
+                } else {
+                    formContainer.style.display = 'none';
+                }
+            }
+            let cart = JSON.parse(localStorage.getItem('cart')) || {}; // Lấy giỏ hàng từ localStorage
 
             // Lắng nghe sự kiện click vào các nút "Thêm vào giỏ"
             document.querySelectorAll('.add-to-cart').forEach(button => {

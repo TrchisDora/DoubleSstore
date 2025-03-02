@@ -1,373 +1,470 @@
 @extends('AdminPages.admin')
 @section('admin_content')
-	<!-- //market-->
-	<div class="market-updates">
-			<div class="col-md-3 market-update-gd">
-				<div class="market-update-block clr-block-2">
-					<div class="col-md-4 market-update-right">
-						<i class="fa fa-eye"> </i>
-					</div>
-					 <div class="col-md-8 market-update-left">
-					 <h4>Visitors</h4>
-					<h3>13,500</h3>
-					<p>Other hand, we denounce</p>
-				  </div>
-				  <div class="clearfix"> </div>
-				</div>
+<!-- //market-->
+<div class="market-updates">
+	<div class="col-md-3 market-update-gd">
+		<div class="market-update-block clr-block-1">
+			<div class="col-md-4 market-update-right">
+				<img alt="" src="{{ asset('public/backend/images/icons/Product.png') }}" height="90" width="90">
 			</div>
-			<div class="col-md-3 market-update-gd">
-				<div class="market-update-block clr-block-1">
-					<div class="col-md-4 market-update-right">
-						<i class="fa fa-users" ></i>
-					</div>
-					<div class="col-md-8 market-update-left">
-					<h4>Users</h4>
-						<h3>1,250</h3>
-						<p>Other hand, we denounce</p>
-					</div>
-				  <div class="clearfix"> </div>
-				</div>
+			<div class="col-md-8 market-update-left">
+				<h4>Số lượng sản phẩm</h4>
+				<h3>{{ $totalQuantity }}</h3> <!-- Hiển thị tổng -->
+				<p>Số lượng tất cả sản phẩm trong kho. Bao gồm tất cả các loại</p>
 			</div>
-			<div class="col-md-3 market-update-gd">
-				<div class="market-update-block clr-block-3">
-					<div class="col-md-4 market-update-right">
-						<i class="fa fa-usd"></i>
-					</div>
-					<div class="col-md-8 market-update-left">
-						<h4>Sales</h4>
-						<h3>1,500</h3>
-						<p>Other hand, we denounce</p>
-					</div>
-				  <div class="clearfix"> </div>
-				</div>
+			<div class="clearfix"></div>
+		</div>
+	</div>
+	<div class="col-md-3 market-update-gd">
+		<div class="market-update-block clr-block-2">
+			<div class="col-md-4 market-update-right">
+				<img alt="" src="{{ asset('public/backend/images/icons/account.png') }}" height="90" width="90">
 			</div>
-			<div class="col-md-3 market-update-gd">
-				<div class="market-update-block clr-block-4">
-					<div class="col-md-4 market-update-right">
-						<i class="fa fa-shopping-cart" aria-hidden="true"></i>
-					</div>
-					<div class="col-md-8 market-update-left">
-						<h4>Orders</h4>
-						<h3>1,500</h3>
-						<p>Other hand, we denounce</p>
-					</div>
-				  <div class="clearfix"> </div>
-				</div>
+			<div class="col-md-8 market-update-left">
+				<h4>Số lượng thành viên</h4>
+				<h3>{{ $totalCustomer}}</h3>
+				<p>Thông tin các thành đã tham gia vào GreenStore.</p>
 			</div>
-		   <div class="clearfix"> </div>
-		</div>	
-		<!-- //market-->
-		<div class="row">
-			<div class="panel-body">
-				<div class="col-md-12 w3ls-graph">
-					<!--agileinfo-grap-->
-						<div class="agileinfo-grap">
-							<div class="agileits-box">
-								<header class="agileits-box-header clearfix">
-									<h3>Visitor Statistics</h3>
-										<div class="toolbar">
-											
-											
-										</div>
-								</header>
-								<div class="agileits-box-body clearfix">
-									<div id="hero-area"></div>
-								</div>
-							</div>
-						</div>
-	<!--//agileinfo-grap-->
+			<div class="clearfix"></div>
+		</div>
+	</div>
+
+	<div class="col-md-3 market-update-gd">
+		<div class="market-update-block clr-block-3">
+			<div class="col-md-4 market-update-right">
+				<img alt="" src="{{ asset('public/backend/images/icons/Coin.png') }}" height="90" width="90">
+			</div>
+			<div class="col-md-8 market-update-left">
+				<h4>Tổng doanh thu</h4>
+				<h3>{{ number_format($totalSales, 0, '.', ',') }}</h3> <!-- Tổng doanh thu -->
+				<p>Doanh thu thu được từ các đơn hàng đã bán.</p>
+			</div>
+			<div class="clearfix"></div>
+		</div>
+	</div>
+	<div class="col-md-3 market-update-gd">
+		<div class="market-update-block clr-block-4">
+			<div class="col-md-4 market-update-right">
+				<img alt="" src="{{ asset('public/backend/images/icons/DH.png') }}" height="90" width="90">
+			</div>
+			<div class="col-md-8 market-update-left">
+				<h4>Số lượng đơn hàng</h4>
+				<h3>{{ $totalOrders }}</h3> <!-- Tổng số đơn hàng -->
+				<p>Thông tin chi tiết về các đơn hàng đã được đặt.</p>
+			</div>
+			<div class="clearfix"></div>
+		</div>
+	</div>
+
+	<div class="clearfix"> </div>
+</div>
+<!-- //market-->
+<div class="row">
+	<div class="panel-body">
+		<div class="col-md-12 w3ls-graph">
+			<!--agileinfo-grap-->
+			<div class="agileinfo-grap">
+				<div class="agileits-box">
+					<header class="agileits-box-header clearfix">
+						<h3>Bảng danh thu</h3>
+						<label for="filter">Lọc dữ liệu theo:</label>
+						<select id="filter" onchange="filterData()">
+							<option value="all">Tất cả</option>
+							<option value="day">Ngày</option>
+							<option value="month">Tháng</option>
+							<option value="year">Năm</option>
+						</select>
 
 				</div>
-			</div>
-		</div>
-		<div class="agil-info-calendar">
-		<!-- calendar -->
-		<div class="col-md-6 agile-calendar">
-			<div class="calendar-widget">
-                <div class="panel-heading ui-sortable-handle">
-					<span class="panel-icon">
-                      <i class="fa fa-calendar-o"></i>
-                    </span>
-                    <span class="panel-title"> Calendar Widget</span>
-                </div>
-				<!-- grids -->
-					<div class="agile-calendar-grid">
-						<div class="page">
-							
-							<div class="w3l-calendar-left">
-								<div class="calendar-heading">
-									
-								</div>
-								<div class="monthly" id="mycalendar"></div>
-							</div>
-							
-							<div class="clearfix"> </div>
-						</div>
-					</div>
-			</div>
-		</div>
-		<!-- //calendar -->
-		<div class="col-md-6 w3agile-notifications">
-			<div class="notifications">
-				<!--notification start-->
-				
-					<header class="panel-heading">
-						Notification 
-					</header>
-					<div class="notify-w3ls">
-						<div class="alert alert-info clearfix">
-							<span class="alert-icon"><i class="fa fa-envelope-o"></i></span>
-							<div class="notification-info">
-								<ul class="clearfix notification-meta">
-									<li class="pull-left notification-sender"><span><a href="#">Jonathan Smith</a></span> send you a mail </li>
-									<li class="pull-right notification-time">1 min ago</li>
-								</ul>
-								<p>
-									Urgent meeting for next proposal
-								</p>
-							</div>
-						</div>
-						<div class="alert alert-danger">
-							<span class="alert-icon"><i class="fa fa-facebook"></i></span>
-							<div class="notification-info">
-								<ul class="clearfix notification-meta">
-									<li class="pull-left notification-sender"><span><a href="#">Jonathan Smith</a></span> mentioned you in a post </li>
-									<li class="pull-right notification-time">7 Hours Ago</li>
-								</ul>
-								<p>
-									Very cool photo jack
-								</p>
-							</div>
-						</div>
-						<div class="alert alert-success ">
-							<span class="alert-icon"><i class="fa fa-comments-o"></i></span>
-							<div class="notification-info">
-								<ul class="clearfix notification-meta">
-									<li class="pull-left notification-sender">You have 5 message unread</li>
-									<li class="pull-right notification-time">1 min ago</li>
-								</ul>
-								<p>
-									<a href="#">Anjelina Mewlo, Jack Flip</a> and <a href="#">3 others</a>
-								</p>
-							</div>
-						</div>
-						<div class="alert alert-warning ">
-							<span class="alert-icon"><i class="fa fa-bell-o"></i></span>
-							<div class="notification-info">
-								<ul class="clearfix notification-meta">
-									<li class="pull-left notification-sender">Domain Renew Deadline 7 days ahead</li>
-									<li class="pull-right notification-time">5 Days Ago</li>
-								</ul>
-								<p>
-									Next 5 July Thursday is the last day
-								</p>
-							</div>
-						</div>
-						<div class="alert alert-info clearfix">
-							<span class="alert-icon"><i class="fa fa-envelope-o"></i></span>
-							<div class="notification-info">
-								<ul class="clearfix notification-meta">
-									<li class="pull-left notification-sender"><span><a href="#">Jonathan Smith</a></span> send you a mail </li>
-									<li class="pull-right notification-time">1 min ago</li>
-								</ul>
-								<p>
-									Urgent meeting for next proposal
-								</p>
-							</div>
-						</div>
-						
-					</div>
-				
-				<!--notification end-->
-				</div>
-			</div>
-			<div class="clearfix"> </div>
-		</div>
-			<!-- tasks -->
-			<div class="agile-last-grids">
-				<div class="col-md-4 agile-last-left">
-					<div class="agile-last-grid">
-						<div class="area-grids-heading">
-							<h3>Monthly</h3>
-						</div>
-						<div id="graph7"></div>
-						<script>
-						// This crosses a DST boundary in the UK.
-						Morris.Area({
-						  element: 'graph7',
-						  data: [
-							{x: '2013-03-30 22:00:00', y: 3, z: 3},
-							{x: '2013-03-31 00:00:00', y: 2, z: 0},
-							{x: '2013-03-31 02:00:00', y: 0, z: 2},
-							{x: '2013-03-31 04:00:00', y: 4, z: 4}
-						  ],
-						  xkey: 'x',
-						  ykeys: ['y', 'z'],
-						  labels: ['Y', 'Z']
-						});
-						</script>
 
-					</div>
-				</div>
-				<div class="col-md-4 agile-last-left agile-last-middle">
-					<div class="agile-last-grid">
-						<div class="area-grids-heading">
-							<h3>Daily</h3>
-						</div>
-						<div id="graph8"></div>
-						<script>
-						/* data stolen from http://howmanyleft.co.uk/vehicle/jaguar_'e'_type */
-						var day_data = [
-						  {"period": "2016-10-01", "licensed": 3407, "sorned": 660},
-						  {"period": "2016-09-30", "licensed": 3351, "sorned": 629},
-						  {"period": "2016-09-29", "licensed": 3269, "sorned": 618},
-						  {"period": "2016-09-20", "licensed": 3246, "sorned": 661},
-						  {"period": "2016-09-19", "licensed": 3257, "sorned": 667},
-						  {"period": "2016-09-18", "licensed": 3248, "sorned": 627},
-						  {"period": "2016-09-17", "licensed": 3171, "sorned": 660},
-						  {"period": "2016-09-16", "licensed": 3171, "sorned": 676},
-						  {"period": "2016-09-15", "licensed": 3201, "sorned": 656},
-						  {"period": "2016-09-10", "licensed": 3215, "sorned": 622}
-						];
-						Morris.Bar({
-						  element: 'graph8',
-						  data: day_data,
-						  xkey: 'period',
-						  ykeys: ['licensed', 'sorned'],
-						  labels: ['Licensed', 'SORN'],
-						  xLabelAngle: 60
-						});
-						</script>
-					</div>
-				</div>
-				<div class="col-md-4 agile-last-left agile-last-right">
-					<div class="agile-last-grid">
-						<div class="area-grids-heading">
-							<h3>Yearly</h3>
-						</div>
-						<div id="graph9"></div>
-						<script>
-						var day_data = [
-						  {"elapsed": "I", "value": 34},
-						  {"elapsed": "II", "value": 24},
-						  {"elapsed": "III", "value": 3},
-						  {"elapsed": "IV", "value": 12},
-						  {"elapsed": "V", "value": 13},
-						  {"elapsed": "VI", "value": 22},
-						  {"elapsed": "VII", "value": 5},
-						  {"elapsed": "VIII", "value": 26},
-						  {"elapsed": "IX", "value": 12},
-						  {"elapsed": "X", "value": 19}
-						];
-						Morris.Line({
-						  element: 'graph9',
-						  data: day_data,
-						  xkey: 'elapsed',
-						  ykeys: ['value'],
-						  labels: ['value'],
-						  parseTime: false
-						});
-						</script>
+				<div class="toolbar">
 
-					</div>
+
 				</div>
-				<div class="clearfix"> </div>
+				</header>
+				<canvas id="salesChart" width="350" height="100"></canvas>
 			</div>
-		<!-- //tasks -->
-		<div class="agileits-w3layouts-stats">
-					<div class="col-md-4 stats-info widget">
-						<div class="stats-info-agileits">
-							<div class="stats-title">
-								<h4 class="title">Browser Stats</h4>
-							</div>
-							<div class="stats-body">
-								<ul class="list-unstyled">
-									<li>GoogleChrome <span class="pull-right">85%</span>  
-										<div class="progress progress-striped active progress-right">
-											<div class="bar green" style="width:85%;"></div> 
-										</div>
-									</li>
-									<li>Firefox <span class="pull-right">35%</span>  
-										<div class="progress progress-striped active progress-right">
-											<div class="bar yellow" style="width:35%;"></div>
-										</div>
-									</li>
-									<li>Internet Explorer <span class="pull-right">78%</span>  
-										<div class="progress progress-striped active progress-right">
-											<div class="bar red" style="width:78%;"></div>
-										</div>
-									</li>
-									<li>Safari <span class="pull-right">50%</span>  
-										<div class="progress progress-striped active progress-right">
-											<div class="bar blue" style="width:50%;"></div>
-										</div>
-									</li>
-									<li>Opera <span class="pull-right">80%</span>  
-										<div class="progress progress-striped active progress-right">
-											<div class="bar light-blue" style="width:80%;"></div>
-										</div>
-									</li>
-									<li class="last">Others <span class="pull-right">60%</span>  
-										<div class="progress progress-striped active progress-right">
-											<div class="bar orange" style="width:60%;"></div>
-										</div>
-									</li> 
-								</ul>
-							</div>
+		</div>
+		<!--//agileinfo-grap-->
+
+	</div>
+</div>
+<div class="agil-info-calendar">
+	<!-- calendar container -->
+	<div class="col-md-6 agile-calendar">
+		<div class="calendar-widget">
+			<div class="panel-heading ui-sortable-handle">
+				<span class="panel-icon">
+					<i class="fa fa-calendar-o"></i>
+				</span>
+				<span class="panel-title"> Calendar Widget</span>
+			</div>
+			<div class="agile-calendar-grid">
+				<div class="page">
+					<div class="w3l-calendar-left">
+						<div class="calendar-heading">
 						</div>
-					</div>
-					<div class="col-md-8 stats-info stats-last widget-shadow">
-						<div class="stats-last-agile">
-							<table class="table stats-table ">
-								<thead>
-									<tr>
-										<th>S.NO</th>
-										<th>PRODUCT</th>
-										<th>STATUS</th>
-										<th>PROGRESS</th>
-									</tr>
-								</thead>
-								<tbody>
-									<tr>
-										<th scope="row">1</th>
-										<td>Lorem ipsum</td>
-										<td><span class="label label-success">In progress</span></td>
-										<td><h5>85% <i class="fa fa-level-up"></i></h5></td>
-									</tr>
-									<tr>
-										<th scope="row">2</th>
-										<td>Aliquam</td>
-										<td><span class="label label-warning">New</span></td>
-										<td><h5>35% <i class="fa fa-level-up"></i></h5></td>
-									</tr>
-									<tr>
-										<th scope="row">3</th>
-										<td>Lorem ipsum</td>
-										<td><span class="label label-danger">Overdue</span></td>
-										<td><h5 class="down">40% <i class="fa fa-level-down"></i></h5></td>
-									</tr>
-									<tr>
-										<th scope="row">4</th>
-										<td>Aliquam</td>
-										<td><span class="label label-info">Out of stock</span></td>
-										<td><h5>100% <i class="fa fa-level-up"></i></h5></td>
-									</tr>
-									<tr>
-										<th scope="row">5</th>
-										<td>Lorem ipsum</td>
-										<td><span class="label label-success">In progress</span></td>
-										<td><h5 class="down">10% <i class="fa fa-level-down"></i></h5></td>
-									</tr>
-									<tr>
-										<th scope="row">6</th>
-										<td>Aliquam</td>
-										<td><span class="label label-warning">New</span></td>
-										<td><h5>38% <i class="fa fa-level-up"></i></h5></td>
-									</tr>
-								</tbody>
-							</table>
+						<div class="monthly" id="mycalendar">
+
 						</div>
 					</div>
 					<div class="clearfix"> </div>
 				</div>
+			</div>
+		</div>
+	</div>
+	<!-- //calendar -->
+	<div class="col-md-6 w3agile-notifications">
+		<div class="col-md-12 w3ls-graph">
+			<!--agileinfo-grap-->
+			<div class="agileinfo-grap">
+				<div class="agileits-box">
+					<header class="agileits-box-header clearfix">
+						<h3>Bảng Đơn hàng</h3>
+						<label for="filter">Lọc dữ liệu theo:</label>
+						<select id="filter" onchange="filterData()">
+							<option value="all">Tất cả</option>
+							<option value="day">Ngày</option>
+							<option value="month">Tháng</option>
+							<option value="year">Năm</option>
+						</select>
+
+				</div>
+
+				<div class="toolbar">
+
+
+				</div>
+				</header>
+
+
+				<!-- Biểu đồ Trạng thái Đơn hàng -->
+				<div id="orderStatusChartWrapper" style="display:none;">
+					<canvas id="orderStatusChart" height="240"></canvas>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="clearfix"> </div>
+
+</div>
+<div class="row">
+    <div class="panel-body">
+        <div class="col-md-12 w3ls-graph">
+            <!--agileinfo-grap-->
+            <div class="agileinfo-grap">
+                <div class="agileits-box">
+                    <header class="agileits-box-header clearfix">
+                        <h3>Sản phẩm gần hết hàng</h3>
+                    </header>
+                    <div class="toolbar"></div>
+                    <div class="panel-body">
+                        <div class="row text-center">
+                            @foreach($lowStockProducts as $index => $product)
+                                <div class="col-md-2 mb-4">
+                                    <!-- Canvas biểu đồ tròn -->
+                                    <canvas id="productChart{{ $index }}"></canvas>
+                                    <script>
+                                        var ctx = document.getElementById('productChart{{ $index }}').getContext('2d');
+                                        var productChart{{ $index }} = new Chart(ctx, {
+                                            type: 'doughnut',
+                                            data: {
+                                                labels: ['Sản phẩm gần hết hàng'],
+                                                datasets: [{
+                                                    label: '{{ $product->product_name }}',
+                                                    data: [{{ $lowStockPercentages[$index] }}, 100 - {{ $lowStockPercentages[$index] }}],
+                                                    backgroundColor: ['#4CAF50', '#FF9800'],  // Màu xanh lá và cam
+                                                    borderWidth: 1
+                                                }]
+                                            },
+                                            options: {
+                                                responsive: true,
+                                                cutoutPercentage: 70, // Tạo vòng tròn bên trong
+                                                plugins: {
+                                                    legend: {
+                                                        display: false
+                                                    },
+                                                    tooltip: {
+                                                        callbacks: {
+                                                            label: function(tooltipItem) {
+                                                                return tooltipItem.raw.toFixed(2) + '%';
+                                                            }
+                                                        }
+                                                    }
+                                                }
+                                            }
+                                        });
+                                    </script>
+                                    <!-- Hiển thị tên sản phẩm và tỷ lệ -->
+                                    <div class="product-name mt-2">
+                                        <p><strong>{{ $product->product_name }}</strong></p>
+										<p>{{ $product->product_quantity }}/10</p> <!-- Hiển thị số lượng hiện tại -->
+                                    </div>
+                                </div>
+                            @endforeach
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!--//agileinfo-grap-->
+        </div>
+    </div>
+</div>
+
+<style>
+    .row.text-center {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-wrap: wrap;
+    }
+    .product-name {
+        text-align: center;
+        font-size: 14px;
+        color: #333;
+    }
+</style>
+
+	<div class="panel-body">
+		<div class="table-agile-info">
+			<div class="panel panel-default">
+				<div class="panel-heading bg-primary text-white">
+					<h5 class="mb-0">KHÁCH HÀNG GẦN ĐÂY</h5>
+				</div>
+				<div class="table-responsive">
+					<table class="table table-striped b-t b-light">
+						<thead class="thead-dark">
+							<tr>
+								<th>Tên khách hàng</th>
+								<th>Email</th>
+								<th>Số điện thoại</th>
+								<th>Ngày tạo</th>
+							</tr>
+						</thead>
+						<tbody>
+							@foreach($recentCustomers as $customer)
+								<tr>
+									<td>{{ $customer->customer_name }}</td>
+									<td>{{ $customer->customer_email }}</td>
+									<td>{{ $customer->customer_phone }}</td>
+									<td>{{ $customer->created_at->format('d/m/Y') }}</td>
+								</tr>
+							@endforeach
+						</tbody>
+					</table>
+				</div>
+			</div>
+
+			<!-- Bảng Đơn hàng gần nhất -->
+			<div class="panel panel-default">
+				<div class="panel-heading bg-info text-white">
+					<h5 class="mb-0">ĐƠN HÀNG GẦN NHẤT</h5>
+				</div>
+				<div class="table-responsive">
+					<table class="table table-striped b-t b-light">
+						<thead class="thead-dark">
+							<tr>
+								<th>Mã đơn hàng</th>
+								<th>Trạng thái</th>
+								<th>Ngày tạo</th>
+								<th>Tổng tiền</th>
+							</tr>
+						</thead>
+						<tbody>
+							@foreach($recentOrders as $order)
+								<tr>
+									<td>{{ $order->order_code }}</td>
+									<td>{{ $order->order_status }}</td>
+									<td>{{ $order->created_at->format('d/m/Y') }}</td>
+									<td>{{ number_format($order->getTotalAmountAttribute()) }} VNĐ</td>
+								</tr>
+							@endforeach
+						</tbody>
+					</table>
+				</div>
+			</div>
+
+			<!-- Bảng Sản phẩm mới -->
+			<div class="panel panel-default">
+				<div class="panel-heading bg-success text-white">
+					<h5 class="mb-0">SẢN PHẨM MỚI</h5>
+				</div>
+				<div class="table-responsive">
+					<table class="table table-striped b-t b-light">
+						<thead class="thead-dark">
+							<tr>
+								<th>Tên sản phẩm</th>
+								<th>Giá</th>
+								<th>Giới thiệu</th>
+								<th>Số lượng</th>
+							</tr>
+						</thead>
+						<tbody>
+							@foreach($recentProducts as $product)
+								<tr>
+									<td>{{ $product->product_name }}</td>
+									<td>{{ number_format($product->product_price) }} VNĐ</td>
+									<td>{{ $product->product_prominent }}</td>
+									<td>{{ $product->product_quantity }}</td>
+								</tr>
+							@endforeach
+						</tbody>
+					</table>
+				</div>
+			</div>
+		</div>
+	</div>
+
+<script>
+	// Dữ liệu Doanh thu
+	const rawDates = @json($date);
+	const rawSales = @json($sales);
+
+	let filteredDates = rawDates;
+	let filteredSales = rawSales;
+
+	// Biểu đồ Doanh thu
+	const ctx1 = document.getElementById('salesChart').getContext('2d');
+	const chart1 = new Chart(ctx1, {
+		type: 'bar',
+		data: {
+			labels: filteredDates,
+			datasets: [{
+				label: 'Doanh thu',
+				data: filteredSales,
+				backgroundColor: 'rgba(75, 192, 192, 0.7)',
+				borderColor: 'rgba(75, 192, 192, 1)',
+				borderWidth: 1
+			}]
+		},
+		options: {
+			plugins: {
+				legend: {
+					display: true,
+					position: 'top',
+					labels: { font: { size: 12 } }
+				}
+			},
+			scales: {
+				x: {
+					title: { display: true, text: 'Ngày đặt hàng' }
+				},
+				y: {
+					title: { display: true, text: 'Giá trị (VNĐ)' }
+				}
+			}
+		}
+	});
+
+	// Hàm lọc dữ liệu
+	function filterData() {
+		const filter = document.getElementById('filter').value;
+
+		if (filter === 'day') {
+			filteredDates = rawDates;
+			filteredSales = rawSales;
+		} else if (filter === 'month') {
+			const monthData = {};
+			rawDates.forEach((date, index) => {
+				const month = date.slice(0, 7);
+				const salesValue = parseFloat(rawSales[index]) || 0;
+
+				if (!monthData[month]) {
+					monthData[month] = { sales: 0 };
+				}
+				monthData[month].sales += salesValue;
+			});
+
+			filteredDates = Object.keys(monthData);
+			filteredSales = filteredDates.map(date => monthData[date].sales.toFixed(2));
+		} else if (filter === 'year') {
+			const yearData = {};
+			rawDates.forEach((date, index) => {
+				const year = date.slice(0, 4);
+				const salesValue = parseFloat(rawSales[index]) || 0;
+
+				if (!yearData[year]) {
+					yearData[year] = { sales: 0 };
+				}
+				yearData[year].sales += salesValue;
+			});
+
+			filteredDates = Object.keys(yearData);
+			filteredSales = filteredDates.map(date => yearData[date].sales.toFixed(2));
+		} else {
+			filteredDates = rawDates;
+			filteredSales = rawSales;
+		}
+
+		// Cập nhật biểu đồ doanh thu
+		chart1.data.labels = filteredDates;
+		chart1.data.datasets[0].data = filteredSales;
+		chart1.update();
+	}
+	// Biểu đồ Trạng thái Đơn hàng
+	const dates = @json($dates);
+	const statusCounts = @json($statusCounts);
+	const statusNames = ['Giao hàng thành công', 'Giao hàng thất bại', 'Thanh toán tại của hàng']; // Tên các trạng thái
+
+	// Kiểm tra xem có dữ liệu hay không
+	if (dates.length > 0 && Object.keys(statusCounts).length > 0) {
+		// Hiển thị phần wrapper cho biểu đồ
+		const orderStatusChartWrapper = document.getElementById('orderStatusChartWrapper');
+		if (orderStatusChartWrapper) {
+			orderStatusChartWrapper.style.display = 'block';
+		}
+
+		// Tính giá trị max từ statusCounts để tự động điều chỉnh trục y
+		let maxOrderCount = 0;
+		Object.values(statusCounts).forEach(counts => {
+			const maxInStatus = Math.max(...counts);
+			maxOrderCount = Math.max(maxOrderCount, maxInStatus);
+		});
+
+		// Làm tròn giá trị max lên để tạo khoảng cách đẹp
+		let maxY = Math.ceil(maxOrderCount / 3) * 3; // Giới hạn lên một bội số của 3
+
+		const ctx2 = document.getElementById('orderStatusChart').getContext('2d');
+		const chart2 = new Chart(ctx2, {
+			type: 'line',
+			data: {
+				labels: dates,
+				datasets: Object.keys(statusCounts).map((status, index) => ({
+					label: statusNames[index], // Sử dụng tên trạng thái thay vì "Trạng thái"
+					data: statusCounts[status].map(count => Math.round(count)), // Làm tròn số
+					borderColor: `rgba(${Math.random() * 255}, ${Math.random() * 255}, ${Math.random() * 255}, 1)`,
+					fill: false,
+					tension: 0 // Loại bỏ độ căng để không làm tròn các điểm
+				}))
+			},
+			options: {
+				responsive: true,
+				plugins: { legend: { position: 'bottom' } },
+				scales: {
+					x: {
+						title: { display: true, text: 'Ngày' }
+					},
+					y: {
+						title: { display: true, text: 'Số đơn hàng' },
+						beginAtZero: true,
+						min: 0, // Đảm bảo trục y bắt đầu từ 0
+						max: maxY, // Sử dụng giá trị max tính toán
+						ticks: {
+							stepSize: 1 // Đảm bảo trục y chỉ có số nguyên
+						}
+					}
+				}
+			}
+		});
+	} else {
+		// Nếu không có dữ liệu, ẩn phần wrapper
+		const orderStatusChartWrapper = document.getElementById('orderStatusChartWrapper');
+		if (orderStatusChartWrapper) {
+			orderStatusChartWrapper.style.display = 'none';
+		}
+	}
+
+
+</script>
+
 @endsection

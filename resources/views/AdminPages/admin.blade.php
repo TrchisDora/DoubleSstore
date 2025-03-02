@@ -27,7 +27,9 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 <script src="{{asset('public/backend/js/morris.js')}}"></script>
 <script src="{{asset('public/backend/js/admin.js')}}"></script>
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
+
 <body>
 <section id="container">
 <!--header start-->
@@ -263,13 +265,13 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
         <div class="leftside-navigation">
             <ul class="sidebar-menu" id="nav-accordion">
                 <li class="sub-menu">
-                    <a class="active" href="{{URL::to('/dashboard')}}">
+                    <a class="" href="{{URL::to('/dashboard')}}">
                         <img src="{{ asset('public/backend/images/icons/dashboard-admin.png')}}" alt="icon-sliderbar" width="40" style="margin-right: 20px">
                         <span>Dashboard</span>
                     </a>
                 </li>
                 <li class="sub-menu">
-                    <a href="javascript:;">
+                    <a class="" href="{{URL::to('/all-customer')}}">
                     <img src="{{ asset('public/backend/images/icons/users.png')}}" alt="icon-sliderbar" width="40" style="margin-right: 20px">
                         <span>Người dùng</span>
                     </a>

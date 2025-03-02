@@ -17,7 +17,7 @@ class ProductController extends Controller
         if ($admin_id) {
             return Redirect::to('dashboard');
         } else {
-            return Redirect::to('admin')->send();
+            return Redirect::to('login')->send();
         }
     }
 

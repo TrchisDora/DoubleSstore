@@ -10,11 +10,16 @@
                 <h4 class="h3 text-muted">CHI TIẾT ĐƠN HÀNG</h2>
             </div>
             <div class="customer-info mb-4 border p-4 rounded shadow-sm bg-light">
-                <div><strong>Họ và tên:</strong> <span style="text-transform: capitalize;">{{ $order->customer->customer_name }}</span></div>
-                <div><strong>Email:</strong> <span style="text-transform: lowercase;">{{ $order->customer->customer_email }}</span></div>
-                <div><strong>Số điện thoại:</strong> <span>{{ $order->customer->customer_phone }}</span></div>
-                <div><strong>Địa chỉ:</strong> <span style="text-transform: capitalize;"></span></div>
+                @if($order->customer)
+                    <div><strong>Họ và tên:</strong> <span style="text-transform: capitalize;">{{ $order->customer->customer_name }}</span></div>
+                    <div><strong>Email:</strong> <span style="text-transform: lowercase;">{{ $order->customer->customer_email }}</span></div>
+                    <div><strong>Số điện thoại:</strong> <span>{{ $order->customer->customer_phone }}</span></div>
+                    <div><strong>Địa chỉ:</strong> <span style="text-transform: capitalize;">{{ $order->customer->customer_address ?? 'Chưa có thông tin' }}</span></div>
+                @else
+                    <p>Không có thông tin khách hàng.</p>
+                @endif
             </div>
+
             <table class="table table-bordered table-striped">
                 <thead>
                     <tr>

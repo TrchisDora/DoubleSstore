@@ -25,12 +25,11 @@
             @csrf  <!-- Tạo mã CSRF bảo vệ -->
             <input type="text" class="ggg" name="admin_email" placeholder="Điền email" required="">
             <input type="password" class="ggg" name="admin_password" placeholder="Điền mật khẩu" required="">
-            <span><input type="checkbox" /> Lưu lại tài khoản</span>
-            <h6><a href="#">Quên mật khẩu?</a></h6>
+            <h6><a href="{{ route('forgot.password.form') }}">Quên mật khẩu?</a></h6>
             <div class="clearfix"></div>
             <input type="submit" value="Đăng nhập" name="login">
         </form>
-        <p>Bạn chưa có tài khoản? <a href="registration.html">Tạo tài khoản</a></p>
+        <p>Bạn chưa có tài khoản? <a href="{{ route('register.form') }}">Tạo tài khoản</a></p>
     </div>
 </div>
 
