@@ -28,7 +28,7 @@
                     @foreach($content as $v_content)
                     <tr>
                         <td class="cart_product">
-                            <a href=""><img src="{{URL::to('public/ReDoub/images/products/'.$v_content->options->image)}}" height="50px" alt=""></a>
+                            <a href=""><img src="{{URL::to('public/fontend/images/product/'.$v_content->options->image)}}" height="50px" alt=""></a>
                         </td>
                         <td class="cart_description">
                             <h4><a href="">{{$v_content->name}}</a></h4>
