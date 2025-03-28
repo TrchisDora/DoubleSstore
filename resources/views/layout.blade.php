@@ -162,18 +162,18 @@
 						
 						<div class="carousel-inner">
 							<div class="item active">					
-									<img src="{{('public/ReDoub/images/sliders/slide1.png')}}" class="girl img-responsive" alt="" />
+									<img src="{{('public/backend/images/sliders/slide1.png')}}" class="girl img-responsive" alt="" />
 									<!-- <img src="{{('public/ReDoub/images/others/panner1.png')}}"  class="pricing" alt="" /> -->
 							</div>
 							<div class="item">
 								<a href="">
-									<img src="{{('public/ReDoub/images/sliders/slide2.png')}}" class="girl img-responsive" alt="" />
+									<img src="{{('public/backend/images/sliders/slide2.png')}}" class="girl img-responsive" alt="" />
 									<img src="images/home/pricing.png" class="pricing" alt="" />
 								</a>
 							</div>
 							<div class="item">
 								<a href="">
-									<img src="{{('public/ReDoub/images/sliders/slide3.png')}}" class="girl img-responsive" alt="" />
+									<img src="{{('public/backend/images/sliders/slide3.png')}}" class="girl img-responsive" alt="" />
 									<img src="images/home/pricing.png" class="pricing" alt="" />
 								</a>
 							</div>
