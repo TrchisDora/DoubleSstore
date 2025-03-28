@@ -8,6 +8,8 @@ use App\Http\Controllers\ProductController;
 use App\Http\Controllers\BrandProductController;
 use App\Http\Controllers\OrderController;
 use App\Http\Controllers\CouponController;
+use App\Http\Controllers\CartController;
+use App\Http\Controllers\CheckoutController;
 use App\Http\Controllers\Auth\ForgotPasswordController;
 use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\CustomerController;
@@ -16,9 +18,11 @@ use App\Http\Controllers\CustomerController;
 Route::get('/trang-chu', [HomeController::class, 'index']);
 Route::get('/', [HomeController::class, 'index']);
 Route::post('/tim kiem', [HomeController::class, 'search']);
+Route::post('/tim kiem', [HomeController::class, 'search']);
 
 //danh mục sản phẩm trang chủ
 Route::get('/danh muc san pham/{category_id}', [CategoryProductController::class, 'show_category_home'])->name('category.show');
+Route::get('/chi-tiet-san-pham/{product_id}', [ProductController::class, 'details_product'])->name('detils.product');
 Route::get('/chi-tiet-san-pham/{product_id}', [ProductController::class, 'details_product'])->name('detils.product');
 
 //thương hiệu sản phẩm 
@@ -40,16 +44,6 @@ Route::get('/checkout', [CheckoutController::class, 'checkout'])->name('checkout
 Route::get('/payment', [CheckoutController::class, 'payment'])->name('payment');
 Route::post('/save-checkout-customer', [CheckoutController::class, 'save_checkout_customer'])->name('save.checkout.customer');
 Route::post('/order-place', [CheckoutController::class, 'order_place'])->name('order.place');
-
-
-
-
-
-
-
-
-
-
 
 
 

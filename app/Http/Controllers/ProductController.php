@@ -215,7 +215,8 @@ class ProductController extends Controller
             $file->move(public_path('fontend/images/product'), $filename);
             $product->product_image = $filename; // Cập nhật tên hình ảnh trong cơ sở dữ liệu
         }
-    
+
+        
         // Lưu sản phẩm
         $product->save();
         Session::put('message', 'Cập nhật sản phẩm thành công');

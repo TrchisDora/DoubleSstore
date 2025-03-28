@@ -59,10 +59,40 @@
 					<div class="col-sm-8">
 						<div class="shop-menu pull-right">
 							<ul class="nav navbar-nav">
-								<li><a href="#"><i class="fa fa-user"></i> Tài khoản</a></li>
-								<li><a href="checkout.html"><i class="fa fa-crosshairs"></i> Kiểm tra đơn hàng</a></li>
-								<li><a href="cart.html"><i class="fa fa-shopping-cart"></i> Giỏ hàng</a></li>
-								<li><a href="{{URL::to('/login')}}"><i class="fa fa-lock"></i> Đăng nhập</a></li>
+
+								<?php
+									$customer_id = Session::get('customer_id');
+									$shipping_id = Session::get('shipping_id');
+									if($customer_id!=NULL && $shipping_id=NULL){
+
+								?>
+									<li><a href="{{URL::to('/checkout')}}"><i class="fa fa-crosshairs"></i> Kiểm tra đơn hàng</a></li>
+								<?php
+								}elseif($customer_id!=NULL && $shipping_id!=NULL){
+								?>
+									<li><a href="{{URL::to('/payment')}}"><i class="fa fa-crosshairs"></i> Kiểm tra đơn hàng</a></li>
+								<?php
+								}else{
+								?>
+								<li><a href="{{URL::to('/login-checkout')}}"><i class="fa fa-crosshairs"></i> Kiểm tra đơn hàng</a></li>
+								<?php
+								}
+								?>
+
+								<li><a href="{{URL::to('/show-cart')}}"><i class="fa fa-shopping-cart"></i> Giỏ hàng</a></li>
+								<?php
+									$customer_id = Session::get('customer_id');
+									if($customer_id!=NULL){
+
+								?>
+									<li><a href="{{URL::to('/logout-checkout')}}"><i class="fa fa-lock"></i> Đăng xuất</a></li>
+								<?php
+								}else{
+								?>
+									<li><a href="{{URL::to('/login-checkout')}}"><i class="fa fa-lock"></i> Đăng nhập</a></li>
+								<?php
+								}
+								?>
 							</ul>
 						</div>
 					</div>
@@ -73,7 +103,7 @@
 		<div class="header-bottom"><!--header-bottom-->
 			<div class="container">
 				<div class="row">
-					<div class="col-sm-9">
+					<div class="col-sm-7">
 						<div class="navbar-header">
 							<button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
 								<span class="sr-only">Toggle navigation</span>
@@ -84,31 +114,35 @@
 						</div>
 						<div class="mainmenu pull-left">
 							<ul class="nav navbar-nav collapse navbar-collapse">
-							<li><a href="{{ URL::to('/trang-chu') }}" class="active">Home</a></li>
-								<li class="dropdown"><a href="{{ URL::to('/DS') }}">Shop<i class="fa fa-angle-down"></i></a>
+							<li><a href="{{ URL::to('/trang-chu') }}" class="active">Trang chủ</a></li>
+								<li class="dropdown"><a href="{{ URL::to('/DS') }}">Sản phẩm<i class="fa fa-angle-down"></i></a>
                                     <ul role="menu" class="sub-menu">
-                                        <li><a href="shop.html">Products</a></li>
-										<li><a href="product-details.html">Product Details</a></li> 
-										<li><a href="checkout.html">Checkout</a></li> 
-										<li><a href="cart.html">Cart</a></li> 
-										<li><a href="login.html">Login</a></li> 
+                                        <li><a href="shop.html">Sản phẩm</a></li>
+										<li><a href="product-details.html">Chi tiết sản phẩm</a></li> 
+										<li><a href="checkout.html">Thanh toán</a></li> 
+										<li><a href="cart.html">Giỏ hàng</a></li> 
+										<li><a href="login.html">Đăng nhập</a></li> 
                                     </ul>
                                 </li> 
-								<li class="dropdown"><a href="#">Blog<i class="fa fa-angle-down"></i></a>
+								<li class="dropdown"><a href="#">Tin tức<i class="fa fa-angle-down"></i></a>
                                     <ul role="menu" class="sub-menu">
                                         <li><a href="blog.html">Blog List</a></li>
 										<li><a href="blog-single.html">Blog Single</a></li>
                                     </ul>
                                 </li> 
-								<li><a href="404.html">404</a></li>
-								<li><a href="contact-us.html">Contact</a></li>
+								<li><a href="{{URL::to('/show-cart')}}">Giỏ hàng</a></li>
+								<li><a href="contact-us.html">Liên hệ</a></li>
 							</ul>
 						</div>
 					</div>
-					<div class="col-sm-3">
+					<div class="col-sm-5">
+						<form action="{{URL::to('/tim kiem')}}" method="POST">
+							{{ csrf_field() }}
 						<div class="search_box pull-right">
-							<input type="text" placeholder="Search"/>
+							<input type="text" name="keywords_submit" placeholder="Tìm kiếm sản phẩm"/>
+							<input type="submit" name="search_items" style="margin-top:0;color:#666" class="btn btn-primary btn-sm" value="Tìm kiếm">
 						</div>
+						</form>
 					</div>
 				</div>
 			</div>
@@ -127,44 +161,22 @@
 						</ol>
 						
 						<div class="carousel-inner">
-							<div class="item active">
-								<div class="col-sm-6">
-									<h1><span>E</span>-SHOPPER</h1>
-									<h2>Free E-Commerce Template</h2>
-									<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. </p>
-									<button type="button" class="btn btn-default get">Get it now</button>
-								</div>
-								<div class="col-sm-6">
-									<img src="{{('public/fontend/images/home/girl1.jpg')}}" class="girl img-responsive" alt="" />
-									<img src="{{('public/fontend/images/home/pricing..png')}}"  class="pricing" alt="" />
-								</div>
+							<div class="item active">					
+									<img src="{{('public/ReDoub/images/sliders/slide1.png')}}" class="girl img-responsive" alt="" />
+									<!-- <img src="{{('public/ReDoub/images/others/panner1.png')}}"  class="pricing" alt="" /> -->
 							</div>
 							<div class="item">
-								<div class="col-sm-6">
-									<h1><span>E</span>-SHOPPER</h1>
-									<h2>100% Responsive Design</h2>
-									<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. </p>
-									<button type="button" class="btn btn-default get">Get it now</button>
-								</div>
-								<div class="col-sm-6">
-									<img src="{{('public/fontend/images/home/girl2.jpg')}}" class="girl img-responsive" alt="" />
-									<img src="{{('public/fontend/images/home/pricing.png')}}"  class="pricing" alt="" />
-								</div>
+								<a href="">
+									<img src="{{('public/ReDoub/images/sliders/slide2.png')}}" class="girl img-responsive" alt="" />
+									<img src="images/home/pricing.png" class="pricing" alt="" />
+								</a>
 							</div>
-							
 							<div class="item">
-								<div class="col-sm-6">
-									<h1><span>E</span>-SHOPPER</h1>
-									<h2>Free Ecommerce Template</h2>
-									<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. </p>
-									<button type="button" class="btn btn-default get">Get it now</button>
-								</div>
-								<div class="col-sm-6">
-									<img src="{{('public/fontend/images/home/girl3.jpg')}}" class="girl img-responsive" alt="" />
-									<img src="{{('public/fontend/images/home/pricing.png')}}" class="pricing" alt="" />
-								</div>
+								<a href="">
+									<img src="{{('public/ReDoub/images/sliders/slide3.png')}}" class="girl img-responsive" alt="" />
+									<img src="images/home/pricing.png" class="pricing" alt="" />
+								</a>
 							</div>
-							
 						</div>
 						
 						<a href="#slider-carousel" class="left control-carousel hidden-xs" data-slide="prev">
@@ -193,7 +205,7 @@
 									<h4 class="panel-title"><a href="{{URL::to('/danh muc san pham/'.$cate->category_id)}}">{{$cate->category_name}}</a></h4>
 								</div>
 							</div>
-						@endforeach
+							@endforeach
 						</div><!--/category-products-->
 					
 						<div class="brands_products"><!--brands_products-->
@@ -201,7 +213,7 @@
 							<div class="brands-name">
 								<ul class="nav nav-pills nav-stacked">
 								@foreach($brand_product as $key => $brand)
-									<li><a href="{{URL::to('/thuong hieu san pham/'.$brand->brand_id)}}"> <span class="pull-right">(50)</span>{{$brand->brand_name}}</a></li>
+									<li><a href="{{URL::to('/thuong hieu san pham/'.$brand->brand_id)}}"> <span class="pull-right"></span>{{$brand->brand_name}}</a></li>
 								@endforeach	
 								</ul>
 							</div>

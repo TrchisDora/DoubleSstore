@@ -23,4 +23,19 @@ class HomeController extends Controller
         // Truyền dữ liệu vào view
         return view('UserPages.Pages.home', compact('cate_product', 'brand_product', 'product'));
     }
+    public function search(Request $request){
+        $keywords = $request->keywords_submit;
+
+        // Lấy danh mục sản phẩm
+        $cate_product = CategoryProduct::where('category_status', 1)->orderBy('category_id', 'desc')->get();
+
+        // Lấy thương hiệu sản phẩm
+        $brand_product = BrandProduct::where('brand_status', 0)->orderBy('brand_id', 'desc')->get();
+
+        //Lấy danh sách sản phẩm
+        $search_product = Product::where('product_name', 'like', '%'.$keywords.'%')->get();
+
+        // Truyền dữ liệu vào view
+        return view('UserPages.Pages.details.search', compact('cate_product', 'brand_product', 'search_product'));
+    }
 }

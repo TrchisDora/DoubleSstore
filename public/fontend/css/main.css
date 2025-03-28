@@ -1,4 +1,4 @@
-﻿
+
 /*************************
 *******Typography******
 **************************/
@@ -8,7 +8,7 @@
 
 body {
   font-family: 'Roboto', sans-serif;
-  background:;
+  /* background:; */
   position: relative;
   font-weight:400px;
 }
@@ -231,7 +231,7 @@ a#scrollUp i{
   outline: medium none;
   padding-left: 10px;
   width: 155px;
-  background-image: url(../images/home/searchicon.png);
+  /* background-image: url(../images/home/searchicon.png); */
   background-repeat: no-repeat;
   background-position: 130px;
 }
@@ -295,19 +295,18 @@ ul.sub-menu {
   padding-left: 5px; 
 }
 
-@-webkit-keyframes fadeInUp {
-  0% {
-    opacity: 0;
-    -webkit-transform: translateY(20px);
-    transform: translateY(20px);
+@keyframes fadeInUp {
+    0% {
+      opacity: 0;
+      transform: translateY(20px);
+    }
+  
+    100% {
+      opacity: 1;
+      transform: translateY(0);
+    }
   }
-
-  100% {
-    opacity: 1;
-    -webkit-transform: translateY(0);
-    transform: translateY(0);
-  }
-}
+  
   
 /*************************
 *******Footer CSS******
@@ -561,6 +560,7 @@ ul.sub-menu {
 
 .girl {
   margin-left: 0;
+  width: 950px;
 }
 
 .item h1 {
@@ -867,7 +867,7 @@ h2.title {
   transition: height 500ms ease 0s;
   width: 100%;
   display: block;
-  opacity:;
+  /* opacity:; */
 }
 
 .single-products:hover .product-overlay {
@@ -1032,8 +1032,8 @@ h2.title {
   background: #ccccc6;
 }
 
-.recommended_items  h2 {
-}
+/* .recommended_items  h2 {
+} */
 
 .our_partners{
   overflow:hidden;
@@ -1141,7 +1141,7 @@ h2.title {
 
 .view-product img {
   border: 1px solid #F7F7F0;
-  height: 380px;
+  /* height: 230px; */
   width: 100%;
 }
 
@@ -1400,13 +1400,13 @@ h2.title {
   overflow: hidden;
 }
 
-.login-form {
+/* .login-form {
 
 }
 
 .signup-form {
 
-}
+} */
 
 .login-form h2, .signup-form h2 {
   color: #696763;
@@ -1457,9 +1457,9 @@ h2.title {
   padding: 6px 25px;
 }
 
-.login-form label{
+/* .login-form label{
 
-}
+} */
 
 
 .login-form label input {
@@ -1511,7 +1511,7 @@ h2.title {
 }
 
 .breadcrumbs .breadcrumb li a:after {
-  content:"";
+  /* content:""; */
   height:auto;
   width: auto;
   border-width: 8px;
@@ -1524,7 +1524,7 @@ h2.title {
 }
 
 .breadcrumbs .breadcrumb > li + li:before {
-  content: " ";
+  content: "";
 }
 
 #cart_items .cart_info {
@@ -1572,7 +1572,7 @@ h2.title {
 #cart_items .cart_info .cart_description h4 a {
   color: #363432;
   font-family: 'Roboto',sans-serif;
-  font-size: 20px;
+  /* font-size: 20px; */
   font-weight: normal;
 
 }
@@ -1590,12 +1590,12 @@ h2.title {
 
 #cart_items .cart_info .cart_total_price {
   color: #FE980F;
-  font-size: 24px;
+  font-size: 20px;
 }
 
 .cart_product {
   display: block;
-  margin: 15px -70px 10px 25px;
+  margin: 10px 10px 10px 10px;
 }
 
 .cart_quantity_button a {
@@ -1607,7 +1607,7 @@ h2.title {
   overflow: hidden;
   text-align: center;
   width: 35px;
-  float: left;
+  /* float: left; */
 }
 
 
@@ -1617,7 +1617,7 @@ h2.title {
   font-size: 16px;
   text-align: center;
   font-family: 'Roboto',sans-serif;
-  
+  width: 50px;
 }
 
 
@@ -1718,8 +1718,8 @@ h2.title {
   margin-right: 10px
 }
 
-.user_info > li > span {
-}
+/* .user_info > li > span {
+} */
 
 .user_info input, select, textarea {
   background: #F0F0E9;
@@ -1968,8 +1968,8 @@ h2.title {
   margin-bottom: 17px;
 }
 
-.single-blog-post > a {
-}
+/* .single-blog-post > a {
+} */
 
 .blog-post-area 
 .single-blog-post a img {
@@ -2362,8 +2362,8 @@ h2.title {
 .btn.btn-primary {
   background:#FE980F;
   border: 0 none;
-  border-radius: 0;
-  margin-top: 16px;
+  /* border-radius: 0;
+  margin-top: 16px; */
 }
 
 .blank-arrow {
