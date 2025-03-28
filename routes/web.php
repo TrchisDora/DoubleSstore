@@ -15,13 +15,31 @@ use App\Http\Controllers\CustomerController;
 // Frontend
 Route::get('/trang-chu', [HomeController::class, 'index']);
 Route::get('/', [HomeController::class, 'index']);
+Route::post('/tim kiem', [HomeController::class, 'search']);
 
 //danh mục sản phẩm trang chủ
 Route::get('/danh muc san pham/{category_id}', [CategoryProductController::class, 'show_category_home'])->name('category.show');
-Route::get('/chi-tiet-san-pham/{product_id}', [ProductController::class, 'details_product'])->name('');
+Route::get('/chi-tiet-san-pham/{product_id}', [ProductController::class, 'details_product'])->name('detils.product');
 
 //thương hiệu sản phẩm 
 Route::get('/thuong hieu san pham/{brand_id}', [BrandProductController::class, 'show_brand_home'])->name('brand.show');
+
+//cart
+Route::post('/save-cart', [CartController::class, 'save_cart'])->name('save.cart');
+Route::post('/update-cart-quantity', [CartController::class, 'update_cart_quantity'])->name('update.cart.quantity');
+Route::get('/show-cart', [CartController::class, 'show_cart'])->name('show.cart');
+Route::get('/delete-to-cart/{rowId}', [CartController::class, 'delete_to_cart'])->name('delete.to.cart');
+
+
+//Check out
+Route::get('/login-checkout', [CheckoutController::class, 'login_checkout'])->name('login.checkout');
+Route::get('/logout-checkout', [CheckoutController::class, 'logout_checkout'])->name('logout.checkout');
+Route::post('/login-customer', [CheckoutController::class, 'login_customer'])->name('login.customer');
+Route::post('/add-customer', [CheckoutController::class, 'add_customer'])->name('add.customer');
+Route::get('/checkout', [CheckoutController::class, 'checkout'])->name('checkout');
+Route::get('/payment', [CheckoutController::class, 'payment'])->name('payment');
+Route::post('/save-checkout-customer', [CheckoutController::class, 'save_checkout_customer'])->name('save.checkout.customer');
+Route::post('/order-place', [CheckoutController::class, 'order_place'])->name('order.place');
 
 
 
