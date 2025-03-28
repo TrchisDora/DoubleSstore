@@ -58,6 +58,7 @@
 
 	<div class="clearfix"> </div>
 </div>
+
 <!-- //market-->
 <div class="row">
 	<div class="panel-body">
@@ -68,6 +69,7 @@
 					<header class="agileits-box-header clearfix">
 						<h3>Bảng danh thu</h3>
 						<label for="filter">Lọc dữ liệu theo:</label>
+						
 						<select id="filter" onchange="filterData()">
 							<option value="all">Tất cả</option>
 							<option value="day">Ngày</option>

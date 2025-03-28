@@ -46,9 +46,6 @@
     .top-nav{
         margin-bottom: 20px;
     }
-    .top-menu{
-        margin-right: 10px;
-    }
     .wrapper{
         margin-top: 0px;
     }
@@ -206,14 +203,13 @@
         top: 0px;
         z-index: 1005;
     }
+    
     .sidebar-toggle-box{
         right: 10px;
-    }
+    } 
+    
     .top-nav{
         margin-bottom: 20px;
-    }
-    .top-menu{
-        margin-right: 10px;
     }
     .wrapper{
         margin-top: 0px;

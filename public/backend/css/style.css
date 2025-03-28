@@ -321,26 +321,6 @@ a.logo span {
     margin-top:23px;
     margin-left:25px;
 }
-ul.top-menu {
-    margin-right:15px;
-    margin-top: 0;
-}
-ul.top-menu > li > a {
-    color: #fff;
-    font-size: 16px;
-    background: #2fa9da;
-    padding: 4px 8px;
-    margin-right: 15px;
-    border-radius: 50%;
-    -webkit-border-radius: 50%;
-    padding-right: 8px !important;
-}
-ul.top-menu>li>a:hover,ul.top-menu>li>a:focus {
-    background:#22707e;
-    text-decoration:none;
-    color:#fff !important;
-    padding-right:8px !important;
-}
 .nav .open>a, .nav .open>a:focus, .nav .open>a:hover {
      background:#22707e !important;
     color:#fff !important;
@@ -548,18 +528,34 @@ ul.top-menu>li>a:hover,ul.top-menu>li>a:focus {
 }
 .dropdown-menu.extended.logout>li>a>i {
     padding-right:10px;
+    font-size: 33px;
 }
 .top-nav .username {
     font-size:13px;
     color:#fff;
 }
-.top-nav ul.top-menu>li>a {
-    border-radius: 100px;
-    -webkit-border-radius: 100px;
-    padding: 0px;
+    
+.top-nav .badge {
+    position:absolute;
+    right:-10px;
+    top:-10px;
+    z-index:100;
+}
+
+.top-nav ul.top-menu>li{
+    margin-left: 10px;
     background: none;
     margin-right: 0;
+}
+.top-nav ul.top-menu>li>a{
     background: #2fa9da;
+    color: white;
+    border-radius: 100px;
+    -webkit-border-radius: 100px;
+
+}
+.top-nav ul.top-menu>li>a#acc{
+    padding: 5px;
 }
 .top-nav ul.top-menu>li.language>a {
     margin-top:-2px;
@@ -576,14 +572,12 @@ ul.top-menu>li>a:hover,ul.top-menu>li>a:focus {
     -webkit-border-radius:0;
     width:18px;
 }
-.top-nav ul.top-menu>li {
-    margin-left:10px;
-}
 .top-nav ul.top-menu>li>a:hover,.top-nav ul.top-menu>li>a:focus {
     background:#22707e !important;
     border-radius:100px;
     -webkit-border-radius:100px;
 }
+
 .top-nav .dropdown-menu.extended.logout {
     top:50px;
 }
@@ -617,22 +611,24 @@ ul.top-menu>li>a:hover,ul.top-menu>li>a:focus {
 }
 /*search*/
 .search {
-    width: 20px;
+    width: 30px;
     -webkit-transition: all .3s ease;
     -moz-transition: all .3s ease;
     -ms-transition: all .3s ease;
     -o-transition: all .3s ease;
     transition: all .3s ease;
     box-shadow: none;
-    background: #2fa9da url(../images/icons/search-icon.png) no-repeat 10px 8px;
-    padding: 0 5px 0 30px;
-    color: #fff;
+    background: #2fa9da url(../images/icons/search-icon.png) no-repeat 20px 14px;
+    padding: 21px 30px;
+    color: #ffffff;
     border-radius: 100px;
     -webkit-border-radius: 100px;
 	cursor:pointer;
 }
 .search:focus {
-    width:300px;
+    margin-bottom: 20px;
+    padding-left: 50px;
+    width:390px;
     box-shadow:none;
     -webkit-transition:all .3s ease;
     -moz-transition:all .3s ease;
@@ -643,7 +639,7 @@ ul.top-menu>li>a:hover,ul.top-menu>li>a:focus {
     font-weight: 300;
 }
 .todo-search:focus{
-    width:100% !important;
+    width:95% !important;
 }
 /*--sidebar toggle---*/
 .sidebar-toggle-box {
@@ -1860,6 +1856,10 @@ select.input-sm {
     left: 32px;
     position: absolute;
 }
+canvas {
+    width: 100% !important;
+    height: auto !important;
+}
 #upload ul li span{
     width: 15px;
     height: 12px;
@@ -2587,8 +2587,6 @@ div#chartContainer5,div#chartContainer6,div#chartContainer7,div#chartContainer8 
     height:150px;
     margin-top:20px;
 }
-canvas.canvasjs-chart-canvas {
-}
 .chart_agile_bottom{
 	padding:20px;
 	background:#fff;
@@ -2795,11 +2793,8 @@ div#graph1, div#graph4, div#graph5, div#graph6, div#graph7, div#graph8, div#grap
 .w3layouts-main {
     margin: 14.3em auto;
 }
-.search:focus {
-    width:170px;
-}
 .todo-search:focus{
-    width:95% !important;
+    width:90% !important;
 }
 }
 @media (max-width: 736px){
@@ -2976,7 +2971,7 @@ div#graph1, div#graph4, div#graph5, div#graph6, div#graph7, div#graph8, div#grap
     width: 100%;
 }
 .market-update-left {
-    margin-left: 0;
+    margin-left: 30px;
     text-align: left;
     width: 63%;
 }
@@ -3203,9 +3198,6 @@ div#graph1, div#graph4, div#graph5, div#graph6, div#graph7, div#graph8, div#grap
 }
 .input-append {
     margin-top: 1em;
-}
-.search:focus {
-    width:150px;
 }
 .todo-search:focus{
     width:90% !important;
