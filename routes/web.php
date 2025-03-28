@@ -14,6 +14,16 @@ use App\Http\Controllers\Auth\ForgotPasswordController;
 use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\CustomerController;
 
+
+
+
+
+
+
+
+
+
+
 // Frontend
 Route::get('/trang-chu', [HomeController::class, 'index']);
 Route::get('/', [HomeController::class, 'index']);
